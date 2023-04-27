@@ -18,8 +18,8 @@ import static com.hrp.exception.EErrorType.INTERNAL_ERROR;
 
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
 
+public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
     public ResponseEntity<ErrorMessage> handleIllegalArgumentException(IllegalArgumentException exception){
@@ -78,6 +78,5 @@ public class GlobalExceptionHandler {
                 .message(EErrorType.getMessage())
                 .build();
     }
-
 
 }

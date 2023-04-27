@@ -1,5 +1,4 @@
 package com.hrp.repository.entity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +15,4 @@ public class BaseEntity {
     private String createDate;
     private String UpdateDate;
     private boolean state;
-
 }
