@@ -1,5 +1,4 @@
 package com.hrp.dto.response;
-
 import lombok.*;
 
 @Data

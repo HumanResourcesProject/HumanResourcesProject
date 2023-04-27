@@ -13,13 +13,13 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.pawer.exception.EErrorType.BAD_REQUEST_ERROR;
-import static com.pawer.exception.EErrorType.INTERNAL_ERROR;
+import static com.hrp.exception.EErrorType.BAD_REQUEST_ERROR;
+import static com.hrp.exception.EErrorType.INTERNAL_ERROR;
 
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
 
+public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseBody
     public ResponseEntity<ErrorMessage> handleIllegalArgumentException(IllegalArgumentException exception){
@@ -78,6 +78,5 @@ public class GlobalExceptionHandler {
                 .message(EErrorType.getMessage())
                 .build();
     }
-
 
 }

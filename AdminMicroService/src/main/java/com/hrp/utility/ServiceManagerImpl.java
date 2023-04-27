@@ -1,5 +1,4 @@
 package com.hrp.utility;
-
 import com.hrp.repository.entity.BaseEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +10,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Getter
-public class ServiceManagerImpl<T extends BaseEntity,ID> implements IServiceManager<T,ID>{
-
+public class ServiceManagerImpl <T extends BaseEntity,ID> implements IServiceManager<T,ID>{
     private final JpaRepository<T,ID> repository;
 
     @Override

@@ -1,5 +1,4 @@
 package com.hrp.exception;
-
 import lombok.Getter;
 
 @Getter
