@@ -80,6 +80,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             String fileUrl = client.sharing().createSharedLinkWithSettings(metadata.getPathLower()).getUrl();
             Optional<Admin> admin = adminRepository.findById(id);
             admin.get().setAvatar(fileUrl);
+            System.out.println(fileUrl);
             update(admin.get());
             return true;
         } catch (Exception e) {
