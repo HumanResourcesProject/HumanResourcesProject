@@ -14,6 +14,7 @@ import com.hrp.utility.ServiceManagerImpl;
 //import io.imagekit.sdk.ImageKit;
 //import io.imagekit.sdk.config.Configuration;
 //import io.imagekit.sdk.models.FileCreateRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ import java.util.Optional;
 
 @Service
 public class AdminService extends ServiceManagerImpl<Admin, Long> {
+
+    @Value("${dropbox.token}")
+    private String drptoken;
     private final IAdminRepository adminRepository;
 
 
@@ -62,28 +66,39 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     }
 
 
-    public Boolean uploadImage(MultipartFile file, Long id) throws IOException {
+    public Boolean uploadImage(MultipartFile file) throws IOException {
+        System.out.println("***********");
         try {
             // Dropbox'a bağlanmak için erişim anahtarlarınızı kullanın
-            DbxRequestConfig config = new DbxRequestConfig("HRMProject");
-            String token = "sl.BdUQl8Fp8wPKfcRM-G13tIIqKQ-IIRz6v2yXTy69LiomEJiGa5UrOu_ewMT1mm73qaqzBCXd5Vm2bgb17LDWFn5mv5w9TP7neFxDgQiBe9XPWBTVQyEY-E_grDSIcTzuVmRCc80";
+            DbxRequestConfig config = new DbxRequestConfig("HRMProjectt");
+            String token = drptoken;
             DbxClientV2 client = new DbxClientV2(config, token);
+            System.out.println("***********2");
 
             // Dosyayı yükle
             String fileName = file.getOriginalFilename();
+            System.out.println("***********3");
             InputStream inputStream = new BufferedInputStream(file.getInputStream());
-            FileMetadata metadata = client.files().uploadBuilder("/" + fileName)
+            System.out.println("***********4" + inputStream);
+            FileMetadata metadata = client.files().uploadBuilder("/MyFolder/" + fileName)
                     .withMode(WriteMode.ADD)
                     .uploadAndFinish(inputStream);
+            System.out.println("***********5");
 
             // Yükleme başarılı olduysa, dosyanın Dropbox URL'sini döndürün
             String fileUrl = client.sharing().createSharedLinkWithSettings(metadata.getPathLower()).getUrl();
-            Optional<Admin> admin = adminRepository.findById(id);
-            admin.get().setAvatar(fileUrl);
+            /*
+            Admin admin = new Admin();
+            admin.setAvatar(fileUrl);
+            update(admin);
+             */
             System.out.println(fileUrl);
-            update(admin.get());
+
             return true;
         } catch (Exception e) {
+            System.out.println("*********** Exception" + e.getMessage());
+            e.printStackTrace();
+
             // Hata oluşursa, hata mesajını döndürün
             return false;
         }

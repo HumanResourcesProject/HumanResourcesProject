@@ -12,7 +12,10 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPAdminDB
     username: postgres
-    password: burhan71
+    password: 4628
   jpa:
     hibernate:
       ddl-auto: update
+
+dropbox:
+  token: "sl.BdVgQLBmb7QWzBEOxYJu1uKNRGL3qE7VP_01ck0p0ZM9G4lu1JYPh9xgtIbZnO44OGs2dy0ltgME42Fnmo85wY8gSpW0Sd4hu2rA8HH-9X5YEUAKK8gMqu1TZ4t2CsZGTxvc60sryXxJ"

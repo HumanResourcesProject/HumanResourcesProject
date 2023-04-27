@@ -15,9 +15,9 @@
         const file = inputElement.files[0];
         const formData = new FormData();
 
-        formData.append("image", file);
+        formData.append("file", file);
 
-        fetch("http://localhost:7070/admin/images/{$id}", {
+        fetch("http://localhost:7070/admin/images", {
             method: "POST",
             body: formData
         })

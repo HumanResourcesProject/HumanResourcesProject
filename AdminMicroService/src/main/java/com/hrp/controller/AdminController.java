@@ -38,8 +38,10 @@ public class AdminController {
         return ResponseEntity.ok(adminService.findMe(id));
     }
 
-    @PostMapping("/images/{$id}")
-    public ResponseEntity<Boolean> uploadImage(@RequestParam("file") MultipartFile file, @PathVariable Long id) throws IOException {
-        return ResponseEntity.ok(adminService.uploadImage(file, id));
+    @PostMapping("/images")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        System.out.println("***********controller");
+        return ResponseEntity.ok(adminService.uploadImage(file));
     }
 }
