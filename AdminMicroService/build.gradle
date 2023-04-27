@@ -4,5 +4,6 @@ buildscript {
     }
 }
 dependencies {
-    //implementation libs.springBootStarterDataJpa
+    implementation libs.springBootStarterDataJpa
+    implementation libs.postgreSql
 }

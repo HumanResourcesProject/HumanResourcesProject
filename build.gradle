@@ -27,6 +27,7 @@ allprojects{
     repositories{
         mavenCentral()
         google()
+        //maven { url 'https://jitpack.io' }
     }
     buildscript {
         repositories{
@@ -47,6 +48,10 @@ allprojects{
         //implementation libs.springCloudSleuthZipkin
         //implementation libs.springCloudConfigClient
         //implementation libs.springBootStarterDataRedis
+        //implementation 'com.github.imagekit-developer:imagekit-java:2.0.0'
+        implementation 'com.dropbox.core:dropbox-core-sdk:5.4.4'
+        //implementation 'com.dropbox.core:dropbox-core-sdk:3.1.6'
+
 
         //  implementation libs.springCloudGCloud
 
