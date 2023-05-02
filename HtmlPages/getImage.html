@@ -5,19 +5,19 @@
     <title>Title</title>
 </head>
 <body>
-    <section class="pawerboxinputfile">
-        <input type="file" name="image" id="file">
-        <button onclick="sendimage()">Bas</button>
-    </section>
+<section class="pawerboxinputfile">
+    <input type="file" name="image" id="file">
+    <button onclick="sendimage()">Bas</button>
+</section>
 <script>
     function sendimage () {
         const inputElement = document.getElementById("file");
         const file = inputElement.files[0];
         const formData = new FormData();
 
-        formData.append("image", file);
+        formData.append("file", file);
 
-        fetch("http://localhost:7070/admin/images/{$id}", {
+        fetch("http://localhost:7070/admin/imagescloud", {
             method: "POST",
             body: formData
         })
