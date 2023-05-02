@@ -42,8 +42,8 @@ public class AdminController {
 
     @PostMapping("/imagescloud")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> uploadImageCloud(@RequestParam("file") MultipartFile file, @RequestBody ProfilePhotoUploadRequestDto dto) throws IOException {
-        return ResponseEntity.ok(adminService.uploadImageCloud(file, dto));
+    public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, @RequestParam ("id") Long id) throws IOException {
+        return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
     }
 
     @PostMapping("updateadmin")

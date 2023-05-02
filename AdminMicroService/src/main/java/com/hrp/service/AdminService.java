@@ -65,8 +65,8 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 .build();
     }
 
-    public Boolean uploadImageCloud(MultipartFile file, ProfilePhotoUploadRequestDto dto) {
-        Optional<Admin> admin = adminRepository.findById(dto.getId());
+    public String uploadImageCloud(MultipartFile file, Long id) {
+        Optional<Admin> admin = adminRepository.findById(id);
         if (admin.isEmpty()){
             System.out.println("Kullanici bulunamadi");
         }
@@ -82,12 +82,11 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             admin.get().setAvatar(url);
             update(admin.get());
             System.out.println(url);
-            return true;
+            return url;
         }catch (Exception e){
-            return false;
+            System.out.println(e.getMessage());
+            return null;
         }
-
-
     }
 
     public Boolean updateAdmin(UpdateAdminRequestDto dto) {
