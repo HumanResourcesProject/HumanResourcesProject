@@ -1,22 +1,15 @@
 package com.hrp.controller;
 
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.FileMetadata;
-import com.dropbox.core.v2.files.WriteMode;
 import com.hrp.dto.request.CreateAdminRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
-import com.hrp.dto.response.FindAdminResponseDto;
+import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 //Dropbox
 //App key: 3qvpw8qwqq2uyp6
@@ -36,7 +29,7 @@ public class AdminController {
     }
 
 
-    public ResponseEntity<FindAdminResponseDto> findMe(Long id){
+    public ResponseEntity<BaseAdminResponseDto> findMe(Long id){
         return ResponseEntity.ok(adminService.findMe(id));
     }
 

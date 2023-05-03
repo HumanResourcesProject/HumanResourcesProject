@@ -6,10 +6,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class FindAdminResponseDto {
-    private String username;
+public class BaseAdminResponseDto {
     private String name;
     private String surname;
     private String email;
     private String password;
+    private String avatar;
+    private String phone;
+    private String address;
 }
