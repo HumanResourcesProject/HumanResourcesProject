@@ -10,6 +10,8 @@
         </processorPath>
         <module name="HumanResourcesProject.main" />
         <module name="HumanResourcesProject.AdminMicroService.main" />
+        <module name="com.hrp.HumanResourcesProject.ApiGatewayService.main" />
+        <module name="com.hrp.HumanResourcesProject.ConfigServer.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

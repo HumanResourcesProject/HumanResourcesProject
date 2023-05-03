@@ -5,6 +5,7 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.WriteMode;
 import com.hrp.dto.request.CreateAdminRequestDto;
+import com.hrp.dto.request.UpdateAdminRequestDto;
 import com.hrp.dto.response.FindAdminResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +39,17 @@ public class AdminController {
         return ResponseEntity.ok(adminService.findMe(id));
     }
 
-    @PostMapping("/images")
+    @PostMapping("/imagescloud")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-        System.out.println("***********controller");
-        return ResponseEntity.ok(adminService.uploadImage(file));
+    public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, @RequestParam ("id") Long id) throws IOException {
+        return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
     }
+
+    @PostMapping("updateadmin")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> updateAdmin (UpdateAdminRequestDto dto){
+        return ResponseEntity.ok(adminService.updateAdmin(dto));
+    }
+
+
 }

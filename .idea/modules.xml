@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AdminMicroService/FinalProjectGenel.HumanResourcesProject.AdminMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AdminMicroService/FinalProjectGenel.HumanResourcesProject.AdminMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AdminMicroService/HumanResourcesProject.AdminMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AdminMicroService/HumanResourcesProject.AdminMicroService.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AdminMicroService/com.hrp.HumanResourcesProject.AdminMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AdminMicroService/com.hrp.HumanResourcesProject.AdminMicroService.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApiGatewayService/HumanResourcesProject.ApiGatewayService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ApiGatewayService/HumanResourcesProject.ApiGatewayService.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ConfigServer/HumanResourcesProject.ConfigServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ConfigServer/HumanResourcesProject.ConfigServer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApiGatewayService/com.hrp.HumanResourcesProject.ApiGatewayService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ApiGatewayService/com.hrp.HumanResourcesProject.ApiGatewayService.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ConfigServer/com.hrp.HumanResourcesProject.ConfigServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ConfigServer/com.hrp.HumanResourcesProject.ConfigServer.main.iml" />
     </modules>
   </component>
 </project>
