@@ -1,0 +1,26 @@
+server:
+  port: 80
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: api-gateway-service
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      default-filters:
+        - RewritePath= /(?<segment>.*), /api/v1/$\{segment}
+      routes:
+        - id: admin-micro-service
+          predicates:
+            - Path=/admin/**
+          uri: http://localhost:7070
+          filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            - name: CircuitBreaker
+              args:
+                name: admin
+                fallbackUri: forward:/fallbackadmin

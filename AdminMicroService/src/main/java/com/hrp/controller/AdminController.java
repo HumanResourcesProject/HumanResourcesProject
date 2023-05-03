@@ -5,7 +5,6 @@ import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.WriteMode;
 import com.hrp.dto.request.CreateAdminRequestDto;
-import com.hrp.dto.request.ProfilePhotoUploadRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
 import com.hrp.dto.response.FindAdminResponseDto;
 import com.hrp.service.AdminService;
