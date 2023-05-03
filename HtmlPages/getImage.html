@@ -8,12 +8,15 @@
     <section class="pawerboxinputfile">
         <input type="file" name="image" id="file">
         <button onclick="sendimage()">Bas</button>
+<!--        get all admin-->
+
     </section>
 <script>
     function sendimage () {
         const inputElement = document.getElementById("file");
         const file = inputElement.files[0];
         const formData = new FormData();
+
 
         formData.append("file", file);
 

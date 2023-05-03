@@ -103,6 +103,87 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             return false;
         }
     }
+    // update admin
+    public Boolean updateAdmin(Long id, MultipartFile file) throws IOException {
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isPresent()) {
+            if (uploadImage(file)) {
+                Admin admin1 = admin.get();
+                admin1.setAvatar(file.getOriginalFilename());
+                adminRepository.save(admin1);
+                return true;
+            }
+        }
+        return false;
+    }
+    // delete admin
+    public Boolean deleteAdmin(Long id) {
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isPresent()) {
+            adminRepository.delete(admin.get());
+            return true;
+        }
+        return false;
+    }
+    // get admin
+    public ResponseEntity<FindAdminResponseDto> getAdmin(Long id) {
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isPresent()) {
+            FindAdminResponseDto responseDto = FindAdminResponseDto.builder()
+                    .email(admin.get().getEmail())
+                    .username(admin.get().getUsername())
+                    .name(admin.get().getName())
+                    .surname(admin.get().getSurname())
+                    .build();
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    // get all admin
+    public ResponseEntity<Iterable<Admin>> getAllAdmin() {
+        Iterable<Admin> admin = adminRepository.findAll();
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+    // get admin by username
+    public ResponseEntity<Admin> getAdminByUsername(String username) {
+        Admin admin = adminRepository.findByUsername(username);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+    // get admin by email
+    public ResponseEntity<Admin> getAdminByEmail(String email) {
+        Admin admin = adminRepository.findByEmail(email);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+    // get admin by id
+    public ResponseEntity<Admin> getAdminById(Long id) {
+        Admin admin = adminRepository.findById(id).get();
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+    // get admin by name
+    public ResponseEntity<Admin> getAdminByName(String name) {
+        Admin admin = adminRepository.findByName(name);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+    // get admin by surname
+    public ResponseEntity<Admin> getAdminBySurname(String surname) {
+        Admin admin = adminRepository.findBySurname(surname);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+    // get admin by username and password
+    public ResponseEntity<Admin> getAdminByUsernameAndPassword(String username, String password) {
+        Admin admin = adminRepository.findByUsernameAndPassword(username, password);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+    // get admin by username and password
+    public ResponseEntity<Admin> getAdminByEmailAndPassword(String email, String password) {
+        Admin admin = adminRepository.findByEmailAndPassword(email, password);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
+    }
+
+
+
+
+
 }
 /**
  // Dosyayı Dropbox'a yükleyin ve paylaşılabilir bir URL elde edin

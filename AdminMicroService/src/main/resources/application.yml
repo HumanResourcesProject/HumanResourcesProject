@@ -2,6 +2,10 @@ server:
   port: 7070
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   zipkin:
     enabled: true
     base-url: http://localhost:9411
@@ -12,7 +16,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPAdminDB
     username: postgres
-    password: 4628
+    password: asd123asd
   jpa:
     hibernate:
       ddl-auto: update
