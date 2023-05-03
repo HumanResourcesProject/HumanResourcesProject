@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 //Dropbox
 //App key: 3qvpw8qwqq2uyp6
@@ -19,6 +20,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class AdminController {
     private final AdminService adminService;
 
@@ -28,7 +30,7 @@ public class AdminController {
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
 
-
+    @GetMapping("/getadmin")
     public ResponseEntity<BaseAdminResponseDto> findMe(Long id){
         return ResponseEntity.ok(adminService.findMe(id));
     }
@@ -43,6 +45,11 @@ public class AdminController {
     @CrossOrigin("*")
     public ResponseEntity<Boolean> updateAdmin (UpdateAdminRequestDto dto){
         return ResponseEntity.ok(adminService.updateAdmin(dto));
+    }
+    @GetMapping("/getalladmin")
+    @CrossOrigin("*")
+    public ResponseEntity<Iterable<BaseAdminResponseDto>> getAll(){
+        return ResponseEntity.ok(adminService.findAllAdmin());
     }
 
 

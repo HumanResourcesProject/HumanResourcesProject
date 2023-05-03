@@ -34,6 +34,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 || dto.getEmail()==null || dto.getPassword()==null){
             throw new AdminException(EErrorType.BAD_REQUEST_ERROR,"zorunlu alanları doldurunuz");
         }
+
         save(Admin.builder()
                 .avatar(uploadImageCloudMft(dto.getAvatar()))
                 .phone(dto.getPhone())
@@ -55,6 +56,9 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 .email(admin.getEmail())
                 .name(admin.getName())
                 .surname(admin.getSurname())
+                .avatar(admin.getAvatar())
+                .phone(admin.getPhone())
+                .address(admin.getAddress())
                 .build();
     }
 
@@ -128,6 +132,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     }
 
     // findalladmin
+
     public Iterable<BaseAdminResponseDto> findAllAdmin() {
         List<BaseAdminResponseDto> baseAdminResponseDtos = new ArrayList<>();
         for (Admin admin : adminRepository.findAll()) {
