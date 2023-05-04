@@ -26,9 +26,11 @@ public enum EErrorType {
     USER_NOT_RESET_PASSWORD(1312,"User is not reset password",HttpStatus.BAD_REQUEST),
     USER_NOT_CHANGE_PASSWORD(1313,"User is not change password",HttpStatus.BAD_REQUEST),
     USER_NOT_CHANGE_USERNAME(1314,"User is not change username",HttpStatus.BAD_REQUEST),
-
-    USERNAME_ERROR(1302,"Username already registered",BAD_REQUEST);
-
+    USERNAME_ERROR(1302,"Username already registered",HttpStatus.BAD_REQUEST),
+    PASSWORD_NOT_EMPTY(1001,"Password cannot be empty",HttpStatus.BAD_REQUEST),
+    PHONE_NOT_LETTER(1004,"Phone must be number",HttpStatus.BAD_REQUEST),
+    USERID_NOT_EMPTY(1002,"UserId cannot be empty",HttpStatus.BAD_REQUEST),
+    FIELD_NOT_EMPTY(1003,"Field cannot be empty",HttpStatus.BAD_REQUEST);
 
     private int code;
     private String message;

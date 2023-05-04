@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,7 +27,9 @@ public class AdminController {
 
     @PostMapping("/createadmin")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createAdmin(CreateAdminRequestDto dto){
+    public ResponseEntity<Boolean> createAdmin(@Valid CreateAdminRequestDto dto){
+        System.out.println("create admin metodu");
+        System.out.println(dto.getAvatar());
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
 
@@ -38,6 +41,7 @@ public class AdminController {
     @PostMapping("/imagescloud")
     @CrossOrigin("*")
     public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, @RequestParam ("id") Long id) throws IOException {
+        System.out.println("upload image metodu");
         return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
     }
 

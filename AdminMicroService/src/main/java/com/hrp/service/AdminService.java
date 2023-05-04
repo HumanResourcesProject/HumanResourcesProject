@@ -29,13 +29,10 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
 
     public Boolean createAdmin(CreateAdminRequestDto dto)  {
-        System.out.println(dto.getPassword());
-        System.out.println("**********");
         if (dto.getName()==null || dto.getSurname()==null
-                || dto.getEmail()==null || dto.getPassword()==null){
-            throw new AdminException(EErrorType.BAD_REQUEST_ERROR,"zorunlu alanları doldurunuz");
+                || dto.getEmail()==null || dto.getPassword()==null || dto.getPassword().equals("")){
+            throw new AdminException(EErrorType.PASSWORD_NOT_EMPTY);
         }
-
         save(Admin.builder()
                 .avatar(uploadImageCloudMft(dto.getAvatar()))
                 .phone(dto.getPhone())
@@ -50,7 +47,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     public BaseAdminResponseDto findMe(Long adminId){
         if (adminId==null){
-            throw new AdminException(EErrorType.BAD_REQUEST_ERROR,"id null geldi");
+            throw new AdminException(EErrorType.USERID_NOT_EMPTY);
         }
         Admin admin = adminRepository.findById(adminId).get();
         return BaseAdminResponseDto.builder()
@@ -88,7 +85,6 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             System.out.println("Kullanici bulunamadi");
             return false;
         }
-
         admin.get().setAddress(dto.getAddress());
         admin.get().setPhone(dto.getPhone());
         update(admin.get());
@@ -120,21 +116,31 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         }
     }
 
+    // bu kullanılacak .adresss ve .phone bos gelebilir
+    // bos gelirse db de ki alınacak
     public Boolean updateAdmin(UpdateAdminRequestDto dto) {
+
         Optional<Admin> admin = adminRepository.findById(dto.getId());
         if (admin.isEmpty()){
-            System.out.println("Kullanici bulunamadi");
-            return false;
+            throw new AdminException(EErrorType.USER_NOT_FOUND);
+        }
+        if (dto.getAddress() == null){
+            admin.get().setPhone(dto.getPhone());
+            admin.get().setAddress(admin.get().getAddress());
         }
 
-        admin.get().setAddress(dto.getAddress());
-        admin.get().setPhone(dto.getPhone());
+        if (dto.getPhone() == null){
+            admin.get().setAddress(dto.getAddress());
+            admin.get().setPhone(admin.get().getPhone());
+        }
+
+
         update(admin.get());
         return true;
     }
 
-    // findalladmin
 
+    // findalladmin
     public Iterable<BaseAdminResponseDto> findAllAdmin() {
         List<BaseAdminResponseDto> baseAdminResponseDtos = new ArrayList<>();
         for (Admin admin : adminRepository.findAll()) {
