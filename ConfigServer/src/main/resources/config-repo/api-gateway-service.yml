@@ -1,23 +1,56 @@
+#server:
+#  port: 80
+#
+#spring:
+#  zipkin:
+#    enabled: true
+#    base-url: http://localhost:9411
+#    service:
+#      name: api-gateway-service
+#  main:
+#    web-application-type: reactive
+#  cloud:
+#    gateway:
+#      default-filters:
+#        - RewritePath= /(?<segment>.*), /$\{segment}
+#      routes:
+#        - id: admin-micro-service
+#          predicates:
+#            - Path=/admin/**
+#          uri: http://localhost:7070
+#          filters:
+#            - name: CircuitBreaker
+#              args:
+#                name: admin
+#                fallbackUri: forward:/fallbackadmin
 server:
   port: 80
-
 spring:
   zipkin:
     enabled: true
-    base-url: http://localhost:9411
+    base-url: http://10.4.0.7:9411
     service:
       name: api-gateway-service
   main:
     web-application-type: reactive
   cloud:
     gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
       default-filters:
-        - RewritePath= /(?<segment>.*), /api/v1/$\{segment}
+        - RewritePath= /(?<segment>.*), /$\{segment}
       routes:
-        - id: admin-micro-service
+        - id: admin-service
           predicates:
-            - Path=/admin/**
-          uri: http://localhost:7070
+            - Path=/auth/**
+          uri: http://10.8.12.204:9090
           filters:
             - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
             - name: CircuitBreaker

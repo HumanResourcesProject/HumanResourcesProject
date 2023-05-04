@@ -57,5 +57,12 @@ public class AdminController {
         return ResponseEntity.ok(adminService.findAllAdmin());
     }
 
+    @GetMapping("/apideneme")
+    @CrossOrigin("*")
+    public ResponseEntity <String> getAllapigateway(){
+        String deneme= "denemeee";
+        return ResponseEntity.ok(deneme);
+    }
+
 
 }
