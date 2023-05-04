@@ -29,7 +29,8 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
 
     public Boolean createAdmin(CreateAdminRequestDto dto)  {
-
+        System.out.println(dto.getPassword());
+        System.out.println("**********");
         if (dto.getName()==null || dto.getSurname()==null
                 || dto.getEmail()==null || dto.getPassword()==null){
             throw new AdminException(EErrorType.BAD_REQUEST_ERROR,"zorunlu alanları doldurunuz");
@@ -74,6 +75,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         try{
             Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             String url = (String) result.get("url");
+            System.out.println(url+" --------------------------");
             return url;
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -86,7 +88,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             System.out.println("Kullanici bulunamadi");
             return false;
         }
-        admin.get().setAvatar(uploadImageCloudMft(dto.getAvatar()));
+
         admin.get().setAddress(dto.getAddress());
         admin.get().setPhone(dto.getPhone());
         update(admin.get());
