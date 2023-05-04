@@ -36,6 +36,8 @@ public class AdminController {
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
 
+    @GetMapping("getadmin")
+    @CrossOrigin("*")
     public ResponseEntity<FindAdminResponseDto> findMe(Long id){
         return ResponseEntity.ok(adminService.findMe(id));
     }
@@ -46,9 +48,10 @@ public class AdminController {
         return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
     }
 
-    @PostMapping("updateadmin")
+    @PutMapping("/updateadmin")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdmin (UpdateAdminRequestDto dto){
+    public ResponseEntity<Boolean> updateAdmin (@RequestBody UpdateAdminRequestDto dto){
+        System.out.println(dto.toString() + "Controller");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
     }
 

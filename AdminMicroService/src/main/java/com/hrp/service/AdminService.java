@@ -59,9 +59,11 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         Admin admin = adminRepository.findById(adminId).get();
         return FindAdminResponseDto.builder()
                 .email(admin.getEmail())
-                .username(admin.getUsername())
+                .address(admin.getAddress())
+                .phone(admin.getPhone())
                 .name(admin.getName())
                 .surname(admin.getSurname())
+                .avatar(admin.getAvatar())
                 .build();
     }
 
