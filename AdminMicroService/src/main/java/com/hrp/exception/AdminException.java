@@ -10,8 +10,11 @@ public class AdminException extends RuntimeException{
         this.EErrorType = EErrorType;
     }
 
+
     public AdminException(EErrorType EErrorType, String message){
         super(message);
         this.EErrorType = EErrorType;
     }
+
+
 }

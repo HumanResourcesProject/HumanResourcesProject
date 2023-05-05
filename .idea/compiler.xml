@@ -10,6 +10,8 @@
         </processorPath>
         <module name="com.hrp.HumanResourcesProject.AdminMicroService.main" />
         <module name="HumanResourcesProject.main" />
+        <module name="intellij.HumanResourcesProject.ApiGatewayService.main" />
+        <module name="intellij.HumanResourcesProject.ConfigServer.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

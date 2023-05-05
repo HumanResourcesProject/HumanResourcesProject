@@ -1,22 +1,8 @@
-server:
-  port: 7070
-
 spring:
-  zipkin:
-    enabled: true
-    base-url: http://localhost:9411
-    service:
-      name: admin-service
-
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/HRPAdminDB
-    username: postgres
-    password: burhan71
-  jpa:
-    hibernate:
-      ddl-auto: update
-cloudinary:
-  cloud-name: "doqksh0xh"
-  api-key: "871216635594134"
-  api-secret: "6b3zcRZyWKeuiW6qIq4XvWnhVno"
+  cloud:
+    config:
+      uri: http://localhost:8888
+  config:
+    import: "configserver:"
+  application:
+    name: admin-micro-service
