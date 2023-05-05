@@ -119,8 +119,10 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     // bu kullanılacak .adresss ve .phone bos gelebilir
     // bos gelirse db de ki alınacak
     public Boolean updateAdmin(UpdateAdminRequestDto dto) {
+        System.out.println("dto ici update... "+ dto.toString());
 
         Optional<Admin> admin = adminRepository.findById(dto.getId());
+
         if (admin.isEmpty()){
             throw new AdminException(EErrorType.USER_NOT_FOUND);
         }
@@ -128,11 +130,14 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             admin.get().setPhone(dto.getPhone());
             admin.get().setAddress(admin.get().getAddress());
         }
-
         if (dto.getPhone() == null){
             admin.get().setAddress(dto.getAddress());
             admin.get().setPhone(admin.get().getPhone());
         }
+        admin.get().setAddress(dto.getAddress());
+        admin.get().setPhone(dto.getPhone());
+        System.out.println("admin adres... "+ admin.get().getAddress());
+        System.out.println("admin phone... "+ admin.get().getPhone());
 
 
         update(admin.get());

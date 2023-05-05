@@ -45,10 +45,11 @@ public class AdminController {
         return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
     }
 
-    @PutMapping("updateadmin")
+    @PutMapping("/updateadmin")
     @CrossOrigin("*")
     public ResponseEntity<Boolean> updateAdmin (@RequestBody UpdateAdminRequestDto dto){
         System.out.println(dto.getId()+" "+dto.getPhone());
+        System.out.println("************** update controller");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
     }
     @GetMapping("/getalladmin")
