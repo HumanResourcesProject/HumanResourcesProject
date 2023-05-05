@@ -30,7 +30,9 @@ public enum EErrorType {
     PASSWORD_NOT_EMPTY(1001,"Password cannot be empty",HttpStatus.BAD_REQUEST),
     PHONE_NOT_LETTER(1004,"Phone must be number",HttpStatus.BAD_REQUEST),
     USERID_NOT_EMPTY(1002,"UserId cannot be empty",HttpStatus.BAD_REQUEST),
-    FIELD_NOT_EMPTY(1003,"Field cannot be empty",HttpStatus.BAD_REQUEST);
+    FIELD_NOT_EMPTY(1003,"Field cannot be empty",HttpStatus.BAD_REQUEST),
+    EMAIL_NOT_EMPTY(1005,"Email cannot be empty",HttpStatus.BAD_REQUEST),
+    TOKEN_NOT_FOUND(4002,"Token not found",BAD_REQUEST);
 
     private int code;
     private String message;

@@ -5,6 +5,7 @@ import com.hrp.dto.request.UpdateAdminRequestDto;
 import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,39 +30,40 @@ public class AdminController {
     @CrossOrigin("*")
     public ResponseEntity<Boolean> createAdmin(@Valid CreateAdminRequestDto dto){
         System.out.println("create admin metodu");
-        System.out.println(dto.getAvatar());
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
 
     @GetMapping("/getadmin")
     public ResponseEntity<BaseAdminResponseDto> findMe(Long id){
+        System.out.println("find me metodu");
         return ResponseEntity.ok(adminService.findMe(id));
     }
 
     @PostMapping("/imagescloud")
     @CrossOrigin("*")
     public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, @RequestParam ("id") Long id) throws IOException {
-        System.out.println("upload image metodu");
+        System.out.println("upload image cloud metodu");
         return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
     }
 
     @PutMapping("/updateadmin")
     @CrossOrigin("*")
     public ResponseEntity<Boolean> updateAdmin (@RequestBody UpdateAdminRequestDto dto){
-        System.out.println(dto.getId()+" "+dto.getPhone());
-        System.out.println("************** update controller");
+        System.out.println("update admin metodu");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
     }
     @GetMapping("/getalladmin")
     @CrossOrigin("*")
     public ResponseEntity<Iterable<BaseAdminResponseDto>> getAll(){
+        System.out.println("get all metodu ");
         return ResponseEntity.ok(adminService.findAllAdmin());
     }
 
     @GetMapping("/apideneme")
     @CrossOrigin("*")
     public ResponseEntity <String> getAllapigateway(){
-        String deneme= "denemeee";
+        System.out.println("api gateway metodu");
+        String deneme = "api gateway icin deneme yazisi görüyorsan calisiyor";
         return ResponseEntity.ok(deneme);
     }
 

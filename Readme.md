@@ -1,3 +1,4 @@
+# yapilacaklar.
 ## Buse
 * başka kullanicilar icin update sayfasi hazırlanacak. ( homepage de kullanicilarin update tusu)
 * update tusu axios istekleri düzenlenecek.
@@ -20,5 +21,5 @@
 ## Mert
 * login page (front) --> token storage de tutulacak.
 * worker icin admin template de register sayfasi.
-* worker micro servisi
+* worker micro servisi.
 

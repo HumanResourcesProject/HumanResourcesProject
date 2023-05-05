@@ -147,6 +147,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     // findalladmin
     public Iterable<BaseAdminResponseDto> findAllAdmin() {
+        System.out.println("findall admin service");
         List<BaseAdminResponseDto> baseAdminResponseDtos = new ArrayList<>();
         for (Admin admin : adminRepository.findAll()) {
             baseAdminResponseDtos.add(BaseAdminResponseDto.builder()
