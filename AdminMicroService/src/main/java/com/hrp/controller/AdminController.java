@@ -1,22 +1,18 @@
 package com.hrp.controller;
 
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.FileMetadata;
-import com.dropbox.core.v2.files.WriteMode;
 import com.hrp.dto.request.CreateAdminRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
-import com.hrp.dto.response.FindAdminResponseDto;
+import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedInputStream;
+import javax.validation.Valid;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.List;
 
 //Dropbox
 //App key: 3qvpw8qwqq2uyp6
@@ -26,29 +22,49 @@ import java.io.InputStream;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/createadmin")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createAdmin(CreateAdminRequestDto dto){
+    public ResponseEntity<Boolean> createAdmin(@Valid CreateAdminRequestDto dto){
+        System.out.println("create admin metodu");
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
 
-    public ResponseEntity<FindAdminResponseDto> findMe(Long id){
+    @GetMapping("/getadmin")
+    public ResponseEntity<BaseAdminResponseDto> findMe(Long id){
+        System.out.println("find me metodu");
         return ResponseEntity.ok(adminService.findMe(id));
     }
 
     @PostMapping("/imagescloud")
     @CrossOrigin("*")
     public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, @RequestParam ("id") Long id) throws IOException {
+        System.out.println("upload image cloud metodu");
         return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
     }
 
-    @PostMapping("updateadmin")
+    @PutMapping("/updateadmin")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdmin (UpdateAdminRequestDto dto){
+    public ResponseEntity<Boolean> updateAdmin (@RequestBody UpdateAdminRequestDto dto){
+        System.out.println("update admin metodu");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
+    }
+    @GetMapping("/getalladmin")
+    @CrossOrigin("*")
+    public ResponseEntity<Iterable<BaseAdminResponseDto>> getAll(){
+        System.out.println("get all metodu ");
+        return ResponseEntity.ok(adminService.findAllAdmin());
+    }
+
+    @GetMapping("/apideneme")
+    @CrossOrigin("*")
+    public ResponseEntity <String> getAllapigateway(){
+        System.out.println("api gateway metodu");
+        String deneme = "api gateway icin deneme yazisi görüyorsan calisiyor";
+        return ResponseEntity.ok(deneme);
     }
 
 
