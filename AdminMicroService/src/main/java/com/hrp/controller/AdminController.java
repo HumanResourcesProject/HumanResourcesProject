@@ -2,6 +2,7 @@ package com.hrp.controller;
 
 import com.hrp.dto.request.CreateAdminRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
+import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
 import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +52,12 @@ public class AdminController {
     public ResponseEntity<Boolean> updateAdmin (@RequestBody UpdateAdminRequestDto dto){
         System.out.println("update admin metodu");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
+    }
+    @PutMapping("/updateadminbuse")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> updateAdminBuse(@RequestBody UpdateAdminRequestDtoBuse dto){
+        System.out.println("update admin metodu");
+        return ResponseEntity.ok(adminService.updateAdminBuse(dto));
     }
     @GetMapping("/getalladmin")
     @CrossOrigin("*")

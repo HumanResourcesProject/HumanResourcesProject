@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.CreateAdminRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
+import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
 import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.exception.AdminException;
 import com.hrp.exception.EErrorType;
@@ -143,7 +144,31 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         update(admin.get());
         return true;
     }
+    public Boolean updateAdminBuse(UpdateAdminRequestDtoBuse dto) {
+        System.out.println("dto ici update... "+ dto.toString());
 
+        Optional<Admin> admin = adminRepository.findOptionalByEmail(dto.getEmail());
+
+        if (admin.isEmpty()){
+            throw new AdminException(EErrorType.USER_NOT_FOUND);
+        }
+        if (dto.getAddress() == null){
+            admin.get().setPhone(dto.getPhone());
+            admin.get().setAddress(admin.get().getAddress());
+        }
+        if (dto.getPhone() == null){
+            admin.get().setAddress(dto.getAddress());
+            admin.get().setPhone(admin.get().getPhone());
+        }
+        admin.get().setAddress(dto.getAddress());
+        admin.get().setPhone(dto.getPhone());
+        System.out.println("admin adres... "+ admin.get().getAddress());
+        System.out.println("admin phone... "+ admin.get().getPhone());
+
+
+        update(admin.get());
+        return true;
+    }
 
     // findalladmin
     public Iterable<BaseAdminResponseDto> findAllAdmin() {
