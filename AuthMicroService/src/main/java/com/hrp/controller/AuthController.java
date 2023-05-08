@@ -28,6 +28,7 @@ public class AuthController {
     @PostMapping("/login")
     @CrossOrigin("*")
     public ResponseEntity<AuthLoginResponse> authLogin(@RequestBody AuthLoginDto dto){
+        System.out.println(dto.getEmail()+ " "+dto.getPassword());
         return ResponseEntity.ok((authService.authLogin(dto)));
     }
 
