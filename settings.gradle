@@ -2,4 +2,5 @@ include 'AdminMicroService'
 include 'ApiGatewayService'
 include 'ConfigServer'
 include 'AuthMicroService'
+include 'MailService'
 

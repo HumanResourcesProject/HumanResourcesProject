@@ -1,4 +1,4 @@
-package com.hrp.dto.response;
+package com.hrp.rabbitmq.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthLoginResponse {
-
-    String token;
-    String role;
+@Builder
+public class ModelRegisterAdmin {
+    private String email;
+    private String password;
 }

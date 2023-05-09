@@ -19,8 +19,10 @@ public enum EErrorType {
     INTERNAL_ERROR(3000,"Unexpected error on server",INTERNAL_SERVER_ERROR),
     INVALID_TOKEN(4001,"Invalid token information",BAD_REQUEST),
     BAD_REQUEST_ERROR(1202,"You have entered an invalid parameter",BAD_REQUEST),
+    ACTIVATE_CODE_ERROR(4113,"Activation code error",HttpStatus.BAD_REQUEST),
+    AUTH_NOT_CREATED(4211,"Auth cannot be created",HttpStatus.BAD_REQUEST),
 
-    KULLANICI_BULUNAMADI(2301,"The user you were looking for could not be found",INTERNAL_SERVER_ERROR);
+    USER_NOT_BE_FOUND(2301,"The user you were looking for could not be found",INTERNAL_SERVER_ERROR);
     private int code;
     private String message;
     private HttpStatus httpStatus;

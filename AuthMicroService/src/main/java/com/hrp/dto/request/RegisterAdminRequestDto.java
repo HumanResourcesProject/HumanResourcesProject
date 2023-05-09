@@ -1,4 +1,4 @@
-package com.hrp.dto.response;
+package com.hrp.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthLoginResponse {
+public class RegisterAdminRequestDto {
 
-    String token;
-    String role;
+    private String email;
+    private String password;
 }
