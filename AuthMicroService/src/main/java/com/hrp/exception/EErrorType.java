@@ -13,7 +13,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 @Getter
 public enum EErrorType {
 
-    AUTH_PARAMETRE_ERROR(1201,"You have entered an invalid parameter",BAD_REQUEST),
+    AUTH_PARAMETER_ERROR(1201,"You have entered an invalid parameter",BAD_REQUEST),
     AUTH_PASSWORD_ERROR(1301,"Passwords do not match",BAD_REQUEST),
     AUTH_USERNAME_ERROR(1302,"Username already registered",BAD_REQUEST),
     INTERNAL_ERROR(3000,"Unexpected error on server",INTERNAL_SERVER_ERROR),

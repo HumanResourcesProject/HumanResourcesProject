@@ -14,12 +14,12 @@
 
 ## Oguz
 * update sayfasi düzenlenecek
-  * id gönderilmicek sadece mail adresi göndererek islem yapilacak
+* id gönderilmicek sadece mail adresi göndererek islem yapilacak
 * Manager icin admin template de register sayfasi.
 * manager micro servisi.
 
 ## Mert
 * login page (front) --> token storage de tutulacak.
-* worker icin admin template de register sayfasi.
+* worker icin admin template de register sayfasi.( sol tarafa register koycaz worker kayıt için sayfa hazırla)
 * worker micro servisi.
 
