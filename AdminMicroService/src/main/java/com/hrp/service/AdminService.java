@@ -8,12 +8,14 @@ import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
 import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.exception.AdminException;
 import com.hrp.exception.EErrorType;
+import com.hrp.mapper.IAdminMapper;
+import com.hrp.rabbitmq.model.EmailModel;
+import com.hrp.rabbitmq.producer.EmailProducer;
+import com.hrp.rabbitmq.producer.ProducerDirectService;
 import com.hrp.repository.IAdminRepository;
 import com.hrp.repository.entity.Admin;
+import com.hrp.utility.CodeGenerator;
 import com.hrp.utility.ServiceManagerImpl;
-//import io.imagekit.sdk.ImageKit;
-//import io.imagekit.sdk.config.Configuration;
-//import io.imagekit.sdk.models.FileCreateRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,27 +24,42 @@ import java.util.*;
 @Service
 public class AdminService extends ServiceManagerImpl<Admin, Long> {
     private final IAdminRepository adminRepository;
-    public AdminService(IAdminRepository adminRepository) {
+    private final EmailProducer emailProducer;
+    private final ProducerDirectService producerDirectService;
+    public AdminService(IAdminRepository adminRepository, EmailProducer emailProducer, ProducerDirectService producerDirectService) {
         super(adminRepository);
         this.adminRepository = adminRepository;
-
+        this.emailProducer = emailProducer;
+        this.producerDirectService = producerDirectService;
     }
 
 
     public Boolean createAdmin(CreateAdminRequestDto dto)  {
         if (dto.getName()==null || dto.getSurname()==null
-                || dto.getEmail()==null || dto.getPassword()==null || dto.getPassword().equals("")){
+                || dto.getEmail()==null ){
             throw new AdminException(EErrorType.PASSWORD_NOT_EMPTY);
         }
-        save(Admin.builder()
-                .avatar(uploadImageCloudMft(dto.getAvatar()))
+        // ??? admin fotosu dönüşmeden maplemeye gidiyor çakışma var
+        String avatarUrl =uploadImageCloudMft(dto.getAvatar());
+
+        Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
+        admin.setPassword(CodeGenerator.generateCode());
+        emailProducer.sendActivationCode(EmailModel.builder()
+                .email(admin.getEmail())
+                .activationCode(admin.getPassword())
+                .build());
+
+
+        save(admin.builder()
+                .avatar(avatarUrl)
                 .phone(dto.getPhone())
                 .address(dto.getAddress())
                 .email(dto.getEmail())
                 .name(dto.getName())
                 .surname(dto.getSurname())
-                .password(dto.getPassword())
+                .password(admin.getPassword())
                 .build());
+        producerDirectService.sendRegisterAdmin(IAdminMapper.INSTANCE.toModelRegisterAdmin(admin));
         return true;
     }
 

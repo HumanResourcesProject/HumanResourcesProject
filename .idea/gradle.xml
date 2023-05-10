@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/AuthMicroService" />
             <option value="$PROJECT_DIR$/CompanyManagerMicroServiceApplication" />
             <option value="$PROJECT_DIR$/ConfigServer" />
+            <option value="$PROJECT_DIR$/MailService" />
             <option value="$PROJECT_DIR$/EmployeeMicroService" />
           </set>
         </option>

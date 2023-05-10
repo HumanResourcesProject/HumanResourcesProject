@@ -18,7 +18,7 @@ public class JwtTokenManager {
         try {
             token = JWT.create().withAudience()
                     .withClaim("id", id)
-                    .withIssuer("pawer")
+                    .withIssuer("hrp")
                     .withIssuedAt(new Date())
                     .withExpiresAt(new Date(System.currentTimeMillis() + exTime))
                     .sign(Algorithm.HMAC512(sifreAnahtari));
@@ -30,7 +30,7 @@ public class JwtTokenManager {
     public Optional<Long> validToken(String token){
         try {
             Algorithm algorithm= Algorithm.HMAC512(sifreAnahtari);
-            JWTVerifier verifier= JWT.require(algorithm).withIssuer("pawer").build();
+            JWTVerifier verifier= JWT.require(algorithm).withIssuer("hrp").build();
             DecodedJWT decodedJWT= verifier.verify(token);
             if (decodedJWT==null) return Optional.empty();
             return Optional.of(decodedJWT.getClaim("id").asLong());

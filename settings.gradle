@@ -4,4 +4,5 @@ include 'ConfigServer'
 include 'CompanyManagerMicroServiceApplication'
 include 'EmployeeMicroService'
 include 'AuthMicroService'
+include 'MailService'
 

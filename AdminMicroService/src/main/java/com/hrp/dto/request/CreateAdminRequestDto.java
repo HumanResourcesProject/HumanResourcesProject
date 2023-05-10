@@ -24,7 +24,7 @@ public class CreateAdminRequestDto {
     private String email;
 //    @NotNull
 //    @Size(min = 3, message = "3 den asaği olamaz")
-    private String password;
+
     @Pattern(regexp = "^[0-9]*$", message = "Telefon numarası sadece sayı içermelidir.")
     @NotNull(message = "telefon bos gecilemez")
     private String phone;
