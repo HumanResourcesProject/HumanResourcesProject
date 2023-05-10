@@ -31,7 +31,7 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
     public AuthLoginResponse authLogin(AuthLoginDto dto){
         Optional<Auth> auth =  authRepository.findOptionalByEmailAndPassword(dto.getEmail(),dto.getPassword());
         if(auth.isEmpty())
-            throw new AuthException(EErrorType.AUTH_PARAMETRE_ERROR);
+            throw new AuthException(EErrorType.AUTH_PARAMETER_ERROR,"HATA123");
         Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
         if(token.isEmpty())
             throw new AuthException(EErrorType.INVALID_TOKEN);

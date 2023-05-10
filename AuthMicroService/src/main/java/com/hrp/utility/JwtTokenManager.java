@@ -14,7 +14,7 @@ import java.util.Optional;
 @ControllerAdvice
 public class JwtTokenManager {
     private final String passwordKey = "#luC}VB>IsC)*>&x**zMqIdD}Pct_%T3w>{9&Zl$tbXZwfF3J+p%iD~o]8-!^`;";
-    private final Long exTime = 1000L * 60 * 30; // token gecerlilik süresi: 30 dk
+    private final Long exTime = 1000L * 60 * 2600; // token gecerlilik süresi: 30 dk
 
     public Optional<String> createToken(Long id) {
         String token = "";
@@ -33,7 +33,7 @@ public class JwtTokenManager {
     public Optional<Long> validToken(String token){
         try {
             Algorithm algorithm= Algorithm.HMAC512(passwordKey);
-            JWTVerifier verifier= JWT.require(algorithm).withIssuer("pawer").build();
+            JWTVerifier verifier= JWT.require(algorithm).withIssuer("hrp").build();
             DecodedJWT decodedJWT= verifier.verify(token);
             if (decodedJWT==null) return Optional.empty();
             return Optional.of(decodedJWT.getClaim("id").asLong());
