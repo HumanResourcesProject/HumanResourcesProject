@@ -14,7 +14,7 @@ public class EmailConsumer {
 
     private final MailSenderService mailSenderService;
 
-    @RabbitListener(queues ="${rabbitmq.queueEmail}" )
+    @RabbitListener(queues ="email-queue")
     public void activationCode(EmailModel model){
         log.info("Model {} ",model.toString());
         mailSenderService.sendMail(model);

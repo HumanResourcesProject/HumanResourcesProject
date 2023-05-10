@@ -34,8 +34,8 @@ public class AdminController {
         return ResponseEntity.ok(adminService.createAdmin(dto));
     }
 
-    @GetMapping("/getadmin")
-    public ResponseEntity<BaseAdminResponseDto> findMe(Long id){
+    @GetMapping("/getadmin{id}")
+    public ResponseEntity<BaseAdminResponseDto> findMe(@PathVariable("id") Long id){
         System.out.println("find me metodu");
         return ResponseEntity.ok(adminService.findMe(id));
     }
