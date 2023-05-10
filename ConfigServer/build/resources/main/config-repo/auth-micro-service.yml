@@ -1,0 +1,22 @@
+server:
+  port: 7071
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: auth-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: user
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/HRPAuthDB
+    username: postgres
+    password: 4628
+  jpa:
+    hibernate:
+      ddl-auto: update

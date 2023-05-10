@@ -4,44 +4,61 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.CreateAdminRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
+import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
 import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.exception.AdminException;
 import com.hrp.exception.EErrorType;
+import com.hrp.mapper.IAdminMapper;
+import com.hrp.rabbitmq.model.EmailModel;
+import com.hrp.rabbitmq.producer.EmailProducer;
+import com.hrp.rabbitmq.producer.ProducerDirectService;
 import com.hrp.repository.IAdminRepository;
 import com.hrp.repository.entity.Admin;
+import com.hrp.utility.CodeGenerator;
 import com.hrp.utility.ServiceManagerImpl;
-//import io.imagekit.sdk.ImageKit;
-//import io.imagekit.sdk.config.Configuration;
-//import io.imagekit.sdk.models.FileCreateRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
 public class AdminService extends ServiceManagerImpl<Admin, Long> {
     private final IAdminRepository adminRepository;
-    public AdminService(IAdminRepository adminRepository) {
+    private final EmailProducer emailProducer;
+    private final ProducerDirectService producerDirectService;
+    public AdminService(IAdminRepository adminRepository, EmailProducer emailProducer, ProducerDirectService producerDirectService) {
         super(adminRepository);
         this.adminRepository = adminRepository;
-
+        this.emailProducer = emailProducer;
+        this.producerDirectService = producerDirectService;
     }
 
-
+    @Transactional
     public Boolean createAdmin(CreateAdminRequestDto dto)  {
-        if (dto.getName()==null || dto.getSurname()==null
-                || dto.getEmail()==null || dto.getPassword()==null || dto.getPassword().equals("")){
+        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
+                || StringUtils.isEmpty(dto.getEmail()) ){
             throw new AdminException(EErrorType.PASSWORD_NOT_EMPTY);
         }
-        save(Admin.builder()
-                .avatar(uploadImageCloudMft(dto.getAvatar()))
+        String avatarUrl = uploadImageCloudMft(dto.getAvatar());
+        Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
+        admin.setPassword(CodeGenerator.generateCode());
+        emailProducer.sendActivationCode(EmailModel.builder()
+                .email(admin.getEmail())
+                .activationCode(admin.getPassword())
+                .build());
+
+        save(admin.builder()
+                .avatar(avatarUrl)
                 .phone(dto.getPhone())
                 .address(dto.getAddress())
                 .email(dto.getEmail())
                 .name(dto.getName())
                 .surname(dto.getSurname())
-                .password(dto.getPassword())
+                .password(admin.getPassword())
                 .build());
+        producerDirectService.sendRegisterAdmin(IAdminMapper.INSTANCE.toModelRegisterAdmin(admin));
         return true;
     }
 
@@ -143,7 +160,31 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         update(admin.get());
         return true;
     }
+    public Boolean updateAdminBuse(UpdateAdminRequestDtoBuse dto) {
+        System.out.println("dto ici update... "+ dto.toString());
 
+        Optional<Admin> admin = adminRepository.findOptionalByEmail(dto.getEmail());
+
+        if (admin.isEmpty()){
+            throw new AdminException(EErrorType.USER_NOT_FOUND);
+        }
+        if (dto.getAddress() == null){
+            admin.get().setPhone(dto.getPhone());
+            admin.get().setAddress(admin.get().getAddress());
+        }
+        if (dto.getPhone() == null){
+            admin.get().setAddress(dto.getAddress());
+            admin.get().setPhone(admin.get().getPhone());
+        }
+        admin.get().setAddress(dto.getAddress());
+        admin.get().setPhone(dto.getPhone());
+        System.out.println("admin adres... "+ admin.get().getAddress());
+        System.out.println("admin phone... "+ admin.get().getPhone());
+
+
+        update(admin.get());
+        return true;
+    }
 
     // findalladmin
     public Iterable<BaseAdminResponseDto> findAllAdmin() {
