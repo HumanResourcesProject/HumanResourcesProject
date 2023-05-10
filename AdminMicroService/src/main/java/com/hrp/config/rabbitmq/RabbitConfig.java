@@ -1,5 +1,6 @@
 package com.hrp.config.rabbitmq;
 
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,33 +13,57 @@ public class RabbitConfig {
 
 
     // Key
+    private String emailKey = "email-key";
+    private String registerKey = "register-key" ;
 
 
-    // Queu
-
-
-
-
-
-
+    // Queue
+    private  String queueEmail = "email-queue";
+    private  String queueRegister = "register-queue";
 
 
     /**
      * ---- Exchange ----
      */
 
+    @Bean
+    DirectExchange exchangeDirect() {
+        return new DirectExchange(exchangeDirect);
+    }
 
+    @Bean
+    FanoutExchange exchangeFanout() {
+        return new FanoutExchange(exchangeFanout);
+    }
+
+    @Bean
+    TopicExchange exchangeTopic() {
+        return new TopicExchange(exchangeTopic);
+    }
 
 
     /**
-     * ---- Queu ----
+     * ---- Queue ----
      */
 
-
+    @Bean
+    Queue emailQueue(){
+        return new Queue(queueEmail);
+    }
+    @Bean
+    Queue registerQueue(){
+        return new Queue(queueRegister);
+    }
 
     /**
      * ---- Binding ----
      */
-
-
+    @Bean
+    public Binding bindingMail(final Queue emailQueue ,final DirectExchange exchangeAuth ){
+        return BindingBuilder.bind(emailQueue).to(exchangeAuth).with(emailKey);
+    }
+    @Bean
+    public Binding bindingRegister(final Queue registerQueue ,final DirectExchange exchangeAuth){
+        return BindingBuilder.bind(registerQueue).to(exchangeAuth).with(registerKey);
+    }
 }

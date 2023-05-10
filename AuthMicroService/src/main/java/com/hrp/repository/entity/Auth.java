@@ -1,9 +1,8 @@
 package com.hrp.repository.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.hrp.repository.entity.enums.ERole;
+import com.hrp.repository.entity.enums.EStatus;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -19,9 +18,12 @@ public class Auth extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String surname;
     private String password;
     private String email;
+    @Enumerated(EnumType.STRING)
+    private ERole role;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private EStatus status=EStatus.PENDING;
 
 }

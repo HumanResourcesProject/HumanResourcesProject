@@ -7,6 +7,11 @@ spring:
     base-url: http://localhost:9411
     service:
       name: admin-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: user
 
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -20,6 +25,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-dropbox:
-  token: "sl.BdVgQLBmb7QWzBEOxYJu1uKNRGL3qE7VP_01ck0p0ZM9G4lu1JYPh9xgtIbZnO44OGs2dy0ltgME42Fnmo85wY8gSpW0Sd4hu2rA8HH-9X5YEUAKK8gMqu1TZ4t2CsZGTxvc60sryXxJ"
