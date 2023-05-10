@@ -3,4 +3,5 @@ include 'ApiGatewayService'
 include 'ConfigServer'
 include 'AuthMicroService'
 include 'MailService'
+include 'CompanyManagerMicroServiceApplication'
 

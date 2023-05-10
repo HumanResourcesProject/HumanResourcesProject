@@ -15,6 +15,9 @@
         <module name="com.hrp.HumanResourcesProject.ApiGatewayService.main" />
         <module name="com.hrp.HumanResourcesProject.ConfigServer.main" />
         <module name="HumanResourcesProject.AuthMicroService.main" />
+        <module name="HRMProject.HumanResourcesProject.ApiGatewayService.main" />
+        <module name="HumanResourcesProject.CompanyManagerMicroServiceApplication.main" />
+        <module name="HRMProject.HumanResourcesProject.ConfigServer.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />
