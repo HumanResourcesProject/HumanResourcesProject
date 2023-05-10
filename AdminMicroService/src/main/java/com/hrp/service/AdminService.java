@@ -144,11 +144,13 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         }
         if (dto.getAddress() == null){
             admin.get().setPhone(dto.getPhone());
-            admin.get().setAddress(admin.get().getAddress());
+            update(admin.get());
+            return true;
         }
         if (dto.getPhone() == null){
             admin.get().setAddress(dto.getAddress());
-            admin.get().setPhone(admin.get().getPhone());
+            update(admin.get());
+            return true;
         }
         admin.get().setAddress(dto.getAddress());
         admin.get().setPhone(dto.getPhone());
