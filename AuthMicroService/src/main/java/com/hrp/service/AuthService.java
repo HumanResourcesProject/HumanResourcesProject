@@ -5,6 +5,7 @@ import com.hrp.dto.response.AuthLoginResponse;
 import com.hrp.exception.AuthException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IAuthMapper;
+import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.repository.IAuthRepository;
 import com.hrp.repository.entity.Auth;
 import com.hrp.repository.entity.enums.EStatus;
@@ -71,8 +72,8 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         return true;
     }
     @Transactional
-    public void registerAdmin(RegisterAdminRequestDto dto) {
-        Auth auth = IAuthMapper.INSTANCE.toAuth(dto);
+    public void registerAdmin(ModelRegisterAdmin model) {
+        Auth auth = IAuthMapper.INSTANCE.toAuth(model);
         try {
 
             save(auth);

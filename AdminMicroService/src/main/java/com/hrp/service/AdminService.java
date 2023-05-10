@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
@@ -34,7 +35,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         this.producerDirectService = producerDirectService;
     }
 
-
+    @Transactional
     public Boolean createAdmin(CreateAdminRequestDto dto)  {
         if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
                 || StringUtils.isEmpty(dto.getEmail()) ){

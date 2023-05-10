@@ -15,6 +15,6 @@ public class RegisterAdminConsumer {
 
      @RabbitListener(queues = "register-queue")
     public void registerAdmin(ModelRegisterAdmin model){
-         authService.registerAdmin(IAuthMapper.INSTANCE.toRegisterAdminRequestDto(model));
+         authService.registerAdmin(model);
      }
 }
