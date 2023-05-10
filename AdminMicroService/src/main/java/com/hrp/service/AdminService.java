@@ -16,6 +16,7 @@ import com.hrp.repository.IAdminRepository;
 import com.hrp.repository.entity.Admin;
 import com.hrp.utility.CodeGenerator;
 import com.hrp.utility.ServiceManagerImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,11 +36,11 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
 
     public Boolean createAdmin(CreateAdminRequestDto dto)  {
-        if (dto.getName()==null || dto.getSurname()==null
-                || dto.getEmail()==null ){
+        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
+                || StringUtils.isEmpty(dto.getEmail()) ){
             throw new AdminException(EErrorType.PASSWORD_NOT_EMPTY);
         }
-
+        String avatarUrl = uploadImageCloudMft(dto.getAvatar());
         Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
         admin.setPassword(CodeGenerator.generateCode());
         emailProducer.sendActivationCode(EmailModel.builder()
@@ -48,7 +49,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 .build());
 
         save(admin.builder()
-                .avatar(uploadImageCloudMft(dto.getAvatar()))
+                .avatar(avatarUrl)
                 .phone(dto.getPhone())
                 .address(dto.getAddress())
                 .email(dto.getEmail())

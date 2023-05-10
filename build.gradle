@@ -46,7 +46,8 @@ allprojects{
         implementation libs.jwt
         //implementation libs.springCloudSleuth
         //implementation libs.springCloudSleuthZipkin
-        implementation libs.springCloudConfigClient
+        //implementation libs.springCloudConfigClient
+        //implementation libs.springCloudConfigServer
         //implementation libs.springBootStarterDataRedis
         //implementation 'com.github.imagekit-developer:imagekit-java:2.0.0'
         implementation 'com.dropbox.core:dropbox-core-sdk:5.4.4'
