@@ -16,13 +16,13 @@ public class CreateCompanyManagerRequestDto {
     private String name;
     private String middleName;
     private String surname;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String email;
     private String address;
     private String phone;
     private String company;
     private String job;
     private String department;
-    private LocalDateTime jobStart;
+    private String jobStart;
     private MultipartFile avatar;
 }

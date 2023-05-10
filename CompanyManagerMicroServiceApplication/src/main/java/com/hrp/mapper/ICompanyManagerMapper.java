@@ -16,6 +16,6 @@ public interface ICompanyManagerMapper {
     @Mapping(source = "id",target = "companyManagerId")
     CompanyManagerFindAllResponseDto toCompanyManagerFindAllResponseDto(final CompanyManager companyManager);
 
-    CompanyManager toCompanyManager(final CreateCompanyManagerRequestDto dto);
+//    CompanyManager toCompanyManager(final CreateCompanyManagerRequestDto dto);
 
 }

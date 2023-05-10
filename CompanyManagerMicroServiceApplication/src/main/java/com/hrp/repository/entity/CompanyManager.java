@@ -22,7 +22,7 @@ public class CompanyManager extends BaseEntity{
     private String middleName;
     private String surname;
     private String password;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String placeOfBirth;
     private String identityNumber;
     private String job;
@@ -31,8 +31,7 @@ public class CompanyManager extends BaseEntity{
     private String address;
     private String phone;
     private String company;
-    @Builder.Default
-    private LocalDateTime jobStart = LocalDateTime.now();
-    private LocalDateTime jobEnd;
+    private String jobStart;
+    private String jobEnd;
     private String avatar;
 }

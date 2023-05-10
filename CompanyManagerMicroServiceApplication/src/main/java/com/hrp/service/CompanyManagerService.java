@@ -45,12 +45,24 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
     }
 
     public Boolean createCompanyManager(CreateCompanyManagerRequestDto dto) {
-        CompanyManager companyManager = ICompanyManagerMapper.INSTANCE.toCompanyManager(dto);
+        CompanyManager companyManager = null;
         String password = generatePassayPassword();
 
         companyManager.builder()
+                .address(dto.getAddress())
+                .identityNumber(dto.getIdentityNumber())
+                .company(dto.getCompany())
+                .department(dto.getDepartment())
+                .dateOfBirth(dto.getDateOfBirth())
+                .name((dto.getName()))
+                .surname(dto.getSurname())
+                .middleName(dto.getMiddleName())
+                .job(dto.getJob())
+                .jobStart(dto.getJobStart())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
                 .password(password)
-                        .avatar(toTurnStringAvatar(dto.getAvatar()));
+                .avatar(toTurnStringAvatar(dto.getAvatar()));
         save(companyManager);
         return true;
     }

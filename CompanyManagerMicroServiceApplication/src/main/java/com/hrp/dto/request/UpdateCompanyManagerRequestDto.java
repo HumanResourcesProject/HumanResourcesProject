@@ -16,6 +16,6 @@ public class UpdateCompanyManagerRequestDto {
     private String address;
     private String phone;
     private String company;
-    private LocalDateTime jobEnd;
+    private String jobEnd;
     private String avatar;
 }
