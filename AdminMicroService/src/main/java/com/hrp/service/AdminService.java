@@ -49,7 +49,6 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 .activationCode(admin.getPassword())
                 .build());
 
-
         save(admin.builder()
                 .avatar(avatarUrl)
                 .phone(dto.getPhone())
