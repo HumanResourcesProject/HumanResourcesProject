@@ -1,23 +1,19 @@
-package com.hrp.rabbitmq.model;
+package com.hrp.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.Serializable;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class ModelSendToCompanyManager implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class CreateEmployeeRequestDto {
     private String identityNumber;
     private String name;
     private String middleName;
     private String surname;
-    private String birthDate;
+    private String dateOfBirth;
     private String email;
     private String address;
     private String phone;
@@ -26,4 +22,5 @@ public class ModelSendToCompanyManager implements Serializable {
     private String department;
     private String jobStart;
     private MultipartFile avatar;
+
 }

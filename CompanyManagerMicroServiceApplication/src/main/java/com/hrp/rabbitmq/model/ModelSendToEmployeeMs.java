@@ -7,17 +7,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ModelSendToCompanyManager implements Serializable {
+public class ModelSendToEmployeeMs implements Serializable {
     private String identityNumber;
     private String name;
     private String middleName;
     private String surname;
-    private String birthDate;
+    private String dateOfBirth;
     private String email;
     private String address;
     private String phone;

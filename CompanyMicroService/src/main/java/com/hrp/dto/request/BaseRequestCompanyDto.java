@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProfilePhotoUploadRequestDto {
-    private Long id;
+public class BaseRequestCompanyDto {
+    private String token;
 }

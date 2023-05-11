@@ -1,7 +1,7 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.CreateCompanyManagerRequestDto;
-import com.hrp.dto.request.GetShortDetailRequestDto;
+import com.hrp.dto.request.CreateEmployeeRequestDto;
 import com.hrp.dto.request.UpdateCompanyManagerRequestDto;
 import com.hrp.dto.response.CompanyManagerFindAllResponseDto;
 import com.hrp.dto.response.GetShortDetailResponseDto;
@@ -18,15 +18,23 @@ import java.util.List;
 public class CompanyManagerController {
     private final CompanyManagerService companyManagerService;
 
-    @PostMapping("/createcompanymanager")
+//    @PostMapping("/createcompanymanager")
+//    @CrossOrigin("*")
+//    public ResponseEntity<Boolean> createCompanyManager(CreateCompanyManagerRequestDto dto){
+//        return ResponseEntity.ok(companyManagerService.createCompanyManager(dto));
+//    }
+
+    @PostMapping("/createemployee")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createCompanyManager(@RequestBody CreateCompanyManagerRequestDto dto){
-        return ResponseEntity.ok(companyManagerService.createCompanyManager(dto));
+    public ResponseEntity<Boolean> createEmployee(CreateEmployeeRequestDto dto){
+        return ResponseEntity.ok(companyManagerService.createEmployee(dto));
     }
 
-    @GetMapping("/getallmanager")
+
+    @GetMapping("/findall")
     @CrossOrigin("*")
     public ResponseEntity<List<CompanyManagerFindAllResponseDto>> findAll(){
+        System.out.println("find all");
         return ResponseEntity.ok(companyManagerService.findAllManager());
     }
 
