@@ -13,13 +13,19 @@ public class RabbitConfig {
 
 
     // Key
-    private String emailKey = "email-key";
-    private String registerKey = "register-key" ;
+    private String adminEmailKey = "admin-email-key";
+    private String companyManagerEmailKey = "company-manager-email-key";
+    private String adminRegisterKey = "admin-register-key" ;
+    private String companyManagerRegisterAuthKey = "company-manager-register-auth-key" ;
+    private String companyManagerSendToKey = "company-manager-send-to-key" ;
 
 
     // Queue
-    private  String queueEmail = "email-queue";
-    private  String queueRegister = "register-queue";
+    private  String adminEmailQueue = "admin-email-queue";
+    private  String companyManagerEmailQueue = "company-manager-email-queue";
+    private  String adminRegisterQueue = "admin-register-queue";
+    private  String companyManagerRegisterAuthQueue = "company-manager-register-auth-queue";
+    private  String companyManagerSendToQueue = "company-manager-send-to-queue";
 
 
     /**
@@ -47,23 +53,47 @@ public class RabbitConfig {
      */
 
     @Bean
-    Queue emailQueue(){
-        return new Queue(queueEmail);
+    Queue adminEmailQueue(){
+        return new Queue(adminEmailQueue);
     }
     @Bean
-    Queue registerQueue(){
-        return new Queue(queueRegister);
+    Queue companyManagerEmailQueue(){
+        return new Queue(companyManagerEmailQueue);
+    }
+    @Bean
+    Queue adminRegisterQueue(){
+        return new Queue(adminRegisterQueue);
+    }
+    @Bean
+    Queue companyManagerRegisterAuthQueue(){
+        return new Queue(companyManagerRegisterAuthQueue);
+    }
+    @Bean
+    Queue companyManagerSendToQueue(){
+        return new Queue(companyManagerSendToQueue);
     }
 
     /**
      * ---- Binding ----
      */
     @Bean
-    public Binding bindingMail(final Queue emailQueue ,final DirectExchange exchangeAuth ){
-        return BindingBuilder.bind(emailQueue).to(exchangeAuth).with(emailKey);
+    public Binding bindingAdminMail(final Queue adminEmailQueue ,final DirectExchange directExchange ){
+        return BindingBuilder.bind(adminEmailQueue).to(directExchange).with(adminEmailKey);
     }
     @Bean
-    public Binding bindingRegister(final Queue registerQueue ,final DirectExchange exchangeAuth){
-        return BindingBuilder.bind(registerQueue).to(exchangeAuth).with(registerKey);
+    public Binding bindingCompanyManagerMail(final Queue companyManagerEmailQueue ,final DirectExchange directExchange ){
+        return BindingBuilder.bind(companyManagerEmailQueue).to(directExchange).with(companyManagerEmailKey);
+    }
+    @Bean
+    public Binding bindingAdminRegister(final Queue adminRegisterQueue ,final DirectExchange directExchange){
+        return BindingBuilder.bind(adminRegisterQueue).to(directExchange).with(adminRegisterKey);
+    }
+    @Bean
+    public Binding bindingCompanyManagerRegisterAuth(final Queue companyManagerRegisterAuthQueue ,final DirectExchange directExchange){
+        return BindingBuilder.bind(companyManagerRegisterAuthQueue).to(directExchange).with(companyManagerRegisterAuthKey);
+    }
+    @Bean
+    public Binding bindingCompanyManagerSendTo(final Queue companyManagerSendToQueue ,final DirectExchange directExchange){
+        return BindingBuilder.bind(companyManagerSendToQueue).to(directExchange).with(companyManagerSendToKey);
     }
 }

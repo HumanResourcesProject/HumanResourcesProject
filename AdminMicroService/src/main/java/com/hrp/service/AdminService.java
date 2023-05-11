@@ -2,16 +2,15 @@ package com.hrp.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.hrp.dto.request.CreateAdminRequestDto;
-import com.hrp.dto.request.GetShortDetailRequestDto;
-import com.hrp.dto.request.UpdateAdminRequestDto;
-import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
+import com.hrp.dto.request.*;
 import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.exception.AdminException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IAdminMapper;
-import com.hrp.rabbitmq.model.EmailModel;
+import com.hrp.rabbitmq.model.EmailAdminModel;
+import com.hrp.rabbitmq.model.EmailCompanyManagerModel;
+import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
 import com.hrp.rabbitmq.producer.EmailProducer;
 import com.hrp.rabbitmq.producer.ProducerDirectService;
 import com.hrp.repository.IAdminRepository;
@@ -45,12 +44,12 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     public Boolean createAdmin(CreateAdminRequestDto dto)  {
         if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
                 || StringUtils.isEmpty(dto.getEmail()) ){
-            throw new AdminException(EErrorType.PASSWORD_NOT_EMPTY);
+            throw new AdminException(EErrorType.USER_NOT_EMPTY);
         }
         String avatarUrl = uploadImageCloudMft(dto.getAvatar());
         Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
         admin.setPassword(CodeGenerator.generateCode());
-        emailProducer.sendActivationCode(EmailModel.builder()
+        emailProducer.sendAdminMail(EmailAdminModel.builder()
                 .email(admin.getEmail())
                 .activationCode(admin.getPassword())
                 .build());
@@ -66,6 +65,29 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 .role(ERole.ADMIN)
                 .build());
         producerDirectService.sendRegisterAdmin(IAdminMapper.INSTANCE.toModelRegisterAdmin(admin));
+        return true;
+    }
+    @Transactional
+    public Boolean createCompanyManager(CreateCompanyManagerRequestDto dto) {
+        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
+                || StringUtils.isEmpty(dto.getEmail()) ){
+            throw new AdminException(EErrorType.USER_NOT_EMPTY);
+        }
+        String passGenerator = CodeGenerator.generateCode();
+        //Emaile gönderilen
+        emailProducer.sendCompanyManagerMail(EmailCompanyManagerModel.builder()
+                .email(dto.getEmail())
+                .activationCode(passGenerator)
+                .build());
+
+        //Auth a gönderilen
+        producerDirectService.sendToAuthRegisterCompanyManager(ModelRegisterCompanyManager.builder()
+                .email(dto.getEmail())
+                .password(passGenerator)
+                .role(ERole.COMPANY_MANAGER)
+                .build());
+        //Company Manager a gönderilen
+        producerDirectService.sendToCompanyManager(IAdminMapper.INSTANCE.toModelSendToCompanyManager(dto));
         return true;
     }
 
