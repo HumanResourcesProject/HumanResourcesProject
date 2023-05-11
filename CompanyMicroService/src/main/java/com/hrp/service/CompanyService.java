@@ -29,13 +29,10 @@ public class CompanyService extends ServiceManagerImpl<Company, Long> {
 
     @Transactional
     public Boolean createCompany(CreateCompanyRequestDto dto)  {
-        if (StringUtils.isEmpty(dto.getName())
-                || StringUtils.isEmpty(dto.getEmail()) ){
-            throw new CompanyException(EErrorType.PASSWORD_NOT_EMPTY);
-        }
+        System.out.println(dto.toString());
         String avatarUrl = uploadImageCloudMft(dto.getLogo());
         Company company = ICompanyMapper.INSTANCE.toCompany(dto);
-
+        System.out.println(dto.toString());
 
         save(company.builder()
                 .logo(avatarUrl)

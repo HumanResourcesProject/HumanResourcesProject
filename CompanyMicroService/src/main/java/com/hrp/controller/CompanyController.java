@@ -26,7 +26,7 @@ public class CompanyController {
 
     @PostMapping("/createcompany")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createCompany(  CreateCompanyRequestDto dto){
+    public ResponseEntity<Boolean> createCompany(CreateCompanyRequestDto dto){
         System.out.println("create company metodu");
         return ResponseEntity.ok(companyService.createCompany(dto));
     }

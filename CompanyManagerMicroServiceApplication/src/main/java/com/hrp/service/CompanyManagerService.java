@@ -77,11 +77,9 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
         CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
         CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
         lowerCaseRule.setNumberOfCharacters(2);
-
         CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
         CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
         upperCaseRule.setNumberOfCharacters(2);
-
         CharacterData digitChars = EnglishCharacterData.Digit;
         CharacterRule digitRule = new CharacterRule(digitChars);
         digitRule.setNumberOfCharacters(2);
