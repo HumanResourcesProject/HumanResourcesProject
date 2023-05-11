@@ -1,5 +1,5 @@
 server:
-  port: 7070
+  port: 7073
 
 spring:
   zipkin:
@@ -15,7 +15,7 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 29000
+      port: 29005
       username: "user"
       password: "root"
       database: HRPEmployeeDB
