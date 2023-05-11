@@ -1,6 +1,7 @@
 package com.hrp.rabbitmq.model;
 
-import com.hrp.repository.entity.enums.ERole;
+
+import com.hrp.repository.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
