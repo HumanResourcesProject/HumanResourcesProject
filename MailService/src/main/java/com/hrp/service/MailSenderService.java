@@ -19,4 +19,5 @@ public class MailSenderService {
         mailMessage.setSubject("Aktivasyon kodunuz: ");
         mailMessage.setText(model.getActivationCode());
         javaMailSender.send(mailMessage);
+        System.out.println("YOLLANDI");
     }}

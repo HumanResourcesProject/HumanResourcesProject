@@ -1,19 +1,20 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.CreateAdminRequestDto;
+import com.hrp.dto.request.GetShortDetailRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
 import com.hrp.dto.response.BaseAdminResponseDto;
+import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.PreUpdate;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 //Dropbox
 //App key: 3qvpw8qwqq2uyp6
@@ -72,6 +73,11 @@ public class AdminController {
         System.out.println("api gateway metodu");
         String deneme = "api gateway icin deneme yazisi görüyorsan calisiyor";
         return ResponseEntity.ok(deneme);
+    }
+    @PostMapping("/getshortdetail")
+    @CrossOrigin("*")
+    public ResponseEntity<GetShortDetailResponseDto> getShortDetail (@RequestBody GetShortDetailRequestDto dto){
+        return ResponseEntity.ok(adminService.getShortDetail(dto));
     }
 
 
