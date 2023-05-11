@@ -15,6 +15,7 @@
         <module name="FinalProjectGenel.HumanResourcesProject.AdminMicroService.main" />
         <module name="HumanResourcesProject.AuthMicroService.main" />
         <module name="HumanResourcesProject.ApiGatewayService.main" />
+        <module name="com.hrp.HumanResourcesProject.CompanyMicroService.main" />
         <module name="HumanResourcesProject.CompanyManagerMicroServiceApplication.main" />
         <module name="HumanResourcesProject.ConfigServer.main" />
       </profile>

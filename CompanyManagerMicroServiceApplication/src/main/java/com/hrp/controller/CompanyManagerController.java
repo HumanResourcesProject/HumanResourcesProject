@@ -1,8 +1,10 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.CreateCompanyManagerRequestDto;
+import com.hrp.dto.request.GetShortDetailRequestDto;
 import com.hrp.dto.request.UpdateCompanyManagerRequestDto;
 import com.hrp.dto.response.CompanyManagerFindAllResponseDto;
+import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.service.CompanyManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class CompanyManagerController {
 
     @PostMapping("/createcompanymanager")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createCompanyManager(CreateCompanyManagerRequestDto dto){
+    public ResponseEntity<Boolean> createCompanyManager(@RequestBody CreateCompanyManagerRequestDto dto){
         return ResponseEntity.ok(companyManagerService.createCompanyManager(dto));
     }
 
@@ -37,5 +39,10 @@ public class CompanyManagerController {
     @CrossOrigin("*")
     public ResponseEntity<Boolean> deleteCompanyManager (String token){
         return ResponseEntity.ok(companyManagerService.deleteCompanyManager(token));
+    }
+    @PostMapping("/getshortdetail")
+    @CrossOrigin("*")
+    public ResponseEntity<GetShortDetailResponseDto> getShortDetail (@RequestBody GetShortDetailRequestDto dto){
+        return ResponseEntity.ok(companyManagerService.getShortDetail(dto));
     }
 }

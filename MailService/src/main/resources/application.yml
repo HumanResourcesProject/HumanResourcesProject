@@ -14,8 +14,8 @@ spring:
     password: user
 
   mail:
-    username: ${MAILUSERNAME} #systemofdeveloper@gmail.com
-    password: ${MAILPASSWORD} #qypodmhoxpjkwcmh
+    username: ${MAILUSERNAME} #systemofdeveloper@gmail.com #${MAILUSERNAME}
+    password: ${MAILPASSWORD} #${MAILPASSWORD} #qypodmhoxpjkwcmh
     host: smtp.gmail.com
     port: 587
     properties:

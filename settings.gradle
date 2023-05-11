@@ -5,4 +5,5 @@ include 'CompanyManagerMicroServiceApplication'
 include 'EmployeeMicroService'
 include 'AuthMicroService'
 include 'MailService'
+include 'CompanyMicroService'
 

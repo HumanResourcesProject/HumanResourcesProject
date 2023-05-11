@@ -9,6 +9,7 @@ import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
 import com.hrp.repository.IAuthRepository;
 import com.hrp.repository.entity.Auth;
+import com.hrp.repository.entity.enums.ERole;
 import com.hrp.repository.entity.enums.EStatus;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
@@ -76,6 +77,7 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
     public void registerAdmin(ModelRegisterAdmin model) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(model);
         try {
+            auth.setRole(ERole.ADMIN);
             save(auth);
         }catch (Exception e){
             e.printStackTrace();
@@ -87,6 +89,7 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
     public void registerCompanyManager(ModelRegisterCompanyManager model) {
         Auth auth = IAuthMapper.INSTANCE.toAuth(model);
         try {
+            auth.setRole(ERole.COMPANY_MANAGER);
             save(auth);
         }catch (Exception e){
             e.printStackTrace();

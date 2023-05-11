@@ -3,8 +3,10 @@ package com.hrp.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.CreateCompanyManagerRequestDto;
+import com.hrp.dto.request.GetShortDetailRequestDto;
 import com.hrp.dto.request.UpdateCompanyManagerRequestDto;
 import com.hrp.dto.response.CompanyManagerFindAllResponseDto;
+import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.exception.CompanyManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.ICompanyManagerMapper;
@@ -45,13 +47,12 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
     }
 
     public Boolean createCompanyManager(CreateCompanyManagerRequestDto dto) {
-        CompanyManager companyManager = null;
         String password = generatePassayPassword();
-
-        companyManager.builder()
+        System.out.println(dto.toString());
+        save(CompanyManager.builder()
                 .address(dto.getAddress())
                 .identityNumber(dto.getIdentityNumber())
-                .company(dto.getCompany())
+//                .company(dto.getCompany())
                 .department(dto.getDepartment())
                 .dateOfBirth(dto.getDateOfBirth())
                 .name((dto.getName()))
@@ -62,8 +63,8 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
                 .email(dto.getEmail())
                 .phone(dto.getPhone())
                 .password(password)
-                .avatar(toTurnStringAvatar(dto.getAvatar()));
-        save(companyManager);
+//                .avatar(toTurnStringAvatar(dto.getAvatar()))
+                .build());
         return true;
     }
 
@@ -127,7 +128,7 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
         }
         Optional<CompanyManager> companyManager = companyManagerRepository.findOptionalById(companyManagerId.get());
         if (companyManagerId.isEmpty()){
-            throw new CompanyManagerException(EErrorType.USER_NOT_FOUND);
+            throw new CompanyManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
         companyManager.get().setPassword(dto.getPassword());
         companyManager.get().setPhone(dto.getPhone());
@@ -148,9 +149,22 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
 
         Optional<CompanyManager> companyManager = companyManagerRepository.findOptionalById(companyManagerId.get());
         if (companyManagerId.isEmpty()){
-            throw new CompanyManagerException(EErrorType.USER_NOT_FOUND);
+            throw new CompanyManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
         deleteById(companyManagerId.get());
         return true;
+    }
+
+    public GetShortDetailResponseDto getShortDetail(GetShortDetailRequestDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        if(id.isEmpty()) throw new CompanyManagerException(EErrorType.TOKEN_NOT_FOUND);
+        Optional<CompanyManager> companyManager  = findById(id.get());
+        if(companyManager.isEmpty()) throw new CompanyManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+
+        return GetShortDetailResponseDto.builder()
+                .name(companyManager.get().getName())
+                .surname(companyManager.get().getSurname())
+                .avatar(companyManager.get().getAvatar())
+                .build();
     }
 }
