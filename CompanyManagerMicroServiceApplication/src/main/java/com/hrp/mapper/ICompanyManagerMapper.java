@@ -16,7 +16,6 @@ import org.mapstruct.factory.Mappers;
 public interface ICompanyManagerMapper {
     ICompanyManagerMapper INSTANCE =  Mappers.getMapper(ICompanyManagerMapper.class);
 
-    @Mapping(source = "id",target = "companyManagerId")
     CompanyManagerFindAllResponseDto toCompanyManagerFindAllResponseDto(final CompanyManager companyManager);
 
 //    CompanyManager toCompanyManager(final CreateCompanyManagerRequestDto dto);

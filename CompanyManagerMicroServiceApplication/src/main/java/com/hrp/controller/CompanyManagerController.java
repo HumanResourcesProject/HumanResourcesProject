@@ -30,9 +30,10 @@ public class CompanyManagerController {
     }
 
 
-    @GetMapping("/getallmanager")
+    @GetMapping("/findall")
     @CrossOrigin("*")
     public ResponseEntity<List<CompanyManagerFindAllResponseDto>> findAll(){
+        System.out.println("find all");
         return ResponseEntity.ok(companyManagerService.findAllManager());
     }
 

@@ -2,102 +2,73 @@ package com.hrp.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.hrp.dto.request.CreateCompanyManagerRequestDto;
+import com.hrp.dto.request.CreateEmployeeRequestDto;
 import com.hrp.dto.request.UpdateCompanyManagerRequestDto;
 import com.hrp.dto.response.CompanyManagerFindAllResponseDto;
 import com.hrp.exception.CompanyManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.ICompanyManagerMapper;
+import com.hrp.rabbitmq.model.EmailEmployeeModel;
+import com.hrp.rabbitmq.model.ModelSendToCompanyManager;
+import com.hrp.rabbitmq.model.RegisterEmployeeModel;
+import com.hrp.rabbitmq.producer.EmailProducer;
+import com.hrp.rabbitmq.producer.ProducerDirectService;
 import com.hrp.repository.ICompanyManagerRepository;
 import com.hrp.repository.entity.CompanyManager;
+import com.hrp.repository.enums.ERole;
+import com.hrp.utility.CodeGenerator;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
-import org.passay.CharacterData;
-import org.passay.CharacterRule;
-import org.passay.EnglishCharacterData;
-import org.passay.PasswordGenerator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.passay.IllegalCharacterRule.ERROR_CODE;
-
 @Service
 public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Long>{
     private final ICompanyManagerRepository companyManagerRepository;
+    private final ProducerDirectService producerDirectService;
     private final JwtTokenManager jwtTokenManager;
-    public CompanyManagerService(ICompanyManagerRepository companyManagerRepository, JwtTokenManager jwtTokenManager) {
+
+    private final EmailProducer emailProducer;
+    public CompanyManagerService(ICompanyManagerRepository companyManagerRepository, ProducerDirectService producerDirectService, JwtTokenManager jwtTokenManager, EmailProducer emailProducer) {
         super(companyManagerRepository);
         this.companyManagerRepository=companyManagerRepository;
+        this.producerDirectService = producerDirectService;
         this.jwtTokenManager = jwtTokenManager;
+        this.emailProducer = emailProducer;
     }
 
     public List<CompanyManagerFindAllResponseDto> findAllManager() {
         return findAll().stream().
                 map(x-> ICompanyManagerMapper.INSTANCE
-                .toCompanyManagerFindAllResponseDto(x)).
+                        .toCompanyManagerFindAllResponseDto(x)).
                 collect(Collectors.toList());
     }
 
-    public Boolean createCompanyManager(CreateCompanyManagerRequestDto dto) {
-        CompanyManager companyManager = null;
-        String password = generatePassayPassword();
-
-        companyManager.builder()
-                .address(dto.getAddress())
-                .identityNumber(dto.getIdentityNumber())
-                .company(dto.getCompany())
-                .department(dto.getDepartment())
-                .dateOfBirth(dto.getDateOfBirth())
-                .name((dto.getName()))
-                .surname(dto.getSurname())
-                .middleName(dto.getMiddleName())
-                .job(dto.getJob())
-                .jobStart(dto.getJobStart())
-                .email(dto.getEmail())
-                .phone(dto.getPhone())
-                .password(password)
-                .avatar(toTurnStringAvatar(dto.getAvatar()));
-        save(companyManager);
+    public Boolean createCompanyManager(ModelSendToCompanyManager model) {
+        System.out.println(model.toString());
+        save(CompanyManager.builder()
+                .address(model.getAddress())
+                .identityNumber(model.getIdentityNumber())
+                .company(model.getCompany())
+                .dateOfBirth(model.getBirthDate())
+                .name((model.getName()))
+                .surname(model.getSurname())
+                .middleName(model.getMiddleName())
+                .job(model.getJob())
+                .jobStart(model.getJobStart())
+                .email(model.getEmail())
+                .phone(model.getPhone())
+                .avatar(toTurnStringAvatar(model.getAvatar()))
+                .build());
         return true;
-    }
-
-    /**
-     * External Lib to generate strong random password.
-     * @return
-     */
-    public String generatePassayPassword() {
-        PasswordGenerator gen = new PasswordGenerator();
-        CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
-        CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
-        lowerCaseRule.setNumberOfCharacters(2);
-        CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
-        CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
-        upperCaseRule.setNumberOfCharacters(2);
-        CharacterData digitChars = EnglishCharacterData.Digit;
-        CharacterRule digitRule = new CharacterRule(digitChars);
-        digitRule.setNumberOfCharacters(2);
-
-        CharacterData specialChars = new CharacterData() {
-            public String getErrorCode() {
-                return ERROR_CODE;
-            }
-
-            public String getCharacters() {
-                return "!@#$%^&*()_+";
-            }
-        };
-        CharacterRule splCharRule = new CharacterRule(specialChars);
-        splCharRule.setNumberOfCharacters(2);
-
-        String password = gen.generatePassword(10, splCharRule, lowerCaseRule,
-                upperCaseRule, digitRule);
-        return password;
     }
 
     private String toTurnStringAvatar(MultipartFile avatar) {
@@ -149,6 +120,30 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
             throw new CompanyManagerException(EErrorType.USER_NOT_FOUND);
         }
         deleteById(companyManagerId.get());
+        return true;
+    }
+    @Transactional
+    public Boolean createEmployee(CreateEmployeeRequestDto dto) {
+        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
+                || StringUtils.isEmpty(dto.getEmail()) ){
+            throw new CompanyManagerException(EErrorType.USER_NOT_EMPTY);
+        }
+        String passGenerator = CodeGenerator.generateCode();
+        String avatarUrl = toTurnStringAvatar(dto.getAvatar());
+
+        //Emaile gönderilen
+        emailProducer.sendEmployeeMail(EmailEmployeeModel.builder()
+                .email(dto.getEmail())
+                .activationCode(passGenerator)
+                .build());
+        //Auth a gönderilen
+        producerDirectService.sendNewEmployeeToAuth(RegisterEmployeeModel.builder()
+                .email(dto.getEmail())
+                .password(passGenerator)
+                .role(ERole.EMPLOYEE)
+                .build());
+        // EmployeeMs' ye gonderilen
+        producerDirectService.sendEmployeeMS(ICompanyManagerMapper.INSTANCE.toModelSendToEmployeeMs(dto));
         return true;
     }
 }

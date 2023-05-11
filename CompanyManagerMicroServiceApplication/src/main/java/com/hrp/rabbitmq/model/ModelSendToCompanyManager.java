@@ -17,7 +17,7 @@ public class ModelSendToCompanyManager implements Serializable {
     private String name;
     private String middleName;
     private String surname;
-    private String dateOfBirth;
+    private String birthDate;
     private String email;
     private String address;
     private String phone;

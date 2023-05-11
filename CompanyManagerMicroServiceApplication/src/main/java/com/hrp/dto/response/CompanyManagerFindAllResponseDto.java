@@ -13,21 +13,17 @@ import java.util.Date;
 @AllArgsConstructor
 @SuperBuilder
 public class CompanyManagerFindAllResponseDto extends BaseEntity {
-    private Long companyManagerId;
     private String name;
     private String middleName;
     private String surname;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String email;
     private String address;
     private String phone;
     private String company;
     private String job;
     private String department;
-    private LocalDateTime jobStart;
-    private LocalDateTime jobEnd;
+    private String jobStart;
+    private String jobEnd;
     private String avatar;
-
-
-
 }

@@ -4,7 +4,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.*;
 import com.hrp.dto.response.BaseAdminResponseDto;
-import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.exception.AdminException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IAdminMapper;
@@ -69,10 +68,8 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     }
     @Transactional
     public Boolean createCompanyManager(CreateCompanyManagerRequestDto dto) {
-        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
-                || StringUtils.isEmpty(dto.getEmail()) ){
-            throw new AdminException(EErrorType.USER_NOT_EMPTY);
-        }
+        System.out.println(dto.toString());
+
         String passGenerator = CodeGenerator.generateCode();
         //Emaile gönderilen
         emailProducer.sendCompanyManagerMail(EmailCompanyManagerModel.builder()
@@ -91,11 +88,10 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         return true;
     }
 
-    public BaseAdminResponseDto findMe(Long adminId){
-        if (adminId==null){
-            throw new AdminException(EErrorType.USERID_NOT_EMPTY);
-        }
-        Admin admin = adminRepository.findById(adminId).get();
+    public BaseAdminResponseDto findMe(BaseAdminRequestDto dto){
+
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        Admin admin = adminRepository.findById(id).get();
         return BaseAdminResponseDto.builder()
                 .email(admin.getEmail())
                 .name(admin.getName())
@@ -126,8 +122,9 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         }
     }
 
-    public Boolean updateAdminMft(UpdateAdminRequestDto dto) {
-        Optional<Admin> admin = adminRepository.findById(dto.getId());
+    public Boolean updateAdminMft(BaseAdminRequestDto dto) {
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        Optional<Admin> admin = adminRepository.findById(id);
         if (admin.isEmpty()){
             System.out.println("Kullanici bulunamadi");
             return false;
@@ -140,7 +137,9 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
 
     // update admin oguz
-    public String uploadImageCloud(MultipartFile file, Long id) {
+    public String uploadImageCloud(MultipartFile file, String token) {
+        Long id = jwtTokenManager.validToken(token).get();
+
         Optional<Admin> admin = adminRepository.findById(id);
         if (admin.isEmpty()){
             System.out.println("Kullanici bulunamadi");
@@ -165,10 +164,11 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     // bu kullanılacak .adresss ve .phone bos gelebilir
     // bos gelirse db de ki alınacak
-    public Boolean updateAdmin(UpdateAdminRequestDto dto) {
+    public Boolean updateAdmin(BaseAdminRequestDto dto) {
         System.out.println("dto ici update... "+ dto.toString());
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
 
-        Optional<Admin> admin = adminRepository.findById(dto.getId());
+        Optional<Admin> admin = adminRepository.findById(id);
 
         if (admin.isEmpty()){
             throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
@@ -192,7 +192,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         update(admin.get());
         return true;
     }
-    public Boolean updateAdminBuse(UpdateAdminRequestDtoBuse dto) {
+    public Boolean updateAdminBuse(BaseAdminRequestDto dto) {
         System.out.println("dto ici update... "+ dto.toString());
 
         Optional<Admin> admin = adminRepository.findOptionalByEmail(dto.getEmail());
@@ -235,13 +235,13 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         return baseAdminResponseDtos;
     }
 
-    public GetShortDetailResponseDto getShortDetail(GetShortDetailRequestDto dto) {
+    public BaseAdminResponseDto getShortDetail(BaseAdminRequestDto dto) {
         Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
         if(id.isEmpty()) throw new AdminException(EErrorType.TOKEN_NOT_FOUND);
         Optional<Admin> admin = findById(id.get());
         if(admin.isEmpty()) throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
 
-        return GetShortDetailResponseDto.builder()
+        return BaseAdminResponseDto.builder()
                 .name(admin.get().getName())
                 .surname(admin.get().getSurname())
                 .avatar(admin.get().getAvatar())

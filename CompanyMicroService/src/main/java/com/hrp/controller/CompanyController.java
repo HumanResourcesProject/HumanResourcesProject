@@ -1,5 +1,6 @@
 package com.hrp.controller;
 
+import com.hrp.dto.request.BaseRequestCompanyDto;
 import com.hrp.dto.request.CreateCompanyRequestDto;
 import com.hrp.dto.response.BaseCompanyResponseDto;
 import com.hrp.service.CompanyService;
@@ -32,8 +33,11 @@ public class CompanyController {
     }
 
     //findall
-    @GetMapping("/findall")
-    public ResponseEntity<List<BaseCompanyResponseDto>> findAll(){
+    @PostMapping("/findall")
+    @CrossOrigin("*")
+    public ResponseEntity<List<BaseCompanyResponseDto>> findAll(@RequestBody BaseRequestCompanyDto dto){
+        System.out.println("find all company");
+        System.out.println(dto.toString());
         return ResponseEntity.ok(companyService.findAllDto());
     }
 

@@ -2,7 +2,6 @@ package com.hrp.controller;
 
 import com.hrp.dto.request.*;
 import com.hrp.dto.response.BaseAdminResponseDto;
-import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,33 +31,34 @@ public class AdminController {
     }
     @PostMapping("/createcompanymanager")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createCompanyManager(@Valid CreateCompanyManagerRequestDto dto){
+    public ResponseEntity<Boolean> createCompanyManager(@Valid @RequestBody CreateCompanyManagerRequestDto dto){
         System.out.println("create companymanager metodu");
+        System.out.println(dto.toString());
         return ResponseEntity.ok(adminService.createCompanyManager(dto));
     }
 
-    @GetMapping("/getadmin{id}")
-    public ResponseEntity<BaseAdminResponseDto> findMe(@PathVariable("id") Long id){
+    @GetMapping("/getadmin")
+    public ResponseEntity<BaseAdminResponseDto> findMe(@RequestBody BaseAdminRequestDto dto){
         System.out.println("find me metodu");
-        return ResponseEntity.ok(adminService.findMe(id));
+        return ResponseEntity.ok(adminService.findMe(dto));
     }
 
     @PostMapping("/imagescloud")
     @CrossOrigin("*")
-    public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, @RequestParam ("id") Long id) throws IOException {
+    public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file,String token) throws IOException {
         System.out.println("upload image cloud metodu");
-        return ResponseEntity.ok(adminService.uploadImageCloud(file, id));
+        return ResponseEntity.ok(adminService.uploadImageCloud(file,token));
     }
 
     @PutMapping("/updateadmin")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdmin (@RequestBody UpdateAdminRequestDto dto){
+    public ResponseEntity<Boolean> updateAdmin (@RequestBody BaseAdminRequestDto dto){
         System.out.println("update admin metodu");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
     }
     @PutMapping("/updateadminbuse")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdminBuse(@RequestBody UpdateAdminRequestDtoBuse dto){
+    public ResponseEntity<Boolean> updateAdminBuse(@RequestBody BaseAdminRequestDto dto){
         System.out.println("update admin metodu");
         return ResponseEntity.ok(adminService.updateAdminBuse(dto));
     }
@@ -78,7 +78,7 @@ public class AdminController {
     }
     @PostMapping("/getshortdetail")
     @CrossOrigin("*")
-    public ResponseEntity<GetShortDetailResponseDto> getShortDetail (@RequestBody GetShortDetailRequestDto dto){
+    public ResponseEntity<BaseAdminResponseDto> getShortDetail (@RequestBody BaseAdminRequestDto dto){
         return ResponseEntity.ok(adminService.getShortDetail(dto));
     }
 
