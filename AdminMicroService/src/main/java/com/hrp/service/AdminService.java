@@ -14,6 +14,7 @@ import com.hrp.rabbitmq.producer.EmailProducer;
 import com.hrp.rabbitmq.producer.ProducerDirectService;
 import com.hrp.repository.IAdminRepository;
 import com.hrp.repository.entity.Admin;
+import com.hrp.repository.entity.enums.ERole;
 import com.hrp.utility.CodeGenerator;
 import com.hrp.utility.ServiceManagerImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -57,6 +58,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 .name(dto.getName())
                 .surname(dto.getSurname())
                 .password(admin.getPassword())
+                .role(ERole.ADMIN)
                 .build());
         producerDirectService.sendRegisterAdmin(IAdminMapper.INSTANCE.toModelRegisterAdmin(admin));
         return true;
