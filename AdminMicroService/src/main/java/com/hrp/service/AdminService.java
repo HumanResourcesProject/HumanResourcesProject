@@ -125,6 +125,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             return null;
         }
     }
+
     public Boolean updateAdminMft(UpdateAdminRequestDto dto) {
         Optional<Admin> admin = adminRepository.findById(dto.getId());
         if (admin.isEmpty()){
