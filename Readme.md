@@ -23,3 +23,5 @@
 * worker icin admin template de register sayfasi.( sol tarafa register koycaz worker kayıt için sayfa hazırla)
 * worker micro servisi.
 
+
+## AdminController id ile istek alıyor tokenlı hale geççek
