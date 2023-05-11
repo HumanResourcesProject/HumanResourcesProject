@@ -15,7 +15,7 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 27000
+      port: 29005
       username: "user"
       password: "root"
       database: HRPEmployeeDB
