@@ -25,5 +25,4 @@ public class Company extends BaseEntity {
     private String vergiNo;
     private String mersisNo;
     private String logo;
-    private String website;
 }
