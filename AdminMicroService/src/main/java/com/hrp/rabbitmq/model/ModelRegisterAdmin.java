@@ -1,5 +1,6 @@
 package com.hrp.rabbitmq.model;
 
+import com.hrp.repository.entity.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +15,5 @@ import java.io.Serializable;
 public class ModelRegisterAdmin implements Serializable {
     private String email;
     private String password;
+    private ERole role;
 }

@@ -32,6 +32,8 @@ public enum EErrorType {
     USERID_NOT_EMPTY(1002,"UserId cannot be empty",HttpStatus.BAD_REQUEST),
     FIELD_NOT_EMPTY(1003,"Field cannot be empty",HttpStatus.BAD_REQUEST),
     EMAIL_NOT_EMPTY(1005,"Email cannot be empty",HttpStatus.BAD_REQUEST),
+    USER_NOT_EMPTY(1006,"User cannot be empty",HttpStatus.BAD_REQUEST),
+
     TOKEN_NOT_FOUND(4002,"Token not found",BAD_REQUEST);
 
     private int code;
