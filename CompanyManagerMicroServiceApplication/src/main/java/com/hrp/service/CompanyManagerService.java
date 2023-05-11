@@ -151,9 +151,11 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
     }
 
     public GetShortDetailResponseDto getShortDetail(GetShortDetailRequestDto dto) {
-        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        if(id.isEmpty()) throw new CompanyManagerException(EErrorType.TOKEN_NOT_FOUND);
-        Optional<CompanyManager> companyManager  = findById(id.get());
+       // Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        Long id = 1L;
+
+        //if(id.isEmpty()) throw new CompanyManagerException(EErrorType.TOKEN_NOT_FOUND);
+        Optional<CompanyManager> companyManager  = findById(id);
         if(companyManager.isEmpty()) throw new CompanyManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
 
         return GetShortDetailResponseDto.builder()

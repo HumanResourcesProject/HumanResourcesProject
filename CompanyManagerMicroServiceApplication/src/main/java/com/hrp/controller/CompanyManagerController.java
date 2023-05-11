@@ -2,6 +2,7 @@ package com.hrp.controller;
 
 import com.hrp.dto.request.CreateCompanyManagerRequestDto;
 import com.hrp.dto.request.CreateEmployeeRequestDto;
+import com.hrp.dto.request.GetShortDetailRequestDto;
 import com.hrp.dto.request.UpdateCompanyManagerRequestDto;
 import com.hrp.dto.response.CompanyManagerFindAllResponseDto;
 import com.hrp.dto.response.GetShortDetailResponseDto;
@@ -51,6 +52,7 @@ public class CompanyManagerController {
     @PostMapping("/getshortdetail")
     @CrossOrigin("*")
     public ResponseEntity<GetShortDetailResponseDto> getShortDetail (@RequestBody GetShortDetailRequestDto dto){
+        System.out.println(dto.getToken());
         return ResponseEntity.ok(companyManagerService.getShortDetail(dto));
     }
 }

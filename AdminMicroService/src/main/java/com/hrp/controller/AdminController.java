@@ -37,8 +37,9 @@ public class AdminController {
         return ResponseEntity.ok(adminService.createCompanyManager(dto));
     }
 
-    @GetMapping("/getadmin")
-    public ResponseEntity<BaseAdminResponseDto> findMe(@RequestBody BaseAdminRequestDto dto){
+    @PostMapping("/getadmin")
+    @CrossOrigin("*")
+    public ResponseEntity<BaseAdminResponseDto> findMe(@RequestBody BaseRequestDto dto){
         System.out.println("find me metodu");
         return ResponseEntity.ok(adminService.findMe(dto));
     }
@@ -55,12 +56,6 @@ public class AdminController {
     public ResponseEntity<Boolean> updateAdmin (@RequestBody BaseAdminRequestDto dto){
         System.out.println("update admin metodu");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
-    }
-    @PutMapping("/updateadminbuse")
-    @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdminBuse(@RequestBody BaseAdminRequestDto dto){
-        System.out.println("update admin metodu");
-        return ResponseEntity.ok(adminService.updateAdminBuse(dto));
     }
     @GetMapping("/getalladmin")
     @CrossOrigin("*")
@@ -79,6 +74,7 @@ public class AdminController {
     @PostMapping("/getshortdetail")
     @CrossOrigin("*")
     public ResponseEntity<BaseAdminResponseDto> getShortDetail (@RequestBody BaseAdminRequestDto dto){
+        System.out.println(dto.getToken());
         return ResponseEntity.ok(adminService.getShortDetail(dto));
     }
 

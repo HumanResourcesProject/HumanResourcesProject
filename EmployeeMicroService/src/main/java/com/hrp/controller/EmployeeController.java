@@ -23,7 +23,7 @@ public class EmployeeController {
     @PostMapping("/createemployee")
     @CrossOrigin("*")
     public ResponseEntity<Boolean> createEmployee(){
-
+        return ResponseEntity.ok(true);
     }
 
 

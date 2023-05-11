@@ -25,10 +25,8 @@ public class Admin extends BaseEntity {
     private String surname;
     @Column(unique = true,nullable = false)
     private String email;
-    private String password;
     private String avatar;
     private String phone;
     private String address;
-    private ERole role;
 
 }

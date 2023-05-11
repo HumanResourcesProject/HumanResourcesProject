@@ -9,6 +9,7 @@ import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IAdminMapper;
 import com.hrp.rabbitmq.model.EmailAdminModel;
 import com.hrp.rabbitmq.model.EmailCompanyManagerModel;
+import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
 import com.hrp.rabbitmq.producer.EmailProducer;
 import com.hrp.rabbitmq.producer.ProducerDirectService;
@@ -45,25 +46,26 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 || StringUtils.isEmpty(dto.getEmail()) ){
             throw new AdminException(EErrorType.USER_NOT_EMPTY);
         }
-        String avatarUrl = uploadImageCloudMft(dto.getAvatar());
-        Admin admin = IAdminMapper.INSTANCE.toAdmin(dto);
-        admin.setPassword(CodeGenerator.generateCode());
+        String passGenerator = CodeGenerator.generateCode();
+        String avatarUrl = uploadImageCloudWithoutToken(dto.getAvatar());
         emailProducer.sendAdminMail(EmailAdminModel.builder()
-                .email(admin.getEmail())
-                .activationCode(admin.getPassword())
+                .email(dto.getEmail())
+                .activationCode(passGenerator)
                 .build());
 
-        save(admin.builder()
+        save(Admin.builder()
                 .avatar(avatarUrl)
                 .phone(dto.getPhone())
                 .address(dto.getAddress())
                 .email(dto.getEmail())
                 .name(dto.getName())
                 .surname(dto.getSurname())
-                .password(admin.getPassword())
-                .role(ERole.ADMIN)
                 .build());
-        producerDirectService.sendRegisterAdmin(IAdminMapper.INSTANCE.toModelRegisterAdmin(admin));
+        producerDirectService.sendRegisterAdmin(ModelRegisterAdmin.builder()
+                        .email(dto.getEmail())
+                        .password(passGenerator)
+                        .role(ERole.ADMIN)
+                .build());
         return true;
     }
     @Transactional
@@ -88,7 +90,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         return true;
     }
 
-    public BaseAdminResponseDto findMe(BaseAdminRequestDto dto){
+    public BaseAdminResponseDto findMe(BaseRequestDto dto){
 
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
         Admin admin = adminRepository.findById(id).get();
@@ -102,9 +104,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
                 .build();
     }
 
-
-
-    public String uploadImageCloudMft(MultipartFile file) {
+    public String uploadImageCloudWithoutToken(MultipartFile file) {
 
         Map config = new HashMap();
         config.put("cloud_name", "doqksh0xh");
@@ -121,8 +121,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             return null;
         }
     }
-
-    public Boolean updateAdminMft(BaseAdminRequestDto dto) {
+/*    public Boolean updateAdminMft(BaseAdminRequestDto dto) {
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
         Optional<Admin> admin = adminRepository.findById(id);
         if (admin.isEmpty()){
@@ -133,7 +132,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         admin.get().setPhone(dto.getPhone());
         update(admin.get());
         return true;
-    }
+    }*/
 
 
     // update admin oguz
@@ -192,32 +191,6 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         update(admin.get());
         return true;
     }
-    public Boolean updateAdminBuse(BaseAdminRequestDto dto) {
-        System.out.println("dto ici update... "+ dto.toString());
-
-        Optional<Admin> admin = adminRepository.findOptionalByEmail(dto.getEmail());
-
-        if (admin.isEmpty()){
-            throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
-        }
-        if (dto.getAddress() == null){
-            admin.get().setPhone(dto.getPhone());
-            admin.get().setAddress(admin.get().getAddress());
-        }
-        if (dto.getPhone() == null){
-            admin.get().setAddress(dto.getAddress());
-            admin.get().setPhone(admin.get().getPhone());
-        }
-        admin.get().setAddress(dto.getAddress());
-        admin.get().setPhone(dto.getPhone());
-        System.out.println("admin adres... "+ admin.get().getAddress());
-        System.out.println("admin phone... "+ admin.get().getPhone());
-
-
-        update(admin.get());
-        return true;
-    }
-
     // findalladmin
     public Iterable<BaseAdminResponseDto> findAllAdmin() {
         System.out.println("findall admin service");
@@ -237,6 +210,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     public BaseAdminResponseDto getShortDetail(BaseAdminRequestDto dto) {
         Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        System.out.println("ID:-------" + id.get());
         if(id.isEmpty()) throw new AdminException(EErrorType.TOKEN_NOT_FOUND);
         Optional<Admin> admin = findById(id.get());
         if(admin.isEmpty()) throw new AdminException(EErrorType.ADMIN_NOT_FOUND);

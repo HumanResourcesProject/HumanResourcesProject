@@ -15,10 +15,7 @@ public interface IAdminMapper {
 
         IAdminMapper INSTANCE= Mappers.getMapper(IAdminMapper.class);
 
-        @Mapping(target="avatar", ignore = true)
-        Admin toAdmin(final CreateAdminRequestDto dto);
 
-        ModelRegisterAdmin toModelRegisterAdmin(final Admin admin);
         @Mapping(target="avatar", ignore = true)
         ModelSendToCompanyManager toModelSendToCompanyManager(final CreateCompanyManagerRequestDto dto);
 
