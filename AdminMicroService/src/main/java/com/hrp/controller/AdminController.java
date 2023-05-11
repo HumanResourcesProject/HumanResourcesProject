@@ -1,9 +1,6 @@
 package com.hrp.controller;
 
-import com.hrp.dto.request.CreateAdminRequestDto;
-import com.hrp.dto.request.GetShortDetailRequestDto;
-import com.hrp.dto.request.UpdateAdminRequestDto;
-import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
+import com.hrp.dto.request.*;
 import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.service.AdminService;
@@ -12,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.PreUpdate;
 import javax.validation.Valid;
 import java.io.IOException;
 
@@ -33,6 +29,12 @@ public class AdminController {
     public ResponseEntity<Boolean> createAdmin(@Valid CreateAdminRequestDto dto){
         System.out.println("create admin metodu");
         return ResponseEntity.ok(adminService.createAdmin(dto));
+    }
+    @PostMapping("/createcompanymanager")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> createCompanyManager(@Valid CreateCompanyManagerRequestDto dto){
+        System.out.println("create companymanager metodu");
+        return ResponseEntity.ok(adminService.createCompanyManager(dto));
     }
 
     @GetMapping("/getadmin{id}")

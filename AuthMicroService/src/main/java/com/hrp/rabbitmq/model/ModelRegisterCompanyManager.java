@@ -12,9 +12,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ModelRegisterAdmin implements Serializable {
+public class ModelRegisterCompanyManager implements Serializable {
     private String email;
     private String password;
     private ERole role;
-
 }

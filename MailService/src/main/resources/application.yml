@@ -11,11 +11,11 @@ spring:
     host: localhost
     port: 5672
     username: user
-    password: password
+    password: user
 
   mail:
-    username: systemofdeveloper@gmail.com #systemofdeveloper@gmail.com #${MAILUSERNAME}
-    password: qypodmhoxpjkwcmh #${MAILPASSWORD} #qypodmhoxpjkwcmh
+    username: ${MAILUSERNAME} #systemofdeveloper@gmail.com #${MAILUSERNAME}
+    password: ${MAILPASSWORD} #${MAILPASSWORD} #qypodmhoxpjkwcmh
     host: smtp.gmail.com
     port: 587
     properties:

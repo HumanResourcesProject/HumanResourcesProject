@@ -1,4 +1,5 @@
 package com.hrp.repository.entity;
+import com.hrp.repository.entity.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,6 @@ public class Admin extends BaseEntity {
     private String avatar;
     private String phone;
     private String address;
+    private ERole role;
+
 }

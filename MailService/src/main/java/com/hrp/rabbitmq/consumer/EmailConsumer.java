@@ -1,6 +1,7 @@
 package com.hrp.rabbitmq.consumer;
 
-import com.hrp.rabbitmq.model.EmailModel;
+import com.hrp.rabbitmq.model.EmailAdminModel;
+import com.hrp.rabbitmq.model.EmailCompanyManagerModel;
 import com.hrp.service.MailSenderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +15,14 @@ public class EmailConsumer {
 
     private final MailSenderService mailSenderService;
 
-    @RabbitListener(queues ="email-queue")
-    public void activationCode(EmailModel model){
+    @RabbitListener(queues ="admin-email-queue")
+    public void adminSendMail(EmailAdminModel model){
         log.info("Model {} ",model.toString());
-        mailSenderService.sendMail(model);
+        mailSenderService.sendAdminMail(model);
     }
-
+    @RabbitListener(queues ="company-manager-email-queue")
+    public void companyManagerSendMail(EmailCompanyManagerModel model){
+        log.info("Model {} ",model.toString());
+        mailSenderService.sendCompanyMail(model);
+    }
 }
