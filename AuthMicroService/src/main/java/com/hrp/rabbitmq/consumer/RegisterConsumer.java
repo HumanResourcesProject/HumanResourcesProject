@@ -13,7 +13,7 @@ public class RegisterConsumer {
 
     private final AuthService authService;
 
-     @RabbitListener(queues = "admin-register-queue")
+    @RabbitListener(queues = "admin-register-queue")
     public void registerAdmin(ModelRegisterAdmin model){
          authService.registerAdmin(model);
      }

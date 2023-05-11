@@ -1,5 +1,6 @@
 package com.hrp.repository.entity;
 
+import com.hrp.repository.enums.ERole;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -34,4 +35,5 @@ public class CompanyManager extends BaseEntity{
     private String jobStart;
     private String jobEnd;
     private String avatar;
+    private ERole role;
 }
