@@ -20,7 +20,7 @@ public class CompanyManagerController {
 
     @PostMapping("/createcompanymanager")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createCompanyManager(CreateCompanyManagerRequestDto dto){
+    public ResponseEntity<Boolean> createCompanyManager(@RequestBody CreateCompanyManagerRequestDto dto){
         return ResponseEntity.ok(companyManagerService.createCompanyManager(dto));
     }
 

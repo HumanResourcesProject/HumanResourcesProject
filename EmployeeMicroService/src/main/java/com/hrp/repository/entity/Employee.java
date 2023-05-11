@@ -22,7 +22,7 @@ public class Employee extends BaseEntity{
     private String name;
     private String middleName;
     private String surname;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String placeOfBirth;
     private String identityNumber;
     private String status;

@@ -47,13 +47,12 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
     }
 
     public Boolean createCompanyManager(CreateCompanyManagerRequestDto dto) {
-        CompanyManager companyManager = null;
         String password = generatePassayPassword();
-
-        companyManager.builder()
+        System.out.println(dto.toString());
+        save(CompanyManager.builder()
                 .address(dto.getAddress())
                 .identityNumber(dto.getIdentityNumber())
-                .company(dto.getCompany())
+//                .company(dto.getCompany())
                 .department(dto.getDepartment())
                 .dateOfBirth(dto.getDateOfBirth())
                 .name((dto.getName()))
@@ -64,8 +63,8 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
                 .email(dto.getEmail())
                 .phone(dto.getPhone())
                 .password(password)
-                .avatar(toTurnStringAvatar(dto.getAvatar()));
-        save(companyManager);
+//                .avatar(toTurnStringAvatar(dto.getAvatar()))
+                .build());
         return true;
     }
 
