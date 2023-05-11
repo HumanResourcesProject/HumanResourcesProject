@@ -3,9 +3,11 @@ package com.hrp.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.CreateAdminRequestDto;
+import com.hrp.dto.request.GetShortDetailRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDto;
 import com.hrp.dto.request.UpdateAdminRequestDtoBuse;
 import com.hrp.dto.response.BaseAdminResponseDto;
+import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.exception.AdminException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IAdminMapper;
@@ -15,6 +17,7 @@ import com.hrp.rabbitmq.producer.ProducerDirectService;
 import com.hrp.repository.IAdminRepository;
 import com.hrp.repository.entity.Admin;
 import com.hrp.utility.CodeGenerator;
+import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -28,11 +31,13 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     private final IAdminRepository adminRepository;
     private final EmailProducer emailProducer;
     private final ProducerDirectService producerDirectService;
-    public AdminService(IAdminRepository adminRepository, EmailProducer emailProducer, ProducerDirectService producerDirectService) {
+    private final JwtTokenManager jwtTokenManager;
+    public AdminService(IAdminRepository adminRepository, EmailProducer emailProducer, ProducerDirectService producerDirectService, JwtTokenManager jwtTokenManager) {
         super(adminRepository);
         this.adminRepository = adminRepository;
         this.emailProducer = emailProducer;
         this.producerDirectService = producerDirectService;
+        this.jwtTokenManager = jwtTokenManager;
     }
 
     @Transactional
@@ -141,7 +146,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         Optional<Admin> admin = adminRepository.findById(dto.getId());
 
         if (admin.isEmpty()){
-            throw new AdminException(EErrorType.USER_NOT_FOUND);
+            throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
         }
         if (dto.getAddress() == null){
             admin.get().setPhone(dto.getPhone());
@@ -168,7 +173,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         Optional<Admin> admin = adminRepository.findOptionalByEmail(dto.getEmail());
 
         if (admin.isEmpty()){
-            throw new AdminException(EErrorType.USER_NOT_FOUND);
+            throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
         }
         if (dto.getAddress() == null){
             admin.get().setPhone(dto.getPhone());
@@ -205,4 +210,16 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         return baseAdminResponseDtos;
     }
 
+    public GetShortDetailResponseDto getShortDetail(GetShortDetailRequestDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        if(id.isEmpty()) throw new AdminException(EErrorType.TOKEN_NOT_FOUND);
+        Optional<Admin> admin = findById(id.get());
+        if(admin.isEmpty()) throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
+
+        return GetShortDetailResponseDto.builder()
+                .name(admin.get().getName())
+                .surname(admin.get().getSurname())
+                .avatar(admin.get().getAvatar())
+                .build();
+    }
 }
