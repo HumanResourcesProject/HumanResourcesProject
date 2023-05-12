@@ -182,6 +182,7 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
 
     public CompanyManagerFindAllResponseDto findMe(GetShortDetailRequestDto dto) {
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        //Burdaki id auth id olacak
         CompanyManager companyManager = companyManagerRepository.findById(id).get();
         return CompanyManagerFindAllResponseDto.builder()
                 .name(companyManager.getName())
@@ -198,5 +199,30 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
                 .jobStart(companyManager.getJobStart())
                 .jobEnd(companyManager.getJobEnd())
                 .build();
+    }
+
+    public String uploadImageCloud(MultipartFile file, String token) {
+        Long id = jwtTokenManager.validToken(token).get();
+
+        Optional<CompanyManager> admin = companyManagerRepository.findById(id);
+        if (admin.isEmpty()){
+            System.out.println("Kullanici bulunamadi");
+        }
+        Map config = new HashMap();
+        config.put("cloud_name", "doqksh0xh");
+        config.put("api_key", "871216635594134");
+        config.put("api_secret", "6b3zcRZyWKeuiW6qIq4XvWnhVno");
+        Cloudinary cloudinary = new Cloudinary(config);
+        try{
+            Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            String url = (String) result.get("url");
+            admin.get().setAvatar(url);
+            update(admin.get());
+            System.out.println(url);
+            return url;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

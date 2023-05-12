@@ -10,7 +10,9 @@ import com.hrp.service.CompanyManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -60,5 +62,12 @@ public class CompanyManagerController {
     public ResponseEntity<CompanyManagerFindAllResponseDto> findMe(@RequestBody GetShortDetailRequestDto dto){
         System.out.println("find me metodu");
         return ResponseEntity.ok(companyManagerService.findMe(dto));
+    }
+
+    @PostMapping("/imagescloud")
+    @CrossOrigin("*")
+    public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, String token) throws IOException {
+        System.out.println("upload image cloud metodu");
+        return ResponseEntity.ok(companyManagerService.uploadImageCloud(file,token));
     }
 }
