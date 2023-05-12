@@ -5,8 +5,10 @@ import com.hrp.dto.response.AuthLoginResponse;
 import com.hrp.exception.AuthException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IAuthMapper;
+import com.hrp.rabbitmq.model.ModelAuthId;
 import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
+import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IAuthRepository;
 import com.hrp.repository.entity.Auth;
 import com.hrp.repository.entity.enums.ERole;
@@ -15,18 +17,19 @@ import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 public class AuthService extends ServiceManagerImpl<Auth,Long> {
     private final IAuthRepository authRepository;
     private final JwtTokenManager jwtTokenManager;
+    private final DirectProducer directProducer;
 
-    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager) {
+    public AuthService(IAuthRepository authRepository, JwtTokenManager jwtTokenManager, DirectProducer directProducer) {
         super(authRepository);
         this.authRepository=authRepository;
         this.jwtTokenManager = jwtTokenManager;
+        this.directProducer = directProducer;
     }
 
 
@@ -79,6 +82,9 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         try {
             auth.setRole(ERole.ADMIN);
             save(auth);
+            ModelAuthId modelAuthId= new ModelAuthId();
+            modelAuthId.setAuthId(auth.getId());
+            directProducer.sendAuthIdForAdmin(modelAuthId);
         }catch (Exception e){
             e.printStackTrace();
             throw  new AuthException(EErrorType.AUTH_NOT_CREATED);
@@ -91,6 +97,9 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         try {
             auth.setRole(ERole.COMPANY_MANAGER);
             save(auth);
+            ModelAuthId modelAuthId= new ModelAuthId();
+            modelAuthId.setAuthId(auth.getId());
+            directProducer.sendAuthIdForEmployee(modelAuthId);
         }catch (Exception e){
             e.printStackTrace();
             throw  new AuthException(EErrorType.AUTH_NOT_CREATED);

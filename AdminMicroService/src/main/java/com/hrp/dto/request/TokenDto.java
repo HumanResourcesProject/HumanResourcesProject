@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseRequestDto {
-    String token;
+public class TokenDto {
+    private String token;
 }
