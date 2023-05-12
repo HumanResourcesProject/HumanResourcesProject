@@ -137,10 +137,7 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
     }
     @Transactional
     public Boolean createEmployee(CreateEmployeeRequestDto dto) {
-        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
-                || StringUtils.isEmpty(dto.getEmail()) ){
-            throw new CompanyManagerException(EErrorType.USER_NOT_EMPTY);
-        }
+
         String passGenerator = CodeGenerator.generateCode();
         String avatarUrl = toTurnStringAvatar(dto.getAvatar());
 

@@ -17,6 +17,7 @@ public class ModelSendToEmployeeMs implements Serializable {
     private String middleName;
     private String surname;
     private String dateOfBirth;
+    private String placeOfBirth;
     private String email;
     private String address;
     private String phone;
@@ -24,5 +25,5 @@ public class ModelSendToEmployeeMs implements Serializable {
     private String job;
     private String department;
     private String jobStart;
-    private MultipartFile avatar;
+    private String avatar;
 }
