@@ -20,9 +20,9 @@ public class CreateCompanyManagerRequestDto {
     private String email;
     private String address;
     private String phone;
-//    private String company;
+    private String company;
     private String job;
     private String department;
     private String jobStart;
-//    private MultipartFile avatar;
+    private MultipartFile avatar;
 }
