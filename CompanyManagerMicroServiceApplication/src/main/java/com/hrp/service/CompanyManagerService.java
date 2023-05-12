@@ -48,7 +48,6 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
         this.jwtTokenManager = jwtTokenManager;
         this.emailProducer = emailProducer;
     }
-
     public List<CompanyManagerFindAllResponseDto> findAllManager() {
         return findAll().stream().
                 map(x-> ICompanyManagerMapper.INSTANCE
