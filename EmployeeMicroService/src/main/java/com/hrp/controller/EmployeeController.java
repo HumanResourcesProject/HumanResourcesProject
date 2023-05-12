@@ -20,11 +20,11 @@ public class EmployeeController {
     public ResponseEntity<List<GetAllEmployeeResponseDto>> getAll(){
         return ResponseEntity.ok(employeeService.findAllEmployee());
     }
-    @PostMapping("/createemployee")
-    @CrossOrigin("*")
-    public ResponseEntity<Boolean> createEmployee(){
-        return ResponseEntity.ok(true);
-    }
+//    @PostMapping("/createemployee")
+//    @CrossOrigin("*")
+//    public ResponseEntity<Boolean> createEmployee(){
+//        return ResponseEntity.ok(true);
+//    }
 
 
 

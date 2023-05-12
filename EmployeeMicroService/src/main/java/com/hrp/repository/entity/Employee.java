@@ -1,5 +1,6 @@
 package com.hrp.repository.entity;
 
+import com.hrp.repository.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Employee extends BaseEntity{
 
     @Id
     private String id;
+    private Long authId;
     private String name;
     private String middleName;
     private String surname;
@@ -32,11 +34,9 @@ public class Employee extends BaseEntity{
     private String address;
     private String phone;
     private String company;
-    @Builder.Default
-    private LocalDateTime jobStart = LocalDateTime.now();
-    private LocalDateTime jobEnd;
+    private String jobStart;
+    private String jobEnd;
     private String avatar;
-
-
+    private ERole role;
 
 }

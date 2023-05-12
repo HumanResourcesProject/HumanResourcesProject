@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class CompanyManagerController {
 
     @PostMapping("/createemployee")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createEmployee(CreateEmployeeRequestDto dto){
+    public ResponseEntity<Boolean> createEmployee(@Valid @RequestBody CreateEmployeeRequestDto dto){
+        System.out.println("create createEmployee metodu");
+        System.out.println(dto.toString());
         return ResponseEntity.ok(companyManagerService.createEmployee(dto));
     }
 

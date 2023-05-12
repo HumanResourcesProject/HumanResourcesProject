@@ -2,6 +2,7 @@ package com.hrp.mapper;
 
 import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
+import com.hrp.rabbitmq.model.RegisterEmployeeModel;
 import com.hrp.repository.entity.Auth;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -14,4 +15,7 @@ public interface IAuthMapper {
 
     Auth toAuth(final ModelRegisterAdmin model);
     Auth toAuth(final ModelRegisterCompanyManager model);
+
+    Auth toAuth(final RegisterEmployeeModel model);
+
 }

@@ -137,12 +137,8 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
     }
     @Transactional
     public Boolean createEmployee(CreateEmployeeRequestDto dto) {
-        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
-                || StringUtils.isEmpty(dto.getEmail()) ){
-            throw new CompanyManagerException(EErrorType.USER_NOT_EMPTY);
-        }
+        System.out.println(dto.toString());
         String passGenerator = CodeGenerator.generateCode();
-        String avatarUrl = toTurnStringAvatar(dto.getAvatar());
 
         //Emaile gönderilen
         emailProducer.sendEmployeeMail(EmailEmployeeModel.builder()
@@ -169,7 +165,7 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
                 .jobStart(dto.getJobStart())
                 .email(dto.getEmail())
                 .phone(dto.getPhone())
-                .avatar(avatarUrl)
+                .avatar(dto.getAvatar())
                 .build());
         return true;
     }

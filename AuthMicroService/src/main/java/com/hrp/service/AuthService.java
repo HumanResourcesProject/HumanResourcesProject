@@ -8,6 +8,7 @@ import com.hrp.mapper.IAuthMapper;
 import com.hrp.rabbitmq.model.ModelAuthId;
 import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
+import com.hrp.rabbitmq.model.RegisterEmployeeModel;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IAuthRepository;
 import com.hrp.repository.entity.Auth;
@@ -104,5 +105,20 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
             e.printStackTrace();
             throw  new AuthException(EErrorType.AUTH_NOT_CREATED);
         }
+    }
+
+    public void registerEmployee(RegisterEmployeeModel model) {
+        Auth auth = IAuthMapper.INSTANCE.toAuth(model);
+        try {
+            auth.setRole(ERole.EMPLOYEE);
+            save(auth);
+            ModelAuthId modelAuthId= new ModelAuthId();
+            modelAuthId.setAuthId(auth.getId());
+            directProducer.sendAuthIdForEmployee(modelAuthId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw  new AuthException(EErrorType.AUTH_NOT_CREATED);
+        }
+
     }
 }

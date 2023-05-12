@@ -15,7 +15,6 @@ public class CreateEmployeeRequestDto {
     private String surname;
     private String dateOfBirth;
     private String placeOfBirth;
-
     private String email;
     private String address;
     private String phone;

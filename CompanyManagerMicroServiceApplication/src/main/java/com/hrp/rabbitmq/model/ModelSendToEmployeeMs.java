@@ -25,5 +25,5 @@ public class ModelSendToEmployeeMs implements Serializable {
     private String job;
     private String department;
     private String jobStart;
-    private String  avatar;
+    private MultipartFile avatar;
 }

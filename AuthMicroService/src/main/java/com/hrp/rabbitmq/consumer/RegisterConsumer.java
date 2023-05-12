@@ -2,6 +2,7 @@ package com.hrp.rabbitmq.consumer;
 
 import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
+import com.hrp.rabbitmq.model.RegisterEmployeeModel;
 import com.hrp.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -21,4 +22,10 @@ public class RegisterConsumer {
     public void registerAdmin(ModelRegisterCompanyManager model){
         authService.registerCompanyManager(model);
     }
+
+    @RabbitListener(queues = "employee-register-auth-queue")
+    public void registerEmployee(RegisterEmployeeModel model){
+        authService.registerEmployee(model);
+    }
+
 }
