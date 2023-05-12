@@ -55,4 +55,10 @@ public class CompanyManagerController {
         System.out.println(dto.getToken());
         return ResponseEntity.ok(companyManagerService.getShortDetail(dto));
     }
+    @PostMapping("/getmanager")
+    @CrossOrigin("*")
+    public ResponseEntity<CompanyManagerFindAllResponseDto> findMe(@RequestBody GetShortDetailRequestDto dto){
+        System.out.println("find me metodu");
+        return ResponseEntity.ok(companyManagerService.findMe(dto));
+    }
 }
