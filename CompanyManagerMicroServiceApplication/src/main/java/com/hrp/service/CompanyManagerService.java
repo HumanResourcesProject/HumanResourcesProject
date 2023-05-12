@@ -13,6 +13,7 @@ import com.hrp.mapper.ICompanyManagerMapper;
 import com.hrp.rabbitmq.consumer.RegisterConsumer;
 import com.hrp.rabbitmq.model.EmailEmployeeModel;
 import com.hrp.rabbitmq.model.ModelSendToCompanyManager;
+import com.hrp.rabbitmq.model.ModelSendToEmployeeMs;
 import com.hrp.rabbitmq.model.RegisterEmployeeModel;
 import com.hrp.rabbitmq.producer.EmailProducer;
 import com.hrp.rabbitmq.producer.ProducerDirectService;
@@ -49,7 +50,6 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
         this.jwtTokenManager = jwtTokenManager;
         this.emailProducer = emailProducer;
     }
-
     public List<CompanyManagerFindAllResponseDto> findAllManager() {
         return findAll().stream().
                 map(x-> ICompanyManagerMapper.INSTANCE
@@ -156,7 +156,21 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
                 .role(ERole.EMPLOYEE)
                 .build());
         // EmployeeMs' ye gonderilen
-        producerDirectService.sendEmployeeMS(ICompanyManagerMapper.INSTANCE.toModelSendToEmployeeMs(dto));
+        producerDirectService.sendEmployeeMS(ModelSendToEmployeeMs.builder()
+                .address(dto.getAddress())
+                .identityNumber(dto.getIdentityNumber())
+                .company(dto.getCompany())
+                .dateOfBirth(dto.getDateOfBirth())
+                .placeOfBirth(dto.getPlaceOfBirth())
+                .name((dto.getName()))
+                .surname(dto.getSurname())
+                .middleName(dto.getMiddleName())
+                .job(dto.getJob())
+                .jobStart(dto.getJobStart())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
+                .avatar(avatarUrl)
+                .build());
         return true;
     }
 
@@ -172,6 +186,26 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
                 .name(companyManager.get().getName())
                 .surname(companyManager.get().getSurname())
                 .avatar(companyManager.get().getAvatar())
+                .build();
+    }
+
+    public CompanyManagerFindAllResponseDto findMe(GetShortDetailRequestDto dto) {
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        CompanyManager companyManager = companyManagerRepository.findById(id).get();
+        return CompanyManagerFindAllResponseDto.builder()
+                .name(companyManager.getName())
+                .middleName(companyManager.getMiddleName())
+                .surname(companyManager.getSurname())
+                .dateOfBirth(companyManager.getDateOfBirth())
+                .email(companyManager.getEmail())
+                .avatar(companyManager.getAvatar())
+                .phone(companyManager.getPhone())
+                .address(companyManager.getAddress())
+                .company(companyManager.getCompany())
+                .job(companyManager.getJob())
+                .department(companyManager.getDepartment())
+                .jobStart(companyManager.getJobStart())
+                .jobEnd(companyManager.getJobEnd())
                 .build();
     }
 }

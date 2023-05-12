@@ -21,8 +21,7 @@ public class Admin extends BaseEntity {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private String authId;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String surname;
     @Column(unique = true,nullable = false)
     private String email;
