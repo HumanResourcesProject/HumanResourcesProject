@@ -39,7 +39,7 @@ public class AdminController {
 
     @PostMapping("/getadmin")
     @CrossOrigin("*")
-    public ResponseEntity<BaseAdminResponseDto> findMe(@RequestBody BaseRequestDto dto){
+    public ResponseEntity<BaseAdminResponseDto> findMe(@RequestBody TokenDto dto){
         System.out.println("find me metodu");
         return ResponseEntity.ok(adminService.findMe(dto));
     }

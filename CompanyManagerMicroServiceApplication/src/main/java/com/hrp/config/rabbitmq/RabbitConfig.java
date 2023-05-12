@@ -18,12 +18,10 @@ public class RabbitConfig {
     private String adminRegisterKey = "admin-register-key" ;
     private String companyManagerRegisterAuthKey = "company-manager-register-auth-key" ;
     private String companyManagerSendToKey = "company-manager-send-to-key" ;
-
     private String employeeEmailKey = "employee-email-key";
-
     private String employeeRegisterAuthKey = "employee-register-auth-key" ;
-
     private String employeeSendEmployeeKey = "employee-send-to-key" ;
+
 
 
     // Queue

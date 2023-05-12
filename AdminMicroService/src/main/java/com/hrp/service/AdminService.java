@@ -90,7 +90,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         return true;
     }
 
-    public BaseAdminResponseDto findMe(BaseRequestDto dto){
+    public BaseAdminResponseDto findMe(TokenDto dto){
 
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
         Admin admin = adminRepository.findById(id).get();

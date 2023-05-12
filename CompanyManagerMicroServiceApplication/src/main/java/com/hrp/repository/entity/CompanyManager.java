@@ -19,6 +19,7 @@ public class CompanyManager extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long authId;
     private String name;
     private String middleName;
     private String surname;

@@ -2,7 +2,6 @@ package com.hrp.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.hrp.dto.request.CreateCompanyManagerRequestDto;
 import com.hrp.dto.request.GetShortDetailRequestDto;
 import com.hrp.dto.request.CreateEmployeeRequestDto;
 import com.hrp.dto.request.UpdateCompanyManagerRequestDto;
@@ -11,6 +10,7 @@ import com.hrp.dto.response.GetShortDetailResponseDto;
 import com.hrp.exception.CompanyManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.ICompanyManagerMapper;
+import com.hrp.rabbitmq.consumer.RegisterConsumer;
 import com.hrp.rabbitmq.model.EmailEmployeeModel;
 import com.hrp.rabbitmq.model.ModelSendToCompanyManager;
 import com.hrp.rabbitmq.model.RegisterEmployeeModel;
@@ -22,7 +22,9 @@ import com.hrp.repository.enums.ERole;
 import com.hrp.utility.CodeGenerator;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
+import com.hrp.utility.StaticValues;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,6 +59,13 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
 
     public Boolean createCompanyManager(ModelSendToCompanyManager model) {
         System.out.println(model.toString());
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("5 sn geçti");
         save(CompanyManager.builder()
                 .address(model.getAddress())
                 .identityNumber(model.getIdentityNumber())
@@ -70,6 +79,7 @@ public class CompanyManagerService extends ServiceManagerImpl<CompanyManager, Lo
                 .email(model.getEmail())
                 .phone(model.getPhone())
                 .avatar(toTurnStringAvatar(model.getAvatar()))
+                .authId(StaticValues.authId)
                 .build());
         return true;
     }
