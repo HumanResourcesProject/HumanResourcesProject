@@ -1,0 +1,104 @@
+package com.hrp.service;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.hrp.dto.request.TokenDto;
+import com.hrp.dto.request.UpdateManagerRequestDto;
+import com.hrp.dto.response.BaseManagerResponseDto;
+import com.hrp.exception.ManagerException;
+import com.hrp.exception.EErrorType;
+import com.hrp.mapper.IManuelManagerMapper;
+import com.hrp.rabbitmq.model.ModelRegisterManager;
+import com.hrp.rabbitmq.producer.DirectProducer;
+import com.hrp.repository.IManagerRepository;
+import com.hrp.repository.entity.Manager;
+import com.hrp.utility.JwtTokenManager;
+import com.hrp.utility.ServiceManagerImpl;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+public class ManagerService extends ServiceManagerImpl<Manager, Long>{
+    private final IManagerRepository companyManagerRepository;
+    private final DirectProducer directProducer;
+    private final JwtTokenManager jwtTokenManager;
+    private final IManuelManagerMapper  iManuelManagerMapper;
+
+    public ManagerService(IManagerRepository companyManagerRepository, DirectProducer directProducer, JwtTokenManager jwtTokenManager, IManuelManagerMapper iManuelManagerMapper) {
+        super(companyManagerRepository);
+        this.companyManagerRepository=companyManagerRepository;
+        this.directProducer = directProducer;
+        this.jwtTokenManager = jwtTokenManager;
+        this.iManuelManagerMapper = iManuelManagerMapper;
+    }
+
+    public Boolean createManager(ModelRegisterManager model) {
+        Manager manager = iManuelManagerMapper.toManager(model);
+        manager.setAvatar("https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+        save(manager);
+        return true;
+    }
+
+    public List<BaseManagerResponseDto> findAllManager() {
+        return findAll().stream().
+                map(x-> iManuelManagerMapper
+                        .toBaseManagerResponseDto(x)).
+                collect(Collectors.toList());
+    }
+
+
+    public Boolean updateManager(UpdateManagerRequestDto dto) {
+        Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
+        Optional<Manager> manager = companyManagerRepository.findOptionalById(companyManagerId.get());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+        }
+        update(iManuelManagerMapper.toManager(manager.get(),dto));
+        return true;
+    }
+
+    public Boolean deleteManager(TokenDto dto) {
+        Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
+        deleteById(companyManagerId.get());
+        return true;
+    }
+
+    public BaseManagerResponseDto findMe(TokenDto dto) {
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        Manager manager = companyManagerRepository.findOptionalByAuthId(id).get();
+        return iManuelManagerMapper.toBaseManagerResponseDto(manager);
+    }
+
+    public String updateImage(MultipartFile file, String token) {
+        Long id = jwtTokenManager.validToken(token).get();
+        Optional<Manager> admin = companyManagerRepository.findById(id);
+        String url = toTurnStringAvatar(file);
+       return url;
+    }
+
+    private String toTurnStringAvatar(MultipartFile avatar) {
+        Map config = new HashMap();
+        config.put("cloud_name", "doqksh0xh");
+        config.put("api_key", "871216635594134");
+        config.put("api_secret", "6b3zcRZyWKeuiW6qIq4XvWnhVno");
+        Cloudinary cloudinary = new Cloudinary(config);
+        try{
+            Map<?, ?> result = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.emptyMap());
+            String url = (String) result.get("url");
+            System.out.println(url+" --------------------------");
+            return url;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+}

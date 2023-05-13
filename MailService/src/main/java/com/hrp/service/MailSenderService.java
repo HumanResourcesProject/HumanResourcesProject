@@ -17,7 +17,7 @@ public class MailSenderService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("${MAILUSERNAME}");
         mailMessage.setTo(model.getEmail());
-        mailMessage.setSubject("Aktivasyon kodunuz: ");
+        mailMessage.setSubject("Sifreniz: ");
         mailMessage.setText(model.getActivationCode());
         javaMailSender.send(mailMessage);
         System.out.println("YOLLANDI");

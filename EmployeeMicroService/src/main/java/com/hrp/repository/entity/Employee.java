@@ -14,26 +14,25 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(value= "employees")
+@Document(value= "tbl_employee")
 public class Employee extends BaseEntity{
 
     @Id
     private String id;
+    private Long authId;
+    private String identityNumber;
     private String name;
     private String middleName;
     private String surname;
-    private String dateOfBirth;
-    private String placeOfBirth;
-    private String identityNumber;
-    private String status;
-    private String job;
-    private String department;
+    private String birthDate;
+    private String birthPlace;
+    private String jobStart;
+    private String Occupation;
+    private String Department;
     private String email;
-    private String address;
     private String phone;
+    private String address;
     private String company;
-    @Builder.Default
-    private LocalDateTime jobStart = LocalDateTime.now();
     private LocalDateTime jobEnd;
     private String avatar;
 
