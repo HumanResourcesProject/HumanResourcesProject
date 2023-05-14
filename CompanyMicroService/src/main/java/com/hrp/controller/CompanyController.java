@@ -35,7 +35,7 @@ public class CompanyController {
     public ResponseEntity<List<BaseCompanyResponseDto>> findAll(@RequestBody TokenDto dto){
         System.out.println("find all company");
         System.out.println(dto.toString());
-        return ResponseEntity.ok(companyService.findAllDto());
+        return ResponseEntity.ok(companyService.findAllDto(dto));
     }
 
 

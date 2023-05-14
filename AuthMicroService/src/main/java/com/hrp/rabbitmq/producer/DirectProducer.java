@@ -4,11 +4,13 @@ import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@EnableRabbit
 public class DirectProducer {
 
     private  final RabbitTemplate rabbitTemplate;

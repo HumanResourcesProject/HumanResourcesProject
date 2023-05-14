@@ -3,10 +3,12 @@ package com.hrp.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.CreateCompanyRequestDto;
+import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.response.BaseCompanyResponseDto;
 import com.hrp.mapper.IManuelCompanyMapper;
 import com.hrp.repository.ICompanyRepository;
 import com.hrp.repository.entity.Company;
+import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +21,12 @@ import java.util.List;
 public class CompanyService extends ServiceManagerImpl<Company, Long> {
     private final ICompanyRepository companyRepository;
     private final IManuelCompanyMapper iManuelCompanyMapper;
-    public CompanyService(ICompanyRepository companyRepository, IManuelCompanyMapper iManuelCompanyMapper) {
+    private final JwtTokenManager  jwtTokenService;
+    public CompanyService(ICompanyRepository companyRepository, IManuelCompanyMapper iManuelCompanyMapper, JwtTokenManager jwtTokenService) {
         super(companyRepository);
         this.companyRepository = companyRepository;
         this.iManuelCompanyMapper = iManuelCompanyMapper;
+        this.jwtTokenService = jwtTokenService;
     }
 
     @Transactional
@@ -35,7 +39,8 @@ public class CompanyService extends ServiceManagerImpl<Company, Long> {
     }
 
     //find all
-    public List<BaseCompanyResponseDto> findAllDto(){
+    public List<BaseCompanyResponseDto> findAllDto(TokenDto dto){
+        Optional<Long> id = jwtTokenService.validToken(dto.getToken());
         Optional<List<BaseCompanyResponseDto>> companiesDto = Optional.of( new ArrayList<>());
         for (Company company : findAll()){
             companiesDto.get().add(iManuelCompanyMapper.toCompanyResponseDto(company));

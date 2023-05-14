@@ -25,14 +25,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class ManagerService extends ServiceManagerImpl<Manager, Long>{
-    private final IManagerRepository companyManagerRepository;
+    private final IManagerRepository managerRepository;
     private final DirectProducer directProducer;
     private final JwtTokenManager jwtTokenManager;
     private final IManuelManagerMapper  iManuelManagerMapper;
 
-    public ManagerService(IManagerRepository companyManagerRepository, DirectProducer directProducer, JwtTokenManager jwtTokenManager, IManuelManagerMapper iManuelManagerMapper) {
-        super(companyManagerRepository);
-        this.companyManagerRepository=companyManagerRepository;
+    public ManagerService(IManagerRepository managerRepository, DirectProducer directProducer, JwtTokenManager jwtTokenManager, IManuelManagerMapper iManuelManagerMapper) {
+        super(managerRepository);
+        this.managerRepository = managerRepository;
         this.directProducer = directProducer;
         this.jwtTokenManager = jwtTokenManager;
         this.iManuelManagerMapper = iManuelManagerMapper;
@@ -45,11 +45,13 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         return true;
     }
 
-    public List<BaseManagerResponseDto> findAllManager() {
-        return findAll().stream().
+    public List<BaseManagerResponseDto> findAllManager(TokenDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        Manager manager = managerRepository.findOptionalByAuthId(id.get()).get();
+        return findAll().stream().filter(x->x.getCompany()==manager.getCompany()).
                 map(x-> iManuelManagerMapper
-                        .toBaseManagerResponseDto(x)).
-                collect(Collectors.toList());
+                        .toBaseManagerResponseDto(x)).collect(Collectors.toList());
+
     }
 
 
@@ -58,7 +60,7 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.INVALID_TOKEN);
         }
-        Optional<Manager> manager = companyManagerRepository.findOptionalById(companyManagerId.get());
+        Optional<Manager> manager = managerRepository.findOptionalById(companyManagerId.get());
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
@@ -74,13 +76,13 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public BaseManagerResponseDto findMe(TokenDto dto) {
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
-        Manager manager = companyManagerRepository.findOptionalByAuthId(id).get();
+        Manager manager = managerRepository.findOptionalByAuthId(id).get();
         return iManuelManagerMapper.toBaseManagerResponseDto(manager);
     }
 
     public String updateImage(MultipartFile file, String token) {
         Long id = jwtTokenManager.validToken(token).get();
-        Optional<Manager> admin = companyManagerRepository.findById(id);
+        Optional<Manager> admin = managerRepository.findById(id);
         String url = toTurnStringAvatar(file);
        return url;
     }
@@ -101,4 +103,5 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
             return null;
         }
     }
+
 }
