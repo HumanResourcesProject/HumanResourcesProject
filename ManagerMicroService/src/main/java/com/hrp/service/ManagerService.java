@@ -47,10 +47,18 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public List<BaseManagerResponseDto> findAllManager(TokenDto dto) {
         Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        Manager manager = managerRepository.findOptionalByAuthId(id.get()).get();
-        return findAll().stream().filter(x->x.getCompany()==manager.getCompany()).
-                map(x-> iManuelManagerMapper
-                        .toBaseManagerResponseDto(x)).collect(Collectors.toList());
+        System.out.println(dto.getRole()+"  ++++++++       ");
+        if(dto.getRole().equals("MANAGER")){
+            Manager manager = managerRepository.findOptionalByAuthId(id.get()).get();
+            return findAll().stream().filter(x->x.getCompany()==manager.getCompany()).
+                    map(x-> iManuelManagerMapper
+                            .toBaseManagerResponseDto(x)).collect(Collectors.toList());
+        }else{
+            return findAll().stream().
+                    map(x-> iManuelManagerMapper
+                            .toBaseManagerResponseDto(x)).collect(Collectors.toList());
+        }
+
 
     }
 

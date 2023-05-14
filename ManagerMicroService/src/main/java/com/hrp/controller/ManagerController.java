@@ -18,9 +18,9 @@ import java.util.List;
 public class ManagerController {
     private final ManagerService managerService;
 
-    @GetMapping("/findall")
+    @PostMapping("/findall")
     @CrossOrigin("*")
-    public ResponseEntity<List<BaseManagerResponseDto>> findAll(TokenDto dto){
+    public ResponseEntity<List<BaseManagerResponseDto>> findAll(@RequestBody TokenDto dto){
         System.out.println("find all");
         return ResponseEntity.ok(managerService.findAllManager(dto));
     }
