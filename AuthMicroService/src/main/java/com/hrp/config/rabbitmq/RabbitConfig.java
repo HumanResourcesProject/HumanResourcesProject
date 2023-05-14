@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitMqConfig {
+public class RabbitConfig {
     // exchange
     private String exchangeDirect = "exchange-direct";
     private String exchangeFanout = "exchange-fanout";

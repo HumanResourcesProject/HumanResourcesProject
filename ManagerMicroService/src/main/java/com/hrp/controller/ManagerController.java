@@ -20,9 +20,9 @@ public class ManagerController {
 
     @GetMapping("/findall")
     @CrossOrigin("*")
-    public ResponseEntity<List<BaseManagerResponseDto>> findAll(){
+    public ResponseEntity<List<BaseManagerResponseDto>> findAll(TokenDto dto){
         System.out.println("find all");
-        return ResponseEntity.ok(managerService.findAllManager());
+        return ResponseEntity.ok(managerService.findAllManager(dto));
     }
 
     @PutMapping("/updatemanager")
