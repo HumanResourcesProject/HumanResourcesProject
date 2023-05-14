@@ -1,6 +1,9 @@
 package com.hrp.config.rabbitmq;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,19 +16,24 @@ public class RabbitConfig {
 
 
     // Key
-    private String adminEmailKey = "admin-email-key";
-    private String companyManagerEmailKey = "company-manager-email-key";
-    private String adminRegisterKey = "admin-register-key" ;
-    private String companyManagerRegisterAuthKey = "company-manager-register-auth-key" ;
-    private String companyManagerSendToKey = "company-manager-send-to-key" ;
+
+    private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
+    private String bindingKeyRegisterManager= "binding-key-register-manager" ;
+    private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
+
+
+
 
 
     // Queue
-    private  String adminEmailQueue = "admin-email-queue";
-    private  String companyManagerEmailQueue = "company-manager-email-queue";
-    private  String adminRegisterQueue = "admin-register-queue";
-    private  String companyManagerRegisterAuthQueue = "company-manager-register-auth-queue";
-    private  String companyManagerSendToQueue = "company-manager-send-to-queue";
+    private  String queueRegisterAdmin = "queue-register-admin";
+    private  String queueRegisterManager = "queue-register-manager";
+    private  String queueRegisterEmployee= "queue-register-employee";
+
+
+
+
+
 
 
     /**
@@ -37,63 +45,44 @@ public class RabbitConfig {
         return new DirectExchange(exchangeDirect);
     }
 
-    @Bean
-    FanoutExchange exchangeFanout() {
-        return new FanoutExchange(exchangeFanout);
-    }
-
-    @Bean
-    TopicExchange exchangeTopic() {
-        return new TopicExchange(exchangeTopic);
-    }
-
 
     /**
      * ---- Queue ----
      */
+    @Bean
+    Queue queueRegisterAdmin(){
+        return new Queue(queueRegisterAdmin);
+    }
 
     @Bean
-    Queue adminEmailQueue(){
-        return new Queue(adminEmailQueue);
+    Queue queueRegisterManager(){
+        return new Queue(queueRegisterManager);
     }
+
     @Bean
-    Queue companyManagerEmailQueue(){
-        return new Queue(companyManagerEmailQueue);
+    Queue queueRegisterEmployee(){
+        return new Queue(queueRegisterEmployee);
     }
-    @Bean
-    Queue adminRegisterQueue(){
-        return new Queue(adminRegisterQueue);
-    }
-    @Bean
-    Queue companyManagerRegisterAuthQueue(){
-        return new Queue(companyManagerRegisterAuthQueue);
-    }
-    @Bean
-    Queue companyManagerSendToQueue(){
-        return new Queue(companyManagerSendToQueue);
-    }
+
+
 
     /**
      * ---- Binding ----
      */
+
+
     @Bean
-    public Binding bindingAdminMail(final Queue adminEmailQueue ,final DirectExchange directExchange ){
-        return BindingBuilder.bind(adminEmailQueue).to(directExchange).with(adminEmailKey);
+    public Binding bindingRegisterAdmin(final Queue queueRegisterAdmin,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueRegisterAdmin).to(directExchange).with(bindingKeyRegisterAdmin);
     }
     @Bean
-    public Binding bindingCompanyManagerMail(final Queue companyManagerEmailQueue ,final DirectExchange directExchange ){
-        return BindingBuilder.bind(companyManagerEmailQueue).to(directExchange).with(companyManagerEmailKey);
+    public Binding bindingRegisterManager(final Queue queueRegisterManager,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueRegisterManager).to(directExchange).with(bindingKeyRegisterManager);
     }
     @Bean
-    public Binding bindingAdminRegister(final Queue adminRegisterQueue ,final DirectExchange directExchange){
-        return BindingBuilder.bind(adminRegisterQueue).to(directExchange).with(adminRegisterKey);
+    public Binding bindingRegisterEmployee(final Queue queueRegisterEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueRegisterEmployee).to(directExchange).with(bindingKeyRegisterEmployee);
     }
-    @Bean
-    public Binding bindingCompanyManagerRegisterAuth(final Queue companyManagerRegisterAuthQueue ,final DirectExchange directExchange){
-        return BindingBuilder.bind(companyManagerRegisterAuthQueue).to(directExchange).with(companyManagerRegisterAuthKey);
-    }
-    @Bean
-    public Binding bindingCompanyManagerSendTo(final Queue companyManagerSendToQueue ,final DirectExchange directExchange){
-        return BindingBuilder.bind(companyManagerSendToQueue).to(directExchange).with(companyManagerSendToKey);
-    }
+
+
 }
