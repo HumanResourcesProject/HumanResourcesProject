@@ -70,7 +70,6 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMINLEVEL1')")
     @CrossOrigin("*")
     public ResponseEntity<String> securityDeneme1(){
-        System.out.println("1.metod");
         return ResponseEntity.ok("security denemesi 1. metodu");
     }
 
