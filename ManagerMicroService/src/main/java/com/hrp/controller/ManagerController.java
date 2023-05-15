@@ -51,4 +51,5 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.updateImage(file,token));
     }
 
+
 }

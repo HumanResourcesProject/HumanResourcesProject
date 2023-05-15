@@ -1,9 +1,14 @@
 package com.hrp.service;
 
 import com.hrp.dto.request.BaseEmployeeRequestDto;
+import com.hrp.dto.request.AdvancePaymentRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
+import com.hrp.exception.EErrorType;
+import com.hrp.exception.EmployeeException;
 import com.hrp.mapper.IManuelEmployeeMapper;
+import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
+import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IEmployeeRepository;
 import com.hrp.repository.entity.Employee;
 import com.hrp.utility.JwtTokenManager;
@@ -20,11 +25,15 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
     private final IEmployeeRepository employeeRepository;
     private final IManuelEmployeeMapper iManuelEmployeeMapper;
     private final JwtTokenManager jwtTokenManager;
-    public EmployeeService(IEmployeeRepository employeeRepository, IManuelEmployeeMapper iManuelEmployeeMapper, JwtTokenManager jwtTokenManager) {
+
+    private final DirectProducer directProducer;
+
+    public EmployeeService(IEmployeeRepository employeeRepository, IManuelEmployeeMapper iManuelEmployeeMapper, JwtTokenManager jwtTokenManager,DirectProducer directProducer) {
         super(employeeRepository);
         this.employeeRepository = employeeRepository;
         this.iManuelEmployeeMapper = iManuelEmployeeMapper;
         this.jwtTokenManager = jwtTokenManager;
+        this.directProducer= directProducer;
     }
 
     public void createEmployee(ModelRegisterEmployee model){
@@ -47,5 +56,26 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
                     .collect(Collectors.toList());
         }
 
+    }
+
+    public Boolean createPermission(AdvancePaymentRequestDto dto) {
+        Optional<Employee> employee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
+        }
+
+        if(dto.getAmount()*3 > employee.get().getSalary()){
+            System.out.println("Maasininizin 3 katindan fazla avans çekemezsiniz.");
+            return null;
+        }
+
+        directProducer.sendAdvanceEmployee(ModelEmployeeAdvancePaymentRequest.builder()
+                        .id(employee.get().getId())
+                        .authId(employee.get().getAuthId())
+                        .identityNumber(dto.getIdentityNumber())
+                        .company(employee.get().getCompany())
+                        .salary(employee.get().getSalary())
+                .build());
+        return true;
     }
 }

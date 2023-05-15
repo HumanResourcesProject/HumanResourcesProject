@@ -1,7 +1,6 @@
 package com.hrp.mapper;
 
 import com.hrp.dto.response.BaseAdminResponseDto;
-import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.repository.entity.Admin;
 import org.springframework.stereotype.Component;
 
