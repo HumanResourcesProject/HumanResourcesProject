@@ -15,15 +15,15 @@ public class ServiceManagerImpl <T extends BaseEntity,ID> implements IServiceMan
 
     @Override
     public T save(T t) {
-        t.setCreatedate(System.currentTimeMillis());
-        t.setUpdatedate(System.currentTimeMillis());
+        t.setCreatedate(LocalDateTime.now().toString());
+        t.setUpdatedate(LocalDateTime.now().toString());
         t.setState(true);
         return repository.save(t);
     }
 
     @Override
     public T update(T t) {
-        t.setUpdatedate(System.currentTimeMillis());
+        t.setUpdatedate(LocalDateTime.now().toString());
         return repository.save(t);
     }
 

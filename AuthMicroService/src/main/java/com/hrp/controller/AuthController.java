@@ -1,9 +1,7 @@
 package com.hrp.controller;
 
 
-import com.hrp.dto.request.ActivateRequestDto;
-import com.hrp.dto.request.AuthLoginDto;
-import com.hrp.dto.request.ChangePasswordDto;
+import com.hrp.dto.request.*;
 import com.hrp.dto.response.AuthLoginResponse;
 import com.hrp.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +18,7 @@ public class AuthController {
     @PostMapping("/login")
     @CrossOrigin("*")
     public ResponseEntity<AuthLoginResponse> authLogin(@RequestBody AuthLoginDto dto){
-        System.out.println(dto.getEmail()+ " "+dto.getPassword());
         return ResponseEntity.ok((authService.authLogin(dto)));
-    }
-
-    @PostMapping("/activatestatus")
-    public  ResponseEntity<Boolean> activateStatus2(@RequestBody ActivateRequestDto dto){
-        return   ResponseEntity.ok(authService.activateStatus(dto));
     }
 
     @PostMapping("/changepassword")
@@ -34,6 +26,29 @@ public class AuthController {
     public ResponseEntity<Boolean> changePassword(@RequestBody ChangePasswordDto dto){
         return ResponseEntity.ok(authService.changePassword(dto));
     }
+
+    // register admin
+    @PostMapping("/registeradmin")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> registerAdmin( RegisterAdminRequestDto dto){
+        return ResponseEntity.ok(authService.registerAdmin(dto));
+    }
+
+    // register Manager
+    @PostMapping("/registermanager")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> registerManager(@RequestBody  RegisterManagerRequestDto dto){
+        return ResponseEntity.ok(authService.registerManager(dto));
+    }
+
+    // register employee
+    @PostMapping("/registeremployee")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> registerEmployee(@RequestBody RegisterEmployeeRequestDto dto){
+        return ResponseEntity.ok(authService.registerEmployee(dto));
+            }
+
+
 
 
 }

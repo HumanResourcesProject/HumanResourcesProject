@@ -1,6 +1,6 @@
 package com.hrp.controller;
 
-import com.hrp.dto.response.GetAllEmployeeResponseDto;
+import com.hrp.dto.response.BaseEmployeeResponseDto;
 import com.hrp.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +15,11 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
 
-    @GetMapping("/getallemployee")
+    @GetMapping("/findallemployee")
     @CrossOrigin("*")
-    public ResponseEntity<List<GetAllEmployeeResponseDto>> getAll(){
+    public ResponseEntity<List<BaseEmployeeResponseDto>> getAll(){
         return ResponseEntity.ok(employeeService.findAllEmployee());
     }
-//    @PostMapping("/createemployee")
-//    @CrossOrigin("*")
-//    public ResponseEntity<Boolean> createEmployee(){
-//        return ResponseEntity.ok(true);
-//    }
 
 
 

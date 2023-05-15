@@ -1,6 +1,5 @@
 package com.hrp.repository.entity;
 
-import com.hrp.repository.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,28 +14,28 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(value= "employees")
+@Document(value= "tbl_employee")
 public class Employee extends BaseEntity{
 
     @Id
     private String id;
     private Long authId;
+    private String identityNumber;
     private String name;
     private String middleName;
     private String surname;
-    private String dateOfBirth;
-    private String placeOfBirth;
-    private String identityNumber;
-    private String status;
-    private String job;
-    private String department;
-    private String email;
-    private String address;
-    private String phone;
-    private String company;
+    private String birthDate;
+    private String birthPlace;
     private String jobStart;
-    private String jobEnd;
+    private String Occupation;
+    private String Department;
+    private String email;
+    private String phone;
+    private String address;
+    private String company;
+    private LocalDateTime jobEnd;
     private String avatar;
-    private ERole role;
+
+
 
 }

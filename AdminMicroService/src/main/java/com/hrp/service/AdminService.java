@@ -4,108 +4,82 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.*;
 import com.hrp.dto.response.BaseAdminResponseDto;
-import com.hrp.exception.AdminException;
-import com.hrp.exception.EErrorType;
-import com.hrp.mapper.IAdminMapper;
-import com.hrp.rabbitmq.model.EmailAdminModel;
-import com.hrp.rabbitmq.model.EmailCompanyManagerModel;
+import com.hrp.mapper.IManuelAdminMapper;
 import com.hrp.rabbitmq.model.ModelRegisterAdmin;
-import com.hrp.rabbitmq.model.ModelRegisterCompanyManager;
-import com.hrp.rabbitmq.producer.EmailProducer;
-import com.hrp.rabbitmq.producer.ProducerDirectService;
 import com.hrp.repository.IAdminRepository;
 import com.hrp.repository.entity.Admin;
-import com.hrp.repository.entity.enums.ERole;
-import com.hrp.utility.CodeGenerator;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
 public class AdminService extends ServiceManagerImpl<Admin, Long> {
+
     private final IAdminRepository adminRepository;
-    private final EmailProducer emailProducer;
-    private final ProducerDirectService producerDirectService;
     private final JwtTokenManager jwtTokenManager;
-    public AdminService(IAdminRepository adminRepository, EmailProducer emailProducer, ProducerDirectService producerDirectService, JwtTokenManager jwtTokenManager) {
+    private final IManuelAdminMapper iManuelAdminMapper;
+    private final AdminAuthService adminAuthService;
+    public AdminService(IAdminRepository adminRepository, JwtTokenManager jwtTokenManager, IManuelAdminMapper iManuelAdminMapper, AdminAuthService adminAuthService) {
         super(adminRepository);
         this.adminRepository = adminRepository;
-        this.emailProducer = emailProducer;
-        this.producerDirectService = producerDirectService;
         this.jwtTokenManager = jwtTokenManager;
+        this.iManuelAdminMapper = iManuelAdminMapper;
+        this.adminAuthService = adminAuthService;
     }
 
-    @Transactional
-    public Boolean createAdmin(CreateAdminRequestDto dto)  {
-        if (StringUtils.isEmpty(dto.getName()) || StringUtils.isEmpty(dto.getSurname())
-                || StringUtils.isEmpty(dto.getEmail()) ){
-            throw new AdminException(EErrorType.USER_NOT_EMPTY);
-        }
-        String passGenerator = CodeGenerator.generateCode();
-        String avatarUrl = uploadImageCloudWithoutToken(dto.getAvatar());
-        emailProducer.sendAdminMail(EmailAdminModel.builder()
-                .email(dto.getEmail())
-                .activationCode(passGenerator)
-                .build());
-
-        save(Admin.builder()
-                .avatar(avatarUrl)
-                .phone(dto.getPhone())
-                .address(dto.getAddress())
-                .email(dto.getEmail())
-                .name(dto.getName())
-                .surname(dto.getSurname())
-                .build());
-        producerDirectService.sendRegisterAdmin(ModelRegisterAdmin.builder()
-                        .email(dto.getEmail())
-                        .password(passGenerator)
-                        .role(ERole.ADMIN)
-                .build());
-        return true;
+    public void adminRegister(ModelRegisterAdmin model){
+        Admin admin = iManuelAdminMapper.toAdmin(model);
+        save(admin);
+        System.out.println("admin register ici admin idsi: "+admin.getId());
+        adminAuthService.createAdminAuth(admin.getId());
     }
-    @Transactional
-    public Boolean createCompanyManager(CreateCompanyManagerRequestDto dto) {
-        System.out.println(dto.toString());
 
-        String passGenerator = CodeGenerator.generateCode();
-        //Emaile gönderilen
-        emailProducer.sendCompanyManagerMail(EmailCompanyManagerModel.builder()
-                .email(dto.getEmail())
-                .activationCode(passGenerator)
-                .build());
 
-        //Auth a gönderilen
-        producerDirectService.sendToAuthRegisterCompanyManager(ModelRegisterCompanyManager.builder()
-                .email(dto.getEmail())
-                .password(passGenerator)
-                .role(ERole.COMPANY_MANAGER)
-                .build());
-        //Company Manager a gönderilen
-        producerDirectService.sendToCompanyManager(IAdminMapper.INSTANCE.toModelSendToCompanyManager(dto));
-        return true;
-    }
 
     public BaseAdminResponseDto findMe(TokenDto dto){
-
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
         Admin admin = adminRepository.findById(id).get();
-        return BaseAdminResponseDto.builder()
-                .email(admin.getEmail())
-                .name(admin.getName())
-                .surname(admin.getSurname())
-                .avatar(admin.getAvatar())
-                .phone(admin.getPhone())
-                .address(admin.getAddress())
-                .build();
+        return iManuelAdminMapper.toBaseResponseDto(admin);
     }
 
-    public String uploadImageCloudWithoutToken(MultipartFile file) {
 
+    public String updateImage(MultipartFile file, String token) {
+        Long id = jwtTokenManager.validToken(token).get();
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isEmpty()){
+            System.out.println("Kullanici bulunamadi");
+        }
+       String url = toTurnStringAvatar(file);
+        return url;
+    }
+
+
+    // bos gelirse db de ki alınacak
+    public Boolean updateAdmin(BaseAdminRequestDto dto) {
+        System.out.println("dto ici update... "+ dto.toString());
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        Optional<Admin> admin = adminRepository.findById(id);
+        admin.get().setAddress(dto.getAddress());
+        admin.get().setPhone(dto.getPhone());
+        update(admin.get());
+        return true;
+    }
+
+    // findalladmin
+    public List<BaseAdminResponseDto> findAllAdmin() {
+        System.out.println("findall admin service");
+        List<BaseAdminResponseDto> baseAdminResponseDtos = new ArrayList<>();
+        for (Admin admin : adminRepository.findAll()) {
+            baseAdminResponseDtos.add(iManuelAdminMapper.toBaseResponseDto(admin));
+        }
+        return baseAdminResponseDtos;
+    }
+
+
+    private String toTurnStringAvatar(MultipartFile file) {
         Map config = new HashMap();
         config.put("cloud_name", "doqksh0xh");
         config.put("api_key", "871216635594134");
@@ -121,104 +95,9 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             return null;
         }
     }
-/*    public Boolean updateAdminMft(BaseAdminRequestDto dto) {
-        Long id = jwtTokenManager.validToken(dto.getToken()).get();
-        Optional<Admin> admin = adminRepository.findById(id);
-        if (admin.isEmpty()){
-            System.out.println("Kullanici bulunamadi");
-            return false;
-        }
-        admin.get().setAddress(dto.getAddress());
-        admin.get().setPhone(dto.getPhone());
-        update(admin.get());
-        return true;
-    }*/
 
-
-    // update admin oguz
-    public String uploadImageCloud(MultipartFile file, String token) {
-        Long id = jwtTokenManager.validToken(token).get();
-
-        Optional<Admin> admin = adminRepository.findById(id);
-        if (admin.isEmpty()){
-            System.out.println("Kullanici bulunamadi");
-        }
-        Map config = new HashMap();
-        config.put("cloud_name", "doqksh0xh");
-        config.put("api_key", "871216635594134");
-        config.put("api_secret", "6b3zcRZyWKeuiW6qIq4XvWnhVno");
-        Cloudinary cloudinary = new Cloudinary(config);
-        try{
-            Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-            String url = (String) result.get("url");
-            admin.get().setAvatar(url);
-            update(admin.get());
-            System.out.println(url);
-            return url;
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
+    public Optional<Admin> findByAuthId(Long authId) {
+      return adminRepository.findOptionalByAuthId(authId);
     }
 
-    // bu kullanılacak .adresss ve .phone bos gelebilir
-    // bos gelirse db de ki alınacak
-    public Boolean updateAdmin(BaseAdminRequestDto dto) {
-        System.out.println("dto ici update... "+ dto.toString());
-        Long id = jwtTokenManager.validToken(dto.getToken()).get();
-
-        Optional<Admin> admin = adminRepository.findById(id);
-
-        if (admin.isEmpty()){
-            throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
-        }
-        if (dto.getAddress() == null){
-            admin.get().setPhone(dto.getPhone());
-            update(admin.get());
-            return true;
-        }
-        if (dto.getPhone() == null){
-            admin.get().setAddress(dto.getAddress());
-            update(admin.get());
-            return true;
-        }
-        admin.get().setAddress(dto.getAddress());
-        admin.get().setPhone(dto.getPhone());
-        System.out.println("admin adres... "+ admin.get().getAddress());
-        System.out.println("admin phone... "+ admin.get().getPhone());
-
-
-        update(admin.get());
-        return true;
-    }
-    // findalladmin
-    public Iterable<BaseAdminResponseDto> findAllAdmin() {
-        System.out.println("findall admin service");
-        List<BaseAdminResponseDto> baseAdminResponseDtos = new ArrayList<>();
-        for (Admin admin : adminRepository.findAll()) {
-            baseAdminResponseDtos.add(BaseAdminResponseDto.builder()
-                            .phone(admin.getPhone())
-                            .avatar(admin.getAvatar())
-                            .address(admin.getAddress())
-                    .email(admin.getEmail())
-                    .name(admin.getName())
-                    .surname(admin.getSurname())
-                    .build());
-        }
-        return baseAdminResponseDtos;
-    }
-
-    public BaseAdminResponseDto getShortDetail(BaseAdminRequestDto dto) {
-        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        System.out.println("ID:-------" + id.get());
-        if(id.isEmpty()) throw new AdminException(EErrorType.TOKEN_NOT_FOUND);
-        Optional<Admin> admin = findById(id.get());
-        if(admin.isEmpty()) throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
-
-        return BaseAdminResponseDto.builder()
-                .name(admin.get().getName())
-                .surname(admin.get().getSurname())
-                .avatar(admin.get().getAvatar())
-                .build();
-    }
 }

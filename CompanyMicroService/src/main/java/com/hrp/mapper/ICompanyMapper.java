@@ -12,8 +12,6 @@ public interface ICompanyMapper {
 
         ICompanyMapper INSTANCE= Mappers.getMapper(ICompanyMapper.class);
 
-        @Mapping(target="logo", ignore = true)
-        Company toCompany(final CreateCompanyRequestDto dto);
     BaseCompanyResponseDto baseCompanyResponseDto (final Company company);
 
     }

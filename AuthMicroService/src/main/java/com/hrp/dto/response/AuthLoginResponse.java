@@ -1,9 +1,13 @@
 package com.hrp.dto.response;
 
+import com.hrp.repository.entity.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Data
 @Builder
@@ -12,5 +16,6 @@ import lombok.NoArgsConstructor;
 public class AuthLoginResponse {
 
     String token;
-    String role;
+    @Enumerated(EnumType.STRING)
+    ERole role;
 }

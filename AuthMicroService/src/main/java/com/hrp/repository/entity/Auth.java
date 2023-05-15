@@ -1,7 +1,6 @@
 package com.hrp.repository.entity;
 
 import com.hrp.repository.entity.enums.ERole;
-import com.hrp.repository.entity.enums.EStatus;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -22,8 +21,5 @@ public class Auth extends BaseEntity {
     private String email;
     @Enumerated(EnumType.STRING)
     private ERole role;
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private EStatus status=EStatus.PENDING;
 
 }
