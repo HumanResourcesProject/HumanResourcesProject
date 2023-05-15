@@ -1,5 +1,6 @@
 package com.hrp.controller;
 
+import com.hrp.dto.request.BaseEmployeeRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
 import com.hrp.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,10 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
 
-    @GetMapping("/findallemployee")
+    @PostMapping("/findallemployee")
     @CrossOrigin("*")
-    public ResponseEntity<List<BaseEmployeeResponseDto>> getAll(){
-        return ResponseEntity.ok(employeeService.findAllEmployee());
+    public ResponseEntity<List<BaseEmployeeResponseDto>> findAll(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAll(dto));
     }
 
 

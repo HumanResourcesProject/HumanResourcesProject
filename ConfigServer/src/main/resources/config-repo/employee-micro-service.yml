@@ -10,12 +10,12 @@ spring:
   rabbitmq:
     host: localhost
     username: user
-    password: user
+    password: password
     port: 5672
   data:
     mongodb:
       host: localhost
-      port: 29005
+      port: 27000
       username: "user"
       password: "root"
       database: HRPEmployeeDB
