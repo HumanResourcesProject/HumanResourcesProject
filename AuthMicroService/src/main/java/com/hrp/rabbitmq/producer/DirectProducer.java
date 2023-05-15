@@ -26,5 +26,6 @@ public class DirectProducer {
     public void sendRegisterEmployee(ModelRegisterEmployee model){
         System.out.println("producer ici" +model.toString());
         rabbitTemplate.convertAndSend("exchange-direct","binding-key-register-employee",model);
+
     }
 }
