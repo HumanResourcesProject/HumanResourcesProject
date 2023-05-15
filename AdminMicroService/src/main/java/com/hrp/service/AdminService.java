@@ -21,16 +21,20 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     private final IAdminRepository adminRepository;
     private final JwtTokenManager jwtTokenManager;
     private final IManuelAdminMapper iManuelAdminMapper;
-    public AdminService(IAdminRepository adminRepository, JwtTokenManager jwtTokenManager,IManuelAdminMapper iManuelAdminMapper ) {
+    private final AdminAuthService adminAuthService;
+    public AdminService(IAdminRepository adminRepository, JwtTokenManager jwtTokenManager, IManuelAdminMapper iManuelAdminMapper, AdminAuthService adminAuthService) {
         super(adminRepository);
         this.adminRepository = adminRepository;
         this.jwtTokenManager = jwtTokenManager;
         this.iManuelAdminMapper = iManuelAdminMapper;
+        this.adminAuthService = adminAuthService;
     }
 
     public void adminRegister(ModelRegisterAdmin model){
         Admin admin = iManuelAdminMapper.toAdmin(model);
         save(admin);
+        System.out.println("admin register ici admin idsi: "+admin.getId());
+        adminAuthService.createAdminAuth(admin.getId());
     }
 
 
@@ -90,6 +94,10 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    public Optional<Admin> findByAuthId(Long authId) {
+      return adminRepository.findOptionalByAuthId(authId);
     }
 
 }

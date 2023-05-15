@@ -50,7 +50,7 @@ ext {
 
             // Güvenlik
             jwt                         : "com.auth0:java-jwt:$versions.jwt",
-            //springBootStarterSecurity   : "org.springframework.boot:spring-boot-starter-security:$versions.springBoot",
+            springBootStarterSecurity   : "org.springframework.boot:spring-boot-starter-security:$versions.springBoot",
 
 
             //Zipkin Server

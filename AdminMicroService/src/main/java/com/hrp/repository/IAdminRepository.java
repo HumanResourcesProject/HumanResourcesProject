@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface IAdminRepository extends JpaRepository<Admin,Long>{
 
-
+    Optional<Admin> findOptionalByAuthId(Long authId);
     Optional<Admin> findOptionalByEmail(String email);
 }
