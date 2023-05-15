@@ -24,7 +24,6 @@ public class AdminSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("admin/create").authenticated()
                 .anyRequest().permitAll();
-        httpSecurity.csrf().disable();
         httpSecurity.cors().disable();
 
         // .antMatchers("admin/","/v3/api-docs/**").permitAll()   // izin verildi
