@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/EmployeeMicroService" />
             <option value="$PROJECT_DIR$/MailService" />
             <option value="$PROJECT_DIR$/ManagerMicroService" />
+            <option value="$PROJECT_DIR$/RequirementsMicroService" />
           </set>
         </option>
       </GradleProjectSettings>
