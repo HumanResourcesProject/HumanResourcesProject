@@ -58,10 +58,7 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
                     map(x-> iManuelManagerMapper
                             .toBaseManagerResponseDto(x)).collect(Collectors.toList());
         }
-
-
     }
-
 
     public Boolean updateManager(UpdateManagerRequestDto dto) {
         Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
