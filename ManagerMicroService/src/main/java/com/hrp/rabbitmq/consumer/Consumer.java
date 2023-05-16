@@ -21,7 +21,7 @@ public class Consumer {
     }
 
     @RabbitListener(queues = "queue-turnallleave-employee")
-    public void TurnAllLeaveRequest(List<ModelTurnAllLeaveRequest> model){
+    public void turnAllLeaveRequest(List<ModelTurnAllLeaveRequest> model){
         StaticValues.findAllLeave=model;
     }
 

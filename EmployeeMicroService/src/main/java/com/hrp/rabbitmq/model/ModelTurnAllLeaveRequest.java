@@ -1,6 +1,5 @@
 package com.hrp.rabbitmq.model;
 
-import com.hrp.repository.entity.enums.LeaveType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

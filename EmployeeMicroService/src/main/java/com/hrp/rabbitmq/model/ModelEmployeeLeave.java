@@ -15,5 +15,6 @@ public class ModelEmployeeLeave implements Serializable {
     private String startDate;
     private String finishDate;
     private String company;
+    private int amountOfDay;
 
 }

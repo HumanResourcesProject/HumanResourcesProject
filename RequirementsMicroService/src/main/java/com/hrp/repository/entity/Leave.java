@@ -28,4 +28,6 @@ public class Leave extends BaseEntity{
     private String finishDate;
     private String approvalDate;
     private int status;
+    private int amountOfDay;
+
 }
