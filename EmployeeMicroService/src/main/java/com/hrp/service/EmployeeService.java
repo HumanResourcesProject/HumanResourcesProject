@@ -1,6 +1,7 @@
 package com.hrp.service;
 
 import com.hrp.dto.request.BaseEmployeeRequestDto;
+import com.hrp.dto.request.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
@@ -83,6 +84,17 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         }
         directProducer.sendLeaveEmployee(iManuelEmployeeMapper.toEmployeeLeaveModel(employee.get(),dto));
         System.out.println("create leave metodu calisti");
+        return true;
+    }
+
+    public Boolean createExpnse(ExpenseRequestDto dto) {
+        Long authId= jwtTokenManager.validToken(dto.getToken()).get();
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId);
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
+        }
+        directProducer.sendExpenseEmployee(iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(), dto));
+        System.out.println("create expense metodu calisti");
         return true;
     }
 }

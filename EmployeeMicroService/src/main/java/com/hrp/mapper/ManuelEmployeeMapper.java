@@ -1,9 +1,11 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
 import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
+import com.hrp.rabbitmq.model.ModelEmployeeExpense;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
 import com.hrp.rabbitmq.model.ModelEmployeeLeave;
 import com.hrp.repository.entity.Employee;
@@ -70,5 +72,22 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeLeave.setEmployeeId(employee.getId());
         modelEmployeeLeave.setCompany(employee.getCompany());
         return modelEmployeeLeave;
+    }
+
+    @Override
+    public ModelEmployeeExpense toEmployeeExpenseModel(Employee employee, ExpenseRequestDto dto) {
+        ModelEmployeeExpense modelEmployeeExpense = new ModelEmployeeExpense();
+        modelEmployeeExpense.setAmount(dto.getAmount());
+        modelEmployeeExpense.setCurrency(dto.getCurrency());
+        modelEmployeeExpense.setType(dto.getType());
+        modelEmployeeExpense.setRequestDate(dto.getRequestDate());
+        modelEmployeeExpense.setInvoiceUrl(dto.getInvoiceUrl());
+        modelEmployeeExpense.setSpendingDate(dto.getSpendingDate());
+        modelEmployeeExpense.setRequestDate(dto.getRequestDate());
+        modelEmployeeExpense.setComment(dto.getComment());
+        modelEmployeeExpense.setEmployeeId(employee.getId());
+        modelEmployeeExpense.setCompany(employee.getCompany());
+
+        return modelEmployeeExpense;
     }
 }

@@ -1,6 +1,7 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.BaseEmployeeRequestDto;
+import com.hrp.dto.request.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
@@ -34,6 +35,12 @@ public class EmployeeController {
     @CrossOrigin("*")
     public ResponseEntity<Boolean> createLeave(@RequestBody LeaveRequestDto dto){
         return ResponseEntity.ok(employeeService.createLeave(dto));
+    }
+
+    @PostMapping("/createexpense")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> createExpense(@RequestBody ExpenseRequestDto dto){
+        return ResponseEntity.ok(employeeService.createExpnse(dto));
     }
 
 
