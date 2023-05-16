@@ -43,4 +43,13 @@ public class LeaveService extends ServiceManagerImpl<Leave, Long> {
         }
         directProducer.turnAllLeaveEmployee(turnAllLeaveRequests);
     }
+
+    public void myLeaveFindAll(ModelEmployeeLeave model) {
+        Optional<List<Leave>> leaves=leaveRepository.findOptionalByEmployeeId(model.getEmployeeId());
+        List<ModelTurnAllLeaveRequest> turnAllLeaveRequests = new ArrayList<>();
+        for (Leave leave: leaves.get()){
+            turnAllLeaveRequests.add( manuelRequirementsMapper.toModelTurnAllLeaveRequest(leave));
+        }
+        directProducer.turnMyLeaveFindAll(turnAllLeaveRequests);
+    }
 }

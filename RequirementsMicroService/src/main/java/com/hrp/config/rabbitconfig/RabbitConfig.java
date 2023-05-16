@@ -20,8 +20,9 @@ public class RabbitConfig {
     private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
     private String bindingKeyRegisterManager= "binding-key-register-manager" ;
     private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
-
     private String bindingKeyTurnAllLeaveEmployee= "binding-turnallleave-employee" ;
+    private String bindingKeyTurnMyLeaveFindAll= "binding-turnmyleave-findall" ;
+
 
 
 
@@ -31,8 +32,8 @@ public class RabbitConfig {
     private  String queueRegisterAdmin = "queue-register-admin";
     private  String queueRegisterManager = "queue-register-manager";
     private  String queueRegisterEmployee= "queue-register-employee";
-
     private String queueTurnAllLeaveEmployee= "queue-turnallleave-employee" ;
+    private String queueTurnMyLeaveFindAll= "queue-turnmyleave-findall" ;
 
 
 
@@ -72,6 +73,11 @@ public class RabbitConfig {
         return new Queue(queueTurnAllLeaveEmployee);
     }
 
+    @Bean
+    Queue queueTurnMyLeaveFindAll(){
+        return new Queue(queueTurnMyLeaveFindAll);
+    }
+
 
 
     /**
@@ -95,6 +101,10 @@ public class RabbitConfig {
     @Bean
     public Binding bindingTurnAllLeaveEmployee(final Queue queueTurnAllLeaveEmployee,final DirectExchange directExchange){
         return BindingBuilder.bind(queueTurnAllLeaveEmployee).to(directExchange).with(bindingKeyTurnAllLeaveEmployee);
+    }
+    @Bean
+    public Binding bindingTurnMyLeavesFindAll(final Queue queueTurnMyLeaveFindAll,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueTurnMyLeaveFindAll).to(directExchange).with(bindingKeyTurnMyLeaveFindAll);
     }
 
 

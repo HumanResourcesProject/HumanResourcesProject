@@ -19,18 +19,7 @@ public class Consumer {
     private final SpendingService spendingService;
     @RabbitListener(queues = "queue-advance-payment-employee")
     public void createAdvancePayment(ModelEmployeeAdvancePaymentRequest model){
-    try {
-        System.out.println("advance payment consumer ici");
         advancepaymentService.createAdvancePayment(model);
-        System.out.println("*******");
-
-    } catch (Exception e) {
-        System.out.println("hata aldik ------------------\n\n----------------\n\n");
-        e.printStackTrace();
-        e.getMessage();
-        System.out.println("\n\n\n hata aldik ------------------------\n\n----------------");
-
-    }
     }
     @RabbitListener(queues = "queue-leave-employee")
     public void createLeave(ModelEmployeeLeave modelEmployeeLeave){
@@ -40,8 +29,13 @@ public class Consumer {
 
     @RabbitListener(queues = "queue-expense-employee")
     public void createExpense(ModelEmployeeExpense modelEmployeeExpense){
-        System.out.println("create leave consumeeeer");
+        System.out.println("create expense consumeeeer");
         spendingService.createExpense(modelEmployeeExpense);
+    }
+    @RabbitListener(queues = "queue-my-leave")
+    public void myLeaveFindAll ( ModelEmployeeLeave model){
+        System.out.println("my leave consumeeeer");
+        leaveService.myLeaveFindAll(model);
     }
 
 

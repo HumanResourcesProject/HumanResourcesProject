@@ -74,6 +74,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeLeave.setStartDate(dto.getStartDate());
         modelEmployeeLeave.setEmployeeId(employee.getId());
         modelEmployeeLeave.setCompany(employee.getCompany());
+        modelEmployeeLeave.setAmountOfDay(dto.getAmountOfDay());
         return modelEmployeeLeave;
     }
 
