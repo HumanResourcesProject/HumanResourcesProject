@@ -1,6 +1,7 @@
 package com.hrp.dto.request;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -15,5 +16,5 @@ public class UpdateManagerRequestDto {
     private String phone;
     private String company;
     private String jobEnd;
-    private String avatar;
+    private MultipartFile avatar;
 }
