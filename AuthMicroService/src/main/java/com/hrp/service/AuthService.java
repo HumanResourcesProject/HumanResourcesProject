@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -50,6 +51,13 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
                 .token(token.get())
                 .role(auth.get().getRole())
                 .build();
+    }
+
+    // find all auth
+    public Iterable<Auth> findAllAuth(){
+        List <Auth> auths = (List<Auth>) authRepository.findAll();
+        return auths;
+
     }
 
 

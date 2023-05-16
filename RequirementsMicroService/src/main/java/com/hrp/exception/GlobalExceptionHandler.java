@@ -27,9 +27,9 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(AdminException.class)
+    @ExceptionHandler(RequirementsMicroException.class)
     @ResponseBody
-    public ResponseEntity<ErrorMessage> handleSpringMonoException(AdminException exception){
+    public ResponseEntity<ErrorMessage> handleSpringMonoException(RequirementsMicroException exception){
         return new ResponseEntity<>(createError(exception.getEErrorType(),exception),exception.getEErrorType().getHttpStatus());
     }
 

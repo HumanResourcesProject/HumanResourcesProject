@@ -9,9 +9,9 @@ spring:
       name: company-manager-service
   rabbitmq:
     host: localhost
+    port: 5672
     username: user
     password: password
-    port: 5672
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPCompanyManagerDB
