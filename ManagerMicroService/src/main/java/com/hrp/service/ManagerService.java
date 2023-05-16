@@ -43,6 +43,7 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
     }
 
     public Boolean createManager(ModelRegisterManager model) {
+        System.out.println("asdsadas");
         Manager manager = iManuelManagerMapper.toManager(model);
         manager.setAvatar("https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
         save(manager);

@@ -45,6 +45,7 @@ public class LeaveService extends ServiceManagerImpl<Leave, Long> {
     }
 
     public void myLeaveFindAll(ModelEmployeeLeave model) {
+        System.out.println("asdsadas");
         Optional<List<Leave>> leaves=leaveRepository.findOptionalByEmployeeId(model.getEmployeeId());
         List<ModelTurnAllLeaveRequest> turnAllLeaveRequests = new ArrayList<>();
         for (Leave leave: leaves.get()){
