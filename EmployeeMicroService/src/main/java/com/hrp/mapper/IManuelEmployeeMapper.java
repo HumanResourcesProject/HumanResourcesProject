@@ -1,6 +1,7 @@
 package com.hrp.mapper;
 
-import com.hrp.dto.request.ExpenseRequestDto;
+import com.hrp.dto.request.EmployeeUpdateRequestDto;
+import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
@@ -17,4 +18,5 @@ public interface IManuelEmployeeMapper {
      ModelEmployeeLeave  toEmployeeLeaveModel(Employee employee, LeaveRequestDto dto);
 
     ModelEmployeeExpense toEmployeeExpenseModel(Employee employee, ExpenseRequestDto dto);
+    Employee toEmployee(Employee employee,EmployeeUpdateRequestDto dto);
 }

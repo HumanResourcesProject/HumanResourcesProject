@@ -1,7 +1,10 @@
 package com.hrp.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.BaseEmployeeRequestDto;
-import com.hrp.dto.request.ExpenseRequestDto;
+import com.hrp.dto.request.EmployeeUpdateRequestDto;
+import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
@@ -15,9 +18,9 @@ import com.hrp.repository.entity.Employee;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -96,5 +99,53 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         directProducer.sendExpenseEmployee(iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(), dto));
         System.out.println("create expense metodu calisti");
         return true;
+    }
+
+    public Boolean updateEmployee(EmployeeUpdateRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
+        System.out.println("********************************************");
+        System.out.println("eski employe bilgileri"+employee.get().toString());
+        System.out.println("----------*****************************-----------------");
+        System.out.println("new employee bilgileri"+newEmployee.toString());
+        //newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
+        System.out.println("116 da ki avatar cevirmeden sonra new employee bilgileri"+newEmployee.toString());
+        System.out.println("********************************************");
+        update(newEmployee);
+return true;
+    }
+
+
+
+    private String toTurnStringAvatar(MultipartFile file) {
+        Map config = new HashMap();
+        config.put("cloud_name", "doqksh0xh");
+        config.put("api_key", "871216635594134");
+        config.put("api_secret", "6b3zcRZyWKeuiW6qIq4XvWnhVno");
+        Cloudinary cloudinary = new Cloudinary(config);
+        try{
+            Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            String url = (String) result.get("url");
+            System.out.println(url+" --------------------------");
+            return url;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<BaseEmployeeResponseDto> findAllEmployee(BaseEmployeeRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        return findAll().stream().filter(x->x.getCompany()==employee.get().getCompany())
+                .map(x-> iManuelEmployeeMapper.toBaseEmployeeDto(x))
+                .collect(Collectors.toList());
+    }
+
+    public BaseEmployeeResponseDto findMe(BaseEmployeeRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        return iManuelEmployeeMapper.toBaseEmployeeDto(employee.get());
     }
 }

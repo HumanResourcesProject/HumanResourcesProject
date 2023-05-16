@@ -1,5 +1,4 @@
 # yapilacaklar.
- ### admin için
-* admin registerden password kaldırılacak.
-* token yok ise giris yapmicak.
-* MY PROFİLE update de id kalkıcak
+* employee -> advance payment da tarih alınacak. ne zamana avans istedigini belirtecek.
+* employee -> findMe metodu icinde kesinlikle fronta maas gönderilmeli 
+* employee -> find all

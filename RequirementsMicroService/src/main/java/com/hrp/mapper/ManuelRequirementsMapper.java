@@ -32,6 +32,7 @@ public class ManuelRequirementsMapper implements IManuelRequirementsMapper {
         advancedPayment.setCurrency(SpendingCurrency.valueOf(model.getCurrency().trim().toUpperCase()));
         advancedPayment.setComment(model.getComment());
         advancedPayment.setStatus(1);
+        advancedPayment.setAdvancedPaymentDate(model.getAdvancedPaymentDate());
         advancedPayment.setRequestDate(LocalDateTime.now().toString());
         return advancedPayment;
     }

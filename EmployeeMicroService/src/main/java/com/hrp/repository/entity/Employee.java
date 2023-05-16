@@ -37,5 +37,4 @@ public class Employee extends BaseEntity{
     private String avatar;
     private Long salary;
 
-
 }

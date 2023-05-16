@@ -1,4 +1,4 @@
-package com.hrp.dto.request;
+package com.hrp.dto.request.requirements;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +16,6 @@ public class ExpenseRequestDto {
     private String currency;
     private String type;
     private String comment;
-    private String invoiceUrl; // fatura url'si
-//    MultipartFile faturaninFotografi;
+    private MultipartFile invoiceUrl; // fatura url'si multi
+    //private String invoiceUrl; // fatura url'si -> swagger deneme icin string
 }

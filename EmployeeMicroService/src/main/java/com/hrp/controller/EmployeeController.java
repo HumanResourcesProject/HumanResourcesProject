@@ -1,7 +1,8 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.BaseEmployeeRequestDto;
-import com.hrp.dto.request.ExpenseRequestDto;
+import com.hrp.dto.request.EmployeeUpdateRequestDto;
+import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
@@ -22,7 +23,20 @@ public class EmployeeController {
     @PostMapping("/findallemployee")
     @CrossOrigin("*")
     public ResponseEntity<List<BaseEmployeeResponseDto>> findAll(@RequestBody BaseEmployeeRequestDto dto){
-        return ResponseEntity.ok(employeeService.findAll(dto));
+        return ResponseEntity.ok(employeeService.findAllEmployee(dto));
+    }
+
+    // update employee
+    @PutMapping("/updateemployee")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> updateEmployee(EmployeeUpdateRequestDto dto){
+        return ResponseEntity.ok(employeeService.updateEmployee(dto));
+    }
+    // find me
+    @PostMapping("/findme")
+    @CrossOrigin("*")
+    public ResponseEntity<BaseEmployeeResponseDto> findMe(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findMe(dto));
     }
 
     @PostMapping("/createadvancepayment")

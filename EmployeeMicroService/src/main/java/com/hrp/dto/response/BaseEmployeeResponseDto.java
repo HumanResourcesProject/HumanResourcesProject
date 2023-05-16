@@ -15,6 +15,7 @@ public class BaseEmployeeResponseDto {
     String surname;
     String birthDate;
     String birthPlace;
+    Long salary;
     String identityNumber;
     String Occupation;
     String department;

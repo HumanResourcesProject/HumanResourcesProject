@@ -1,6 +1,7 @@
 package com.hrp.mapper;
 
-import com.hrp.dto.request.ExpenseRequestDto;
+import com.hrp.dto.request.EmployeeUpdateRequestDto;
+import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
@@ -45,6 +46,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         baseEmployeeResponseDto.setOccupation(employee.getOccupation());
         baseEmployeeResponseDto.setDepartment(employee.getDepartment());
         baseEmployeeResponseDto.setEmail(employee.getEmail());
+        baseEmployeeResponseDto.setSalary(employee.getSalary());
         baseEmployeeResponseDto.setAddress(employee.getAddress());
         baseEmployeeResponseDto.setPhone(employee.getPhone());
         baseEmployeeResponseDto.setCompany(employee.getCompany());
@@ -60,6 +62,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         model.setCompany(employee.getCompany());
         model.setComment(dto.getComment());
         model.setCurrency(dto.getCurrency());
+        model.setAdvancedPaymentDate(dto.getAdvancedPaymentDate());
         return model;
     }
 
@@ -89,5 +92,12 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeExpense.setCompany(employee.getCompany());
 
         return modelEmployeeExpense;
+    }
+
+    @Override
+    public Employee toEmployee(Employee employee,EmployeeUpdateRequestDto dto) {
+        employee.setAddress(dto.getAddress());
+        employee.setPhone(dto.getPhone());
+        return employee;
     }
 }

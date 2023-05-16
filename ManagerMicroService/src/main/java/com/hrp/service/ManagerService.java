@@ -51,7 +51,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public List<BaseManagerResponseDto> findAllManager(TokenDto dto) {
         Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        System.out.println("gelen id: find all manager da : "+ id);
         if(dto.getRole().equals("MANAGER")){
+            System.out.println("findall manager if den sonra");
             Manager manager = managerRepository.findOptionalByAuthId(id.get()).get();
             return findAll().stream().filter(x->x.getCompany()==manager.getCompany()).
                     map(x-> iManuelManagerMapper
@@ -69,7 +71,7 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.INVALID_TOKEN);
         }
-        Optional<Manager> manager = managerRepository.findOptionalById(companyManagerId.get());
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(companyManagerId.get());
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
@@ -115,10 +117,13 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public List<ModelTurnAllLeaveRequest> findAllLeave(TokenDto dto) {
         Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        Optional<Manager> manager = managerRepository.findById(id.get());
+        System.out.println("findall leave de auth id: "+id);
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(id.get());
+        System.out.println("bulma isleminden sonra");
         directProducer.sendfindAllLeave(ModelBaseRequirmentFindAll.builder()
                         .company(manager.get().getCompany())
                 .build());
+        System.out.println("threadden önce");
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
