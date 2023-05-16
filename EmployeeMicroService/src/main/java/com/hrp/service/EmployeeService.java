@@ -96,6 +96,7 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         if (employee.isEmpty()){
             throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
         }
+
         directProducer.sendExpenseEmployee(iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(), dto));
         System.out.println("create expense metodu calisti");
         return true;
