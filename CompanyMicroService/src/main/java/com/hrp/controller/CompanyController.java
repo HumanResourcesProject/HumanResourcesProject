@@ -1,15 +1,13 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.CreateCompanyRequestDto;
+import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.response.BaseCompanyResponseDto;
 import com.hrp.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 //Dropbox
@@ -26,15 +24,18 @@ public class CompanyController {
 
     @PostMapping("/createcompany")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createCompany(  CreateCompanyRequestDto dto){
+    public ResponseEntity<Boolean> createCompany(CreateCompanyRequestDto dto){
         System.out.println("create company metodu");
         return ResponseEntity.ok(companyService.createCompany(dto));
     }
 
     //findall
-    @GetMapping("/findall")
-    public ResponseEntity<List<BaseCompanyResponseDto>> findAll(){
-        return ResponseEntity.ok(companyService.findAllDto());
+    @PostMapping("/findall")
+    @CrossOrigin("*")
+    public ResponseEntity<List<BaseCompanyResponseDto>> findAll(@RequestBody TokenDto dto){
+        System.out.println("find all company");
+        System.out.println(dto.toString());
+        return ResponseEntity.ok(companyService.findAllDto(dto));
     }
 
 

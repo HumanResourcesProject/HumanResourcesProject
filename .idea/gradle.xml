@@ -15,11 +15,12 @@
             <option value="$PROJECT_DIR$/AdminMicroService" />
             <option value="$PROJECT_DIR$/ApiGatewayService" />
             <option value="$PROJECT_DIR$/AuthMicroService" />
-            <option value="$PROJECT_DIR$/CompanyManagerMicroServiceApplication" />
             <option value="$PROJECT_DIR$/CompanyMicroService" />
             <option value="$PROJECT_DIR$/ConfigServer" />
             <option value="$PROJECT_DIR$/EmployeeMicroService" />
             <option value="$PROJECT_DIR$/MailService" />
+            <option value="$PROJECT_DIR$/ManagerMicroService" />
+            <option value="$PROJECT_DIR$/RequirementsMicroService" />
           </set>
         </option>
       </GradleProjectSettings>

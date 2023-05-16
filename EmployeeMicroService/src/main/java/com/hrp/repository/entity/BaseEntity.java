@@ -14,6 +14,6 @@ import java.io.Serializable;
 @SuperBuilder
 public class BaseEntity implements Serializable {
     boolean state;
-    Long createdate;
-    Long updatedate;
+    String createdate;
+    String updatedate;
 }

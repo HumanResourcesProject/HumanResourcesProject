@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(value= "employees")
+@Document(value= "company")
 public class Company extends BaseEntity {
     @Id
     private String id;

@@ -1,9 +1,10 @@
 include 'AdminMicroService'
 include 'ApiGatewayService'
 include 'ConfigServer'
-include 'CompanyManagerMicroServiceApplication'
+include 'ManagerMicroService'
 include 'EmployeeMicroService'
 include 'AuthMicroService'
 include 'MailService'
 include 'CompanyMicroService'
+include 'RequirementsMicroService'
 

@@ -1,0 +1,27 @@
+server:
+  port: 7075
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: requirements-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/HRPRequirementsDB
+    username: postgres
+    password: asd123asd # ortam degiskeni yapialacak
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
