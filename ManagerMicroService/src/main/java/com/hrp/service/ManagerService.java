@@ -4,16 +4,20 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
+import com.hrp.dto.response.AllLeaveFormResponseDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.exception.ManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IManuelManagerMapper;
+import com.hrp.rabbitmq.model.ModelBaseRequirmentFindAll;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
+import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IManagerRepository;
 import com.hrp.repository.entity.Manager;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
+import com.hrp.utility.StaticValues;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -109,4 +113,17 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
     }
 
+    public List<ModelTurnAllLeaveRequest> findAllLeave(TokenDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        Optional<Manager> manager = managerRepository.findById(id.get());
+        directProducer.sendfindAllLeave(ModelBaseRequirmentFindAll.builder()
+                        .company(manager.get().getCompany())
+                .build());
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return StaticValues.findAllLeave;
+    }
 }

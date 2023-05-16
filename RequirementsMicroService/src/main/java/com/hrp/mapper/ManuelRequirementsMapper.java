@@ -1,6 +1,7 @@
 package com.hrp.mapper;
 
 
+import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
 import com.hrp.rabbitmq.model.ModelEmployeeExpense;
 import com.hrp.rabbitmq.model.ModelEmployeeLeave;
@@ -62,5 +63,19 @@ public class ManuelRequirementsMapper implements IManuelRequirementsMapper {
         spending.setCompany(model.getCompany());
 
         return spending;
+    }
+
+    @Override
+    public ModelTurnAllLeaveRequest toModelTurnAllLeaveRequest(Leave leave) {
+       ModelTurnAllLeaveRequest request = new ModelTurnAllLeaveRequest();
+       request.setRequestDate(leave.getRequestDate());
+       request.setStatus(leave.getStatus());
+       request.setType(String.valueOf(leave.getType()));
+       request.setFinishDate(leave.getFinishDate());
+       request.setStartDate(leave.getStartDate());
+       request.setApprovalDate(leave.getApprovalDate());
+       request.setEmployeeId(leave.getEmployeeId());
+
+       return request;
     }
 }

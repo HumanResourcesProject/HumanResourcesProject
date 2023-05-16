@@ -21,6 +21,8 @@ public class RabbitConfig {
     private String bindingKeyRegisterManager= "binding-key-register-manager" ;
     private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
 
+    private String bindingKeyTurnAllLeaveEmployee= "binding-turnallleave-employee" ;
+
 
 
 
@@ -30,6 +32,7 @@ public class RabbitConfig {
     private  String queueRegisterManager = "queue-register-manager";
     private  String queueRegisterEmployee= "queue-register-employee";
 
+    private String queueTurnAllLeaveEmployee= "queue-turnallleave-employee" ;
 
 
 
@@ -64,6 +67,11 @@ public class RabbitConfig {
         return new Queue(queueRegisterEmployee);
     }
 
+    @Bean
+    Queue queueTurnAllLeaveEmployee(){
+        return new Queue(queueTurnAllLeaveEmployee);
+    }
+
 
 
     /**
@@ -82,6 +90,11 @@ public class RabbitConfig {
     @Bean
     public Binding bindingRegisterEmployee(final Queue queueRegisterEmployee,final DirectExchange directExchange){
         return BindingBuilder.bind(queueRegisterEmployee).to(directExchange).with(bindingKeyRegisterEmployee);
+    }
+
+    @Bean
+    public Binding bindingTurnAllLeaveEmployee(final Queue queueTurnAllLeaveEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueTurnAllLeaveEmployee).to(directExchange).with(bindingKeyTurnAllLeaveEmployee);
     }
 
 
