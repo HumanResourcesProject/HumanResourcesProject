@@ -20,6 +20,9 @@ public class RabbitConfig {
     private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
     private String bindingKeyRegisterManager= "binding-key-register-manager" ;
     private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
+    private String bindingKeyAdvancePaymentEmployee = "binding-key-advance-payment-employee" ;
+    private String bindingKeyLeaveEmployee = "binding-key-leave-employee" ;
+
 
 
 
@@ -29,7 +32,9 @@ public class RabbitConfig {
     private  String queueRegisterAdmin = "queue-register-admin";
     private  String queueRegisterManager = "queue-register-manager";
     private  String queueRegisterEmployee= "queue-register-employee";
+    private  String queueAdvancePaymentEmployee = "queue-advance-payment-employee";
 
+    private  String queueLeaveEmployee = "queue-leave-employee";
 
 
 
@@ -64,11 +69,19 @@ public class RabbitConfig {
         return new Queue(queueRegisterEmployee);
     }
 
+    @Bean
+    Queue queueAdvancePaymentEmployee(){
+        return new Queue(queueAdvancePaymentEmployee);
+    }
 
-
+    @Bean
+    Queue queueLeaveEmployee(){
+        return new Queue(queueLeaveEmployee);
+    }
     /**
      * ---- Binding ----
      */
+
 
 
     @Bean
@@ -84,5 +97,13 @@ public class RabbitConfig {
         return BindingBuilder.bind(queueRegisterEmployee).to(directExchange).with(bindingKeyRegisterEmployee);
     }
 
+    @Bean
+    public Binding bindingAdvancePaymentEmployee(final Queue queueAdvancePaymentEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueAdvancePaymentEmployee).to(directExchange).with(bindingKeyAdvancePaymentEmployee);
+    }
+    @Bean
+    public Binding bindingLeaveEmployee(final Queue queueLeaveEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueLeaveEmployee).to(directExchange).with(bindingKeyLeaveEmployee);
+    }
 
 }

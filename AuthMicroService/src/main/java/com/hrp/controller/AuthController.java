@@ -44,9 +44,16 @@ public class AuthController {
     // register employee
     @PostMapping("/registeremployee")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> registerEmployee(@RequestBody RegisterEmployeeRequestDto dto){
+    public ResponseEntity<Boolean> registerEmployee(@RequestBody RegisterEmployeeRequestDto dto) {
         return ResponseEntity.ok(authService.registerEmployee(dto));
-            }
+    }
+
+
+
+
+
+
+
 
 
 

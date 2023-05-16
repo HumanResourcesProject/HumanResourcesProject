@@ -14,7 +14,6 @@ public class Consumer {
     private final EmployeeService employeeService;
     @RabbitListener(queues = "queue-register-employee")
     public void registerEmployee(ModelRegisterEmployee model){
-        System.out.println("employee consumer");
-        employeeService.createEmployee(model);
+            employeeService.createEmployee(model);
     }
 }

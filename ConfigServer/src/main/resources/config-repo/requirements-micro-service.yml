@@ -6,16 +6,22 @@ spring:
     enabled: true
     base-url: http://localhost:9411
     service:
-      name: admin-service
+      name: requirements-service
   rabbitmq:
     host: localhost
+    port: 5672
     username: user
     password: user
-    port: 5672
-  data:
-    mongodb:
-      host: localhost
-      port: 27000
-      username: "user"
-      password: "root"
-      database: HRPRequirementDB
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/HRPRequirementsDB
+    username: postgres
+    password: root # ortam degiskeni yapialacak
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true

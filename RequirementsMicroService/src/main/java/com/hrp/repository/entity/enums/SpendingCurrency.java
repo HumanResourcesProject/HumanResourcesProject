@@ -4,4 +4,6 @@ public enum SpendingCurrency {
     TL,
     EURO,
     DOLAR,
+    DINAR,
+    OTHER;
 }
