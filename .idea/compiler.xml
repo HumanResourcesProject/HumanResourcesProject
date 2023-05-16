@@ -9,16 +9,16 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.26/8f8cf0372abf564913e9796623aac4c8ea44025a/lombok-1.18.26.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct-processor/1.5.3.Final/dce418bedafd71ff8dd2cef15006c0fee788b073/mapstruct-processor-1.5.3.Final.jar" />
         </processorPath>
-        <module name="com.hrp.HumanResourcesProject.AdminMicroService.main" />
-        <module name="com.hrp.HumanResourcesProject.AuthMicroService.main" />
         <module name="HumanResourcesProject.main" />
-        <module name="com.hrp.HumanResourcesProject.ManagerMicroService.main" />
-        <module name="com.hrp.HumanResourcesProject.MailService.main" />
+        <module name="hrp.HumanResourcesProject.AdminMicroService.main" />
+        <module name="hrp.HumanResourcesProject.MailService.main" />
         <module name="HumanResourcesProject.RequirementsMicroService.main" />
-        <module name="HRMProject.HumanResourcesProject.EmployeeMicroService.main" />
-        <module name="HRMProject.HumanResourcesProject.CompanyMicroService.main" />
-        <module name="HRMProject.HumanResourcesProject.ApiGatewayService.main" />
-        <module name="HRMProject.HumanResourcesProject.ConfigServer.main" />
+        <module name="hrp.HumanResourcesProject.ConfigServer.main" />
+        <module name="HumanResourcesProject.ManagerMicroService.main" />
+        <module name="intellij.hrp.HumanResourcesProject.EmployeeMicroService.main" />
+        <module name="HumanResourcesProject.ApiGatewayService.main" />
+        <module name="hrp.HumanResourcesProject.AuthMicroService.main" />
+        <module name="com.hrp.HumanResourcesProject.CompanyMicroService.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

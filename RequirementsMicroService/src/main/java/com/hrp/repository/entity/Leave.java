@@ -1,6 +1,6 @@
 package com.hrp.repository.entity;
 
-import com.hrp.repository.entity.enums.PermissionType;
+import com.hrp.repository.entity.enums.LeaveType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,18 +13,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tbl_permission")
-public class Permission extends BaseEntity{
+@Table(name = "tbl_leave")
+public class Leave extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long employeeId;
-//    private Long managerId;
+    private String employeeId;
+    private Long managerId;
     private String company;
-    private PermissionType type;
+    @Enumerated(EnumType.STRING)
+    private LeaveType type;
     private String requestDate;
     private String startDate;
     private String finishDate;
     private String approvalDate;
-    private int state;
+    private int status;
 }

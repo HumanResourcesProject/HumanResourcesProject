@@ -1,7 +1,11 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
+import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
+import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
+import com.hrp.rabbitmq.model.ModelEmployeeLeave;
 import com.hrp.repository.entity.Employee;
 import org.springframework.stereotype.Component;
 
@@ -18,27 +22,15 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
                 .birthDate(model.getBirthDate())
                 .birthPlace(model.getBirthPlace())
                 .jobStart(model.getJobStart())
-                .Occupation(model.getOccupation())
-                .Department(model.getDepartment())
+                .occupation(model.getOccupation())
+                .department(model.getDepartment())
                 .email(model.getEmail())
                 .phone(model.getPhone())
                 .address(model.getAddress())
                 .company(model.getCompany())
                 .build();
     }
-//    String name;
-//    String middleName;
-//    String surname;
-//    String birthDate;
-//    String birthPlace;
-//    String identityNumber;
-//    String Occupation;
-//    String department;
-//    String email;
-//    String address;
-//    String phone;
-//    String company;
-//    String avatar;
+
     @Override
     public BaseEmployeeResponseDto toBaseEmployeeDto(Employee employee) {
         BaseEmployeeResponseDto baseEmployeeResponseDto = new BaseEmployeeResponseDto();
@@ -56,5 +48,27 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         baseEmployeeResponseDto.setCompany(employee.getCompany());
         baseEmployeeResponseDto.setAvatar(employee.getAvatar());
         return baseEmployeeResponseDto;
+    }
+
+    @Override
+    public ModelEmployeeAdvancePaymentRequest toEmployeeAdvancePaymentModel(Employee employee,AdvancePaymentRequestDto dto) {
+        ModelEmployeeAdvancePaymentRequest model = new ModelEmployeeAdvancePaymentRequest();
+        model.setEmployeeId(employee.getId());
+        model.setAmount(dto.getAmount());
+        model.setCompany(employee.getCompany());
+        model.setComment(dto.getComment());
+        model.setCurrency(dto.getCurrency());
+        return model;
+    }
+
+    @Override
+    public ModelEmployeeLeave toEmployeeLeaveModel(Employee employee, LeaveRequestDto dto) {
+        ModelEmployeeLeave modelEmployeeLeave= new ModelEmployeeLeave();
+        modelEmployeeLeave.setType(dto.getType());
+        modelEmployeeLeave.setFinishDate(dto.getFinishDate());
+        modelEmployeeLeave.setStartDate(dto.getStartDate());
+        modelEmployeeLeave.setEmployeeId(employee.getId());
+        modelEmployeeLeave.setCompany(employee.getCompany());
+        return modelEmployeeLeave;
     }
 }

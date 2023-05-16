@@ -11,10 +11,12 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModelEmployeePermissionRequest implements Serializable {
-    private String id;
-    private Long authId;
-    private String identityNumber;
-    private Long salary;
+public class ModelEmployeeAdvancePaymentRequest implements Serializable {
+    private String employeeId;
+    private Long amount;
     private String company;
+    private String comment;
+    private String currency;
+
+
 }

@@ -15,8 +15,8 @@ public class RegisterEmployeeRequestDto {
     private String birthDate;
     private String birthPlace;
     private String jobStart;
-    private String Occupation;
-    private String Department;
+    private String occupation;
+    private String department;
     private String email;
     private String phone;
     private String address;

@@ -1,12 +1,12 @@
 package com.hrp.service;
 
 import com.hrp.dto.request.BaseEmployeeRequestDto;
-import com.hrp.dto.request.AdvancePaymentRequestDto;
+import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
+import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
 import com.hrp.exception.EErrorType;
 import com.hrp.exception.EmployeeException;
 import com.hrp.mapper.IManuelEmployeeMapper;
-import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IEmployeeRepository;
@@ -36,8 +36,10 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         this.directProducer= directProducer;
     }
 
+
     public void createEmployee(ModelRegisterEmployee model){
         Employee employee= iManuelEmployeeMapper.modelToEmployee(model);
+        employee.setSalary(5000L);
         employee.setAvatar("https://gcavocats.ca/wp-content/uploads/2018/09/man-avatar-icon-flat-vector-19152370-1.jpg");
         save(employee);
     }
@@ -58,24 +60,29 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
 
     }
 
-    public Boolean createPermission(AdvancePaymentRequestDto dto) {
-        Optional<Employee> employee = employeeRepository.findOptionalByIdentityNumber(dto.getIdentityNumber());
+    public Boolean createAdvancePayment(AdvancePaymentRequestDto dto) {
+        Long authId = jwtTokenManager.validToken(dto.getToken()).get();
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId);
         if (employee.isEmpty()){
             throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
         }
-
         if(dto.getAmount()*3 > employee.get().getSalary()){
             System.out.println("Maasininizin 3 katindan fazla avans çekemezsiniz.");
             return null;
         }
 
-        directProducer.sendAdvanceEmployee(ModelEmployeeAdvancePaymentRequest.builder()
-                        .id(employee.get().getId())
-                        .authId(employee.get().getAuthId())
-                        .identityNumber(dto.getIdentityNumber())
-                        .company(employee.get().getCompany())
-                        .salary(employee.get().getSalary())
-                .build());
+        directProducer.sendAdvanceEmployee(iManuelEmployeeMapper.toEmployeeAdvancePaymentModel(employee.get(),dto));
+        return true;
+    }
+
+    public Boolean createLeave(LeaveRequestDto dto) {
+        Long authId= jwtTokenManager.validToken(dto.getToken()).get();
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId);
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
+        }
+        directProducer.sendLeaveEmployee(iManuelEmployeeMapper.toEmployeeLeaveModel(employee.get(),dto));
+        System.out.println("create leave metodu calisti");
         return true;
     }
 }

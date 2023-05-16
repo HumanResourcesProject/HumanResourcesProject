@@ -12,10 +12,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ModelEmployeeAdvancePaymentRequest implements Serializable {
-    private String id;
-    private Long authId;
-    private String identityNumber;
-    private Long salary;
-
+    private String employeeId;
+    private Long amount;
     private String company;
+    private String comment;
+    private String currency;
+
+
 }

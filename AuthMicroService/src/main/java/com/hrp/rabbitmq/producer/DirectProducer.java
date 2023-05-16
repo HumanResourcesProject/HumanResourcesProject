@@ -17,14 +17,19 @@ public class DirectProducer {
 
     public void sendRegisterAdmin(ModelRegisterAdmin model){
         System.out.println("producer ici" +model.toString());
-        rabbitTemplate.convertAndSend("exchange-direct","binding-key-register-admin",model);
+        try {
+            rabbitTemplate.convertAndSend("exchange-direct","binding-key-register-admin",model);
+            System.out.println("girdi alt satıra");
+
+        } catch (Exception e){
+
+        }
     }
     public void sendRegisterManager(ModelRegisterManager model){
         System.out.println("producer ici" +model.toString());
         rabbitTemplate.convertAndSend("exchange-direct","binding-key-register-manager",model);
     }
     public void sendRegisterEmployee(ModelRegisterEmployee model){
-        System.out.println("producer ici" +model.toString());
-        rabbitTemplate.convertAndSend("exchange-direct","binding-key-register-employee",model);
-    }
+            rabbitTemplate.convertAndSend("exchange-direct","binding-key-register-employee",model);
+          }
 }

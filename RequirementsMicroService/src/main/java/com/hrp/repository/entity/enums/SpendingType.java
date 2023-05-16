@@ -1,9 +1,11 @@
 package com.hrp.repository.entity.enums;
 
 public enum SpendingType {
-    TRAVEL, //seyahat
-    HOSPITAL, // hastane
+    TRANSPORTATION, //seyahat
+    EDUCATION, // egitim
     ACCOMODATION, // konaklama
     FOOD, // gida
+    CLOTHES, // aksesuar
+    HEALTH, // saglik
     OTHER;
 }

@@ -1,24 +1,25 @@
 package com.hrp.service;
 
-import com.hrp.rabbitmq.model.ModelEmployeePermissionRequest;
-import com.hrp.repository.IAdvancedPaymentRepository;
+import com.hrp.mapper.IManuelRequirementsMapper;
+import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
+import com.hrp.repository.IAdvancePaymentRepository;
 import com.hrp.repository.entity.AdvancedPayment;
-import com.hrp.repository.entity.Permission;
 import com.hrp.utility.ServiceManagerImpl;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AdvancepaymentService extends ServiceManagerImpl<AdvancedPayment, Long> {
-    private final IAdvancedPaymentRepository advancedPaymentRepository;
-    public AdvancepaymentService(IAdvancedPaymentRepository advancedPaymentRepository) {
-        super(advancedPaymentRepository);
-        this.advancedPaymentRepository = advancedPaymentRepository;
+    private final IAdvancePaymentRepository advancePaymentRepository;
+    private final IManuelRequirementsMapper manuelRequirementsMapper;
+    public AdvancepaymentService(IAdvancePaymentRepository advancePaymentRepository, IManuelRequirementsMapper manuelRequirementsMapper) {
+        super(advancePaymentRepository);
+        this.advancePaymentRepository = advancePaymentRepository;
+        this.manuelRequirementsMapper = manuelRequirementsMapper;
     }
 
-    public void createAdvancePayment(ModelEmployeePermissionRequest model) {
-        save(AdvancedPayment.builder()
-                .employeeId(model.getAuthId())
-                .amount(model.getSalary())
-                .company(model.getCompany())
-                .build());
+    public void createAdvancePayment(ModelEmployeeAdvancePaymentRequest model) {
+        System.out.println("createAdvancePayment metodu ici");
+            save(manuelRequirementsMapper.toAdvancePayment(model));
+
     }
 }

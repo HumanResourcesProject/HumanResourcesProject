@@ -54,6 +54,8 @@ allprojects{
         implementation 'com.cloudinary:cloudinary-http44:1.27.0'
         implementation 'org.passay:passay:1.6.3'
 
+// https://mvnrepository.com/artifact/io.netty/netty-codec-http
+        implementation group: 'io.netty', name: 'netty-codec-http', version: '4.1.86.Final'
 
         //  implementation libs.springCloudGCloud
 

@@ -7,12 +7,16 @@ spring:
     base-url: http://localhost:9411
     service:
       name: company-manager-service
-
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPCompanyManagerDB
     username: postgres
-    password: root # ortam degiskeni yapialacak
+    password: asd123asd # ortam degiskeni yapialacak
   jpa:
     hibernate:
       ddl-auto: update
