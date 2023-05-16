@@ -84,7 +84,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeExpense.setCurrency(dto.getCurrency());
         modelEmployeeExpense.setType(dto.getType());
         modelEmployeeExpense.setRequestDate(dto.getRequestDate());
-        modelEmployeeExpense.setInvoiceUrl(dto.getInvoiceUrl());
+        //modelEmployeeExpense.setInvoiceUrl(dto.getInvoiceUrl());
         modelEmployeeExpense.setSpendingDate(dto.getSpendingDate());
         modelEmployeeExpense.setRequestDate(dto.getRequestDate());
         modelEmployeeExpense.setComment(dto.getComment());
