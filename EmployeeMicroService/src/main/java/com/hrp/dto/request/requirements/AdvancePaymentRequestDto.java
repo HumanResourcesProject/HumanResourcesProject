@@ -13,5 +13,7 @@ public class AdvancePaymentRequestDto {
     private Long amount;
     private String currency; // TL,EURO,DOLAR VS
     private String comment;
+    private String advancedPaymentDate;
+
 
 }

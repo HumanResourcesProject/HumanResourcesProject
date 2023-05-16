@@ -8,13 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UpdateManagerRequestDto {
+public class EmployeeUpdateRequestDto {
     private String token;
-    private String password;
-    private String email;
-    private String address;
     private String phone;
-    private String company;
-    private String jobEnd;
+    private String address;
     private MultipartFile avatar;
 }

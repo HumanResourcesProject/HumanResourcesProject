@@ -24,6 +24,7 @@ public class AdvancedPayment extends BaseEntity{
     private Long amount;
     @Enumerated(EnumType.STRING)
     private SpendingCurrency currency;
+    private String advancedPaymentDate;
     private String requestDate;
     private String approvalDate;
     private String comment;

@@ -4,16 +4,20 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
+import com.hrp.dto.response.AllLeaveFormResponseDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.exception.ManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IManuelManagerMapper;
+import com.hrp.rabbitmq.model.ModelBaseRequirmentFindAll;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
+import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IManagerRepository;
 import com.hrp.repository.entity.Manager;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
+import com.hrp.utility.StaticValues;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,7 +51,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public List<BaseManagerResponseDto> findAllManager(TokenDto dto) {
         Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        System.out.println("gelen id: find all manager da : "+ id);
         if(dto.getRole().equals("MANAGER")){
+            System.out.println("findall manager if den sonra");
             Manager manager = managerRepository.findOptionalByAuthId(id.get()).get();
             return findAll().stream().filter(x->x.getCompany()==manager.getCompany()).
                     map(x-> iManuelManagerMapper
@@ -64,7 +70,7 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.INVALID_TOKEN);
         }
-        Optional<Manager> manager = managerRepository.findOptionalById(companyManagerId.get());
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(companyManagerId.get());
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
@@ -108,4 +114,20 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
     }
 
+    public List<ModelTurnAllLeaveRequest> findAllLeave(TokenDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        System.out.println("findall leave de auth id: "+id);
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(id.get());
+        System.out.println("bulma isleminden sonra");
+        directProducer.sendfindAllLeave(ModelBaseRequirmentFindAll.builder()
+                        .company(manager.get().getCompany())
+                .build());
+        System.out.println("threadden önce");
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return StaticValues.findAllLeave;
+    }
 }

@@ -55,7 +55,6 @@ public class ManuelManagerMapper implements IManuelManagerMapper {
         manager.setPhone(dto.getPhone());
         manager.setCompany(dto.getCompany());
         manager.setJobEnd(dto.getJobEnd());
-        manager.setAvatar(dto.getAvatar());
         return manager;
     }
 }
