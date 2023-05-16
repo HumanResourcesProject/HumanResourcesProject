@@ -1,6 +1,7 @@
 package com.hrp.rabbitmq.producer;
 
 import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
+import com.hrp.rabbitmq.model.ModelEmployeeExpense;
 import com.hrp.rabbitmq.model.ModelEmployeeLeave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -20,5 +21,10 @@ public class DirectProducer {
     public void sendLeaveEmployee(ModelEmployeeLeave model){
         System.out.println("leave employee produceri");
         rabbitTemplate.convertAndSend("exchange-direct","binding-key-leave-employee",model);
+    }
+
+    public void sendExpenseEmployee(ModelEmployeeExpense model) {
+        System.out.println("Expense employee produceri");
+        rabbitTemplate.convertAndSend("exchange-direct","binding-key-expense-employee",model);
     }
 }
