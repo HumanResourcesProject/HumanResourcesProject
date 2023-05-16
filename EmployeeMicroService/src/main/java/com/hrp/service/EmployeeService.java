@@ -8,15 +8,20 @@ import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
+import com.hrp.dto.response.MyLeaveResponseDto;
 import com.hrp.exception.EErrorType;
 import com.hrp.exception.EmployeeException;
 import com.hrp.mapper.IManuelEmployeeMapper;
+import com.hrp.rabbitmq.model.ModelEmployeeExpense;
+import com.hrp.rabbitmq.model.ModelEmployeeLeave;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
+import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IEmployeeRepository;
 import com.hrp.repository.entity.Employee;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
+import com.hrp.utility.StaticValues;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,7 +101,10 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         if (employee.isEmpty()){
             throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
         }
-        directProducer.sendExpenseEmployee(iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(), dto));
+        ModelEmployeeExpense modelEmployeeExpense=new ModelEmployeeExpense();
+        modelEmployeeExpense = iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(),dto);
+        modelEmployeeExpense.setInvoiceUrl(toTurnStringAvatar(dto.getInvoiceUrl()));
+        directProducer.sendExpenseEmployee(modelEmployeeExpense);
         System.out.println("create expense metodu calisti");
         return true;
     }
@@ -148,4 +156,32 @@ return true;
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
         return iManuelEmployeeMapper.toBaseEmployeeDto(employee.get());
     }
+
+    public List<ModelTurnAllLeaveRequest> myLeaveFindAll(BaseEmployeeRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        directProducer.sendMyLeaveFindAll(ModelEmployeeLeave.builder()
+                        .employeeId(employee.get().getId())
+                .build());
+        System.out.println("service ici "+ 166);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("service ici "+ 173);
+        List<ModelTurnAllLeaveRequest> responses= new ArrayList<>();
+        System.out.println("service ici "+ 175);
+        for (ModelTurnAllLeaveRequest response : StaticValues.myLeaveFindAll){
+            System.out.println("service ici "+ 177);
+            responses.add(response);
+        }
+        System.out.println("00000099999900000000000");
+        System.out.println("00000099999900000000000");
+        System.out.println("00000099999900000000000");
+        System.out.println("00000099999900000000000");
+        System.out.println(responses);
+        return responses;
+    }
+
 }

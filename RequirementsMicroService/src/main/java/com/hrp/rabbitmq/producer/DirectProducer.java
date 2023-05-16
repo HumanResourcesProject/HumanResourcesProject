@@ -15,6 +15,10 @@ public class DirectProducer {
     public void turnAllLeaveEmployee (List<ModelTurnAllLeaveRequest> model){
         rabbitTemplate.convertAndSend("exchange-direct", "binding-turnallleave-employee", model);
     }
+    public void turnMyLeaveFindAll(List<ModelTurnAllLeaveRequest> model){
+        System.out.println("producer ici **********");
+        rabbitTemplate.convertAndSend("exchange-direct", "binding-turnmyleave-findall", model);
+    }
 
 
 }

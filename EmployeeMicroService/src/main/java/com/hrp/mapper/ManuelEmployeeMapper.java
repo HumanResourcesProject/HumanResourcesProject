@@ -74,6 +74,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeLeave.setStartDate(dto.getStartDate());
         modelEmployeeLeave.setEmployeeId(employee.getId());
         modelEmployeeLeave.setCompany(employee.getCompany());
+        modelEmployeeLeave.setAmountOfDay(dto.getAmountOfDay());
         return modelEmployeeLeave;
     }
 
@@ -84,7 +85,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeExpense.setCurrency(dto.getCurrency());
         modelEmployeeExpense.setType(dto.getType());
         modelEmployeeExpense.setRequestDate(dto.getRequestDate());
-        modelEmployeeExpense.setInvoiceUrl(dto.getInvoiceUrl());
+        //modelEmployeeExpense.setInvoiceUrl(dto.getInvoiceUrl());
         modelEmployeeExpense.setSpendingDate(dto.getSpendingDate());
         modelEmployeeExpense.setRequestDate(dto.getRequestDate());
         modelEmployeeExpense.setComment(dto.getComment());

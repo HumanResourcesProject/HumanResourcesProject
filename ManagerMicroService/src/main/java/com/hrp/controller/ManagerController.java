@@ -45,14 +45,6 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.findMe(dto));
     }
 
-
-    @PostMapping("/updateimage")
-    @CrossOrigin("*")
-    public ResponseEntity<String> uploadImageCloud(@RequestParam("file") MultipartFile file, String token) throws IOException {
-        System.out.println("upload image cloud metodu");
-        return ResponseEntity.ok(managerService.updateImage(file,token));
-    }
-
     @PostMapping("/findallleave")
     @CrossOrigin("*")
     public ResponseEntity<List<ModelTurnAllLeaveRequest>> findAllLeave (@RequestBody TokenDto dto){
