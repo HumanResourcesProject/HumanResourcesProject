@@ -2,6 +2,8 @@ package com.hrp.mapper;
 
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
+import com.hrp.dto.response.EmployeeRequestAndResponseDto;
+import com.hrp.rabbitmq.model.ModelBaseEmployee;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
 import com.hrp.repository.entity.Manager;
 import org.springframework.stereotype.Component;
@@ -43,7 +45,6 @@ public class ManuelManagerMapper implements IManuelManagerMapper {
         baseManagerResponseDto.setOccupation(manager.getOccupation());
         baseManagerResponseDto.setDepartment(manager.getDepartment());
         baseManagerResponseDto.setJobStart(manager.getJobStart());
-        baseManagerResponseDto.setJobEnd(manager.getJobEnd());
         baseManagerResponseDto.setAvatar(manager.getAvatar());
         return baseManagerResponseDto;
     }
@@ -54,7 +55,37 @@ public class ManuelManagerMapper implements IManuelManagerMapper {
         manager.setAddress(dto.getAddress());
         manager.setPhone(dto.getPhone());
         manager.setCompany(dto.getCompany());
-        manager.setJobEnd(dto.getJobEnd());
         return manager;
+    }
+
+    @Override
+    public ModelBaseEmployee toModelBaseEmployee(Manager manager) {
+        ModelBaseEmployee model= new ModelBaseEmployee();
+        model.setAuthId(manager.getAuthId());
+        model.setManagerId(manager.getId());
+        model.setCompany(manager.getCompany());
+        return model;
+    }
+
+    @Override
+    public EmployeeRequestAndResponseDto toEmployeeDto(ModelBaseEmployee model) {
+        EmployeeRequestAndResponseDto dto = new EmployeeRequestAndResponseDto();
+        dto.setAuthId(model.getAuthId());
+        dto.setManagerId(model.getManagerId());
+        dto.setCompany(model.getCompany());
+        dto.setIdentityNumber(model.getIdentityNumber());
+        dto.setName(model.getName());
+        dto.setMiddleName(model.getMiddleName());
+        dto.setSurname(model.getSurname());
+        dto.setBirthDate(model.getBirthDate());
+        dto.setBirthPlace(model.getBirthPlace());
+        dto.setJobStart(model.getJobStart());
+        dto.setOccupation(model.getOccupation());
+        dto.setDepartment(model.getDepartment());
+        dto.setEmail(model.getEmail());
+        dto.setPhone(model.getPhone());
+        dto.setAddress(model.getAddress());
+        dto.setAvatar(model.getAvatar());
+        return dto;
     }
 }

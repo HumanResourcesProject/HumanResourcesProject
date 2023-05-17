@@ -7,6 +7,7 @@ import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
 import com.hrp.service.EmployeeService;
+import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class EmployeeController {
 
     @PostMapping("/findallemployee")
     @CrossOrigin("*")
-    public ResponseEntity<List<BaseEmployeeResponseDto>> findAll(@RequestBody BaseEmployeeRequestDto dto){
-        return ResponseEntity.ok(employeeService.findAllEmployee(dto));
+    public ResponseEntity<List<BaseEmployeeResponseDto>> findAllMyEmployee(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyEmployee(dto));
     }
 
     // update employee
@@ -52,10 +53,16 @@ public class EmployeeController {
 
     @PostMapping("/createexpense")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> createExpense(@RequestBody ExpenseRequestDto dto){
+    public ResponseEntity<Boolean> createExpense( ExpenseRequestDto dto){
         return ResponseEntity.ok(employeeService.createExpnse(dto));
     }
 
+    @PostMapping("/findallmyemployeecount")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeecount(@RequestBody BaseEmployeeRequestDto dto){
+        System.out.println("dto ici count"+dto.toString());
+        return ResponseEntity.ok(employeeService.findAllMyEmployee(dto).stream().count());
+    }
 
 
 }

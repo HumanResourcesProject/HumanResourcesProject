@@ -5,9 +5,11 @@ import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
+import com.hrp.dto.response.EmployeeRequestAndResponseDto;
 import com.hrp.exception.ManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IManuelManagerMapper;
+import com.hrp.rabbitmq.model.ModelBaseEmployee;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IManagerRepository;
@@ -18,10 +20,7 @@ import com.hrp.utility.StaticValues;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -106,7 +105,21 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
     }
 
 
-
-
-
+    public List<EmployeeRequestAndResponseDto> findAllMyEmployee(TokenDto dto) {
+        Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        System.out.println("serviste 113");
+        Optional<Manager> manager= managerRepository.findOptionalByAuthId(authId.get());
+        directProducer.sendFindAllMyEmployee(iManuelManagerMapper.toModelBaseEmployee(manager.get()));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<ModelBaseEmployee> employees = StaticValues.modelBaseEmployees;
+        List<EmployeeRequestAndResponseDto> dtos= new ArrayList<>();
+        for (ModelBaseEmployee model: employees) {
+            dtos.add(iManuelManagerMapper.toEmployeeDto(model));
+        }
+        return dtos;
+    }
 }

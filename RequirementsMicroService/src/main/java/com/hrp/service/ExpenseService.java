@@ -44,4 +44,25 @@ public class ExpenseService extends ServiceManagerImpl<Expense, Long> {
         }
         return dtos;
     }
+
+    public List<BaseExpenseResponseDto> findAllMyExpensesForManager(BaseRequestDto dto) {
+        Optional<Long> authId=  jwtTokenManager.validToken(dto.getToken());
+        Optional<List<Expense>> expenses = expenseRepository.findOptionalByManagerId(authId.get());
+        List<BaseExpenseResponseDto> dtos = new ArrayList<>();
+        for (Expense expense: expenses.get()){
+            dtos.add(expenseMapper.toResponseDto(expense));
+        }
+        return dtos;
+    }
+
+    public List<BaseExpenseResponseDto> findAllMyExpensesPendingForManager(BaseRequestDto dto) {
+        Optional<Long> authId=  jwtTokenManager.validToken(dto.getToken());
+        Optional<List<Expense>> expenses = expenseRepository.findOptionalByManagerId(authId.get());
+        List<BaseExpenseResponseDto> dtos = new ArrayList<>();
+        for (Expense expense: expenses.get()){
+            dtos.add(expenseMapper.toResponseDto(expense));
+        }
+        return dtos.stream().filter(x->x.getStatus()=="Pending").toList();
+    }
+
 }

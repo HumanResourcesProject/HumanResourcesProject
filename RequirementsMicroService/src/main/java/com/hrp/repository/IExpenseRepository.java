@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface IExpenseRepository extends JpaRepository<Expense,Long> {
     Optional<List<Expense>> findOptionalByEmployeeId(String employeeId);
     Optional<List<Expense>> findOptionalByAuthId(Long authId);
+    Optional<List<Expense>> findOptionalByManagerId(Long managerId);
 
 }
