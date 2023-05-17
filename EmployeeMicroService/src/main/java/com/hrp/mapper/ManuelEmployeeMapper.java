@@ -5,10 +5,7 @@ import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
-import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
-import com.hrp.rabbitmq.model.ModelEmployeeExpense;
-import com.hrp.rabbitmq.model.ModelRegisterEmployee;
-import com.hrp.rabbitmq.model.ModelEmployeeLeave;
+import com.hrp.rabbitmq.model.*;
 import com.hrp.repository.entity.Employee;
 import org.springframework.stereotype.Component;
 
@@ -53,6 +50,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         baseEmployeeResponseDto.setCompany(employee.getCompany());
         baseEmployeeResponseDto.setAvatar(employee.getAvatar());
         baseEmployeeResponseDto.setManagerId(employee.getManagerId());
+        baseEmployeeResponseDto.setJobStart(employee.getJobStart());
         return baseEmployeeResponseDto;
     }
 
@@ -107,5 +105,28 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         employee.setAddress(dto.getAddress());
         employee.setPhone(dto.getPhone());
         return employee;
+    }
+
+    @Override
+    public ModelBaseEmployee toModel(Employee employee) {
+        ModelBaseEmployee model= new ModelBaseEmployee();
+        model.setAuthId(employee.getAuthId());
+        model.setManagerId(employee.getManagerId());
+        model.setIdentityNumber(employee.getIdentityNumber());
+        model.setName(employee.getName());
+        model.setMiddleName(employee.getMiddleName());
+        model.setSurname(employee.getSurname());
+        model.setBirthDate(employee.getBirthDate());
+        model.setBirthPlace(employee.getBirthPlace());
+        model.setJobStart(employee.getJobStart());
+        model.setOccupation(employee.getOccupation());
+        model.setDepartment(employee.getDepartment());
+        model.setEmail(employee.getEmail());
+        model.setPhone(employee.getPhone());
+        model.setAddress(employee.getAddress());
+        model.setCompany(employee.getCompany());
+        model.setAvatar(employee.getAvatar());
+        model.setSalary(employee.getSalary());
+        return model;
     }
 }

@@ -41,4 +41,24 @@ public class AdvancePaymentService extends ServiceManagerImpl<AdvancedPayment, L
         }
         return dtos;
     }
+    public List<BaseAdvancePaymentResponseDto> findAllMyAdvancePaymentForManager(BaseRequestDto dto){
+        Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        Optional<List<AdvancedPayment>> advancedPayments= advancePaymentRepository.findOptionalByManagerId(authId.get());
+        List<BaseAdvancePaymentResponseDto> dtos = new ArrayList<>();
+        for ( AdvancedPayment advance : advancedPayments.get()){
+            dtos.add(manuelRequirementsMapper.toBaseAdvancePaymentResponse(advance));
+        }
+        return dtos;
+    }
+
+    public List<BaseAdvancePaymentResponseDto> findAllMyAdvancePaymentPendingForManager(BaseRequestDto dto){
+        Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        Optional<List<AdvancedPayment>> advancedPayments= advancePaymentRepository.findOptionalByManagerId(authId.get());
+        List<BaseAdvancePaymentResponseDto> dtos = new ArrayList<>();
+        for ( AdvancedPayment advance : advancedPayments.get()){
+            dtos.add(manuelRequirementsMapper.toBaseAdvancePaymentResponse(advance));
+        }
+        return dtos.stream().filter(x->x.getStatus()=="Pending").toList();
+    }
+
 }

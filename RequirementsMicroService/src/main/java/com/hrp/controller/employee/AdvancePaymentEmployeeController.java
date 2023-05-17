@@ -4,21 +4,24 @@ import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseAdvancePaymentResponseDto;
 import com.hrp.service.AdvancePaymentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/requirements/employee")
 @RequiredArgsConstructor
 public class AdvancePaymentEmployeeController {
     private final AdvancePaymentService advancePaymentService;
 
     @PostMapping("/findallmyadvances")
     @CrossOrigin("*")
-    public List<BaseAdvancePaymentResponseDto> findAllMyAdvances(@RequestBody BaseRequestDto dto){
-        return advancePaymentService.findAllMyAdvancePaymentForEmployee(dto);
+    public ResponseEntity<List<BaseAdvancePaymentResponseDto>> findAllMyAdvances(@RequestBody BaseRequestDto dto){
+        return ResponseEntity.ok(advancePaymentService.findAllMyAdvancePaymentForEmployee(dto));
     }
+
+
 
 
 

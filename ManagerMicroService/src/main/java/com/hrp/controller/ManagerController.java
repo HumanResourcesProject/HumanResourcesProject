@@ -3,6 +3,7 @@ package com.hrp.controller;
 import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
+import com.hrp.dto.response.EmployeeRequestAndResponseDto;
 import com.hrp.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,20 @@ public class ManagerController {
         System.out.println("find me metodu");
         return ResponseEntity.ok(managerService.findMe(dto));
     }
+    // findall employee
+    @PostMapping("/findallmyemployee")
+    @CrossOrigin("*")
+    public ResponseEntity<List<EmployeeRequestAndResponseDto>> findAllMyEmployee(@RequestBody TokenDto dto){
+        System.out.println("find employee controller"+ dto.toString());
+        return ResponseEntity.ok(managerService.findAllMyEmployee(dto));
+    }
+    @PostMapping("/findallmyemployeecount")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeCount(@RequestBody TokenDto dto){
+        System.out.println("find employee controller"+ dto.toString());
+        return ResponseEntity.ok(managerService.findAllMyEmployee(dto).stream().count());
+    }
+
 
     // onaylama ve reddetme islemleri
 

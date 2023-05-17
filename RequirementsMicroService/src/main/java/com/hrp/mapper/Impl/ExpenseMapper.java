@@ -37,7 +37,7 @@ public class ExpenseMapper implements IExpenseMapper {
         dto.setAmount(expense.getAmount());
         dto.setCurrency(expense.getCurrency().name());
         dto.setType(expense.getType().name());
-        dto.setStatus(expense.getStatus());
+        dto.setStatus(expense.getStatus()==0 ? "Pending" : (expense.getStatus()==1 ? "Approved" : "Rejected"));
         dto.setSpendingDate(expense.getSpendingDate());
         dto.setRequestDate(expense.getRequestDate());
         dto.setApprovalDate(expense.getApprovalDate());
