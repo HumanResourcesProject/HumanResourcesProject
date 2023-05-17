@@ -102,12 +102,11 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         auth.setRole(ERole.EMPLOYEE);
         auth.setPassword(CodeGenerator.generateCode());
         save(auth);
-        ModelRegisterEmployee modelRegisterEmployee =iManuelMapper.authToModelRegisterEmployee(auth,dto);
+        Optional<Long> managerId = jwtTokenManager.validToken(dto.getToken());
+        ModelRegisterEmployee modelRegisterEmployee =iManuelMapper.authToModelRegisterEmployee(auth,dto,managerId.get());
         directProducer.sendRegisterEmployee(modelRegisterEmployee);
         return true;
     }
-
-
 
     public String uploadImageCloudWithoutToken(MultipartFile file) {
         Map config = new HashMap();

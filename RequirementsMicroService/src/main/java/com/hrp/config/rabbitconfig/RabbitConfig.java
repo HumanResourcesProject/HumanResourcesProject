@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
+
     // exchange
     private String exchangeDirect = "exchange-direct";
     private String exchangeFanout = "exchange-fanout";
@@ -20,25 +21,12 @@ public class RabbitConfig {
     private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
     private String bindingKeyRegisterManager= "binding-key-register-manager" ;
     private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
-    private String bindingKeyTurnAllLeaveEmployee= "binding-turnallleave-employee" ;
-    private String bindingKeyTurnMyLeaveFindAll= "binding-turnmyleave-findall" ;
-    private String bindingKeyTurnAllExpenseEmployee= "binding-turnallexpense-employee" ;
-    private String bindingKeyTurnAllAdvancePaymentEmployee= "binding-turnalladvancepayment-employee" ;
-
-
 
 
     // Queue
     private  String queueRegisterAdmin = "queue-register-admin";
     private  String queueRegisterManager = "queue-register-manager";
     private  String queueRegisterEmployee= "queue-register-employee";
-    private String queueTurnAllLeaveEmployee= "queue-turnallleave-employee" ;
-    private String queueTurnMyLeaveFindAll= "queue-turnmyleave-findall" ;
-    private String queueTurnAllExpenseEmployee= "queue-turnallexpense-employee" ;
-
-    private String queueTurnAllAdvancePaymentEmployee= "queue-turnalladvancepayment-employee" ;
-
-
 
 
 
@@ -70,24 +58,6 @@ public class RabbitConfig {
         return new Queue(queueRegisterEmployee);
     }
 
-    @Bean
-    Queue queueTurnAllLeaveEmployee(){
-        return new Queue(queueTurnAllLeaveEmployee);
-    }
-
-    @Bean
-    Queue queueTurnMyLeaveFindAll(){
-        return new Queue(queueTurnMyLeaveFindAll);
-    }
-    @Bean
-    Queue queueTurnAllExpenseEmployee(){
-        return new Queue(queueTurnAllExpenseEmployee);
-    }
-    @Bean
-    Queue queueTurnAllAdvancePaymentEmployee(){
-        return new Queue(queueTurnAllAdvancePaymentEmployee);
-    }
-
 
     /**
      * ---- Binding ----
@@ -107,22 +77,6 @@ public class RabbitConfig {
         return BindingBuilder.bind(queueRegisterEmployee).to(directExchange).with(bindingKeyRegisterEmployee);
     }
 
-    @Bean
-    public Binding bindingTurnAllLeaveEmployee(final Queue queueTurnAllLeaveEmployee,final DirectExchange directExchange){
-        return BindingBuilder.bind(queueTurnAllLeaveEmployee).to(directExchange).with(bindingKeyTurnAllLeaveEmployee);
-    }
-    @Bean
-    public Binding bindingTurnMyLeavesFindAll(final Queue queueTurnMyLeaveFindAll,final DirectExchange directExchange){
-        return BindingBuilder.bind(queueTurnMyLeaveFindAll).to(directExchange).with(bindingKeyTurnMyLeaveFindAll);
-    }
-    @Bean
-    public Binding bindingTurnAllExpenseEmployee(final Queue queueTurnAllExpenseEmployee,final DirectExchange directExchange){
-        return BindingBuilder.bind(queueTurnAllExpenseEmployee).to(directExchange).with(bindingKeyTurnAllExpenseEmployee);
-    }
-    @Bean
-    public Binding bindingKeyTurnAllAdvancePaymentEmployee(final Queue queueTurnAllAdvancePaymentEmployee,final DirectExchange directExchange){
-        return BindingBuilder.bind(queueTurnAllAdvancePaymentEmployee).to(directExchange).with(bindingKeyTurnAllAdvancePaymentEmployee);
-    }
 
 
 }

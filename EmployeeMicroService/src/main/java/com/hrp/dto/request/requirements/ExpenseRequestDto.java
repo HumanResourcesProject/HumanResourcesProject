@@ -16,6 +16,6 @@ public class ExpenseRequestDto {
     private String currency;
     private String type;
     private String comment;
-    private MultipartFile invoiceUrl; // fatura url'si multi
+   private MultipartFile invoiceUrl; // fatura url'si multi
     //private String invoiceUrl; // fatura url'si -> swagger deneme icin string
 }

@@ -1,6 +1,6 @@
 package com.hrp.repository.entity;
 
-import com.hrp.repository.entity.enums.SpendingCurrency;
+import com.hrp.repository.entity.enums.ExpenseCurrency;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,11 +19,12 @@ public class AdvancedPayment extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String employeeId;
+    private Long authId;
     private Long managerId;
     private String company;
     private Long amount;
     @Enumerated(EnumType.STRING)
-    private SpendingCurrency currency;
+    private ExpenseCurrency currency;
     private String advancedPaymentDate;
     private String requestDate;
     private String approvalDate;

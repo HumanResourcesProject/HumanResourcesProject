@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
 
-    public Employee modelToEmployee(ModelRegisterEmployee model){
+    public Employee ToEmployee(ModelRegisterEmployee model){
         return Employee.builder()
                 .authId(model.getAuthId())
                 .identityNumber(model.getIdentityNumber())
@@ -31,6 +31,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
                 .phone(model.getPhone())
                 .address(model.getAddress())
                 .company(model.getCompany())
+                .managerId(model.getManagerId())
                 .build();
     }
 
@@ -51,6 +52,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         baseEmployeeResponseDto.setPhone(employee.getPhone());
         baseEmployeeResponseDto.setCompany(employee.getCompany());
         baseEmployeeResponseDto.setAvatar(employee.getAvatar());
+        baseEmployeeResponseDto.setManagerId(employee.getManagerId());
         return baseEmployeeResponseDto;
     }
 
@@ -62,7 +64,9 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         model.setCompany(employee.getCompany());
         model.setComment(dto.getComment());
         model.setCurrency(dto.getCurrency());
+        model.setManagerId(employee.getManagerId());
         model.setAdvancedPaymentDate(dto.getAdvancedPaymentDate());
+        model.setAuthId(employee.getAuthId());
         return model;
     }
 
@@ -75,6 +79,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeLeave.setEmployeeId(employee.getId());
         modelEmployeeLeave.setCompany(employee.getCompany());
         modelEmployeeLeave.setAmountOfDay(dto.getAmountOfDay());
+        modelEmployeeLeave.setManagerId(employee.getManagerId());
+        modelEmployeeLeave.setAuthId(employee.getAuthId());
         return modelEmployeeLeave;
     }
 
@@ -91,7 +97,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeExpense.setComment(dto.getComment());
         modelEmployeeExpense.setEmployeeId(employee.getId());
         modelEmployeeExpense.setCompany(employee.getCompany());
-
+        modelEmployeeExpense.setManagerId(employee.getManagerId());
+        modelEmployeeExpense.setAuthId(employee.getAuthId());
         return modelEmployeeExpense;
     }
 

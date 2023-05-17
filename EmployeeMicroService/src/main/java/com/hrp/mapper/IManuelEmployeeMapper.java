@@ -12,10 +12,10 @@ import com.hrp.rabbitmq.model.ModelEmployeeLeave;
 import com.hrp.repository.entity.Employee;
 
 public interface IManuelEmployeeMapper {
-     Employee modelToEmployee(ModelRegisterEmployee model);
+     Employee ToEmployee(ModelRegisterEmployee model);
      BaseEmployeeResponseDto toBaseEmployeeDto(Employee employee);
-     ModelEmployeeAdvancePaymentRequest toEmployeeAdvancePaymentModel(Employee employee,AdvancePaymentRequestDto dto) ;
-     ModelEmployeeLeave  toEmployeeLeaveModel(Employee employee, LeaveRequestDto dto);
+     ModelEmployeeAdvancePaymentRequest toEmployeeAdvancePaymentModel(Employee employee,AdvancePaymentRequestDto dto ) ;
+     ModelEmployeeLeave  toEmployeeLeaveModel(Employee employee, LeaveRequestDto dto );
 
     ModelEmployeeExpense toEmployeeExpenseModel(Employee employee, ExpenseRequestDto dto);
     Employee toEmployee(Employee employee,EmployeeUpdateRequestDto dto);

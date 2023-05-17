@@ -4,12 +4,11 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
-import com.hrp.dto.response.AllLeaveFormResponseDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.exception.ManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IManuelManagerMapper;
-import com.hrp.rabbitmq.model.*;
+import com.hrp.rabbitmq.model.ModelRegisterManager;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IManagerRepository;
 import com.hrp.repository.entity.Manager;
@@ -19,7 +18,10 @@ import com.hrp.utility.StaticValues;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +63,6 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
     }
 
-
     public Boolean updateManager(UpdateManagerRequestDto dto) {
         Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
         if (companyManagerId.isEmpty()){
@@ -87,13 +88,6 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         return iManuelManagerMapper.toBaseManagerResponseDto(manager);
     }
 
-    public String updateImage(MultipartFile file, String token) {
-        Long id = jwtTokenManager.validToken(token).get();
-        Optional<Manager> admin = managerRepository.findById(id);
-        String url = toTurnStringAvatar(file);
-       return url;
-    }
-
     private String toTurnStringAvatar(MultipartFile avatar) {
         Map config = new HashMap();
         config.put("cloud_name", "doqksh0xh");
@@ -111,54 +105,8 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
     }
 
-    public List<ModelTurnAllLeaveRequest> findAllLeave(TokenDto dto) {
-        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        System.out.println("findall leave de auth id: "+id);
-        Optional<Manager> manager = managerRepository.findOptionalByAuthId(id.get());
-        System.out.println("bulma isleminden sonra");
-        directProducer.sendfindAllLeave(ModelBaseRequirmentFindAll.builder()
-                        .company(manager.get().getCompany())
-                .build());
-        System.out.println("threadden önce");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return StaticValues.findAllLeave;
-    }
 
-    public List<ModelTurnAllExpenseRequest> findAllExpense(TokenDto dto) {
-        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        System.out.println("findall expense de auth id: "+id);
-        Optional<Manager> manager = managerRepository.findOptionalByAuthId(id.get());
-        directProducer.sendFindAllExpense((ModelBaseRequirmentFindAll.builder()
-                .company(manager.get().getCompany())
-                .build()));
-        System.out.println("threadden önce");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-        return StaticValues.findAllExpense;
-    }
 
-    public List<ModelTurnAllAdvancePaymentRequest> findAllAdvancePayment(TokenDto dto) {
-        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        System.out.println("findall advancepayment de auth id: "+id);
-        Optional<Manager> manager = managerRepository.findOptionalByAuthId(id.get());
-        directProducer.sendfindAllAdvancePayment((ModelBaseRequirmentFindAll.builder()
-                .company(manager.get().getCompany())
-                .build()));
-        System.out.println("threadden önce");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-        return StaticValues.findAllAdvancePayment;
-    }
 }

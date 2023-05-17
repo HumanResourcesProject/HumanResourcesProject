@@ -1,20 +1,21 @@
-package com.hrp.rabbitmq.model;
+package com.hrp.dto.response;
 
 import com.hrp.repository.entity.enums.LeaveType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.io.Serializable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-public class ModelTurnAllLeaveRequest implements Serializable {
-
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class BaseLeaveResponseDto {
     private String employeeId;
+    private Long authId;
     private Long managerId;
     private String company;
     private String type;
@@ -24,6 +25,4 @@ public class ModelTurnAllLeaveRequest implements Serializable {
     private String approvalDate;
     private int status;
     private int amountOfDay;
-
-
 }

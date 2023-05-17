@@ -19,4 +19,7 @@ public class ModelEmployeeExpense implements Serializable {
     private String requestDate;
     private String company;
     private String comment;
+    private Long managerId;
+    private Long authId;
+
 }
