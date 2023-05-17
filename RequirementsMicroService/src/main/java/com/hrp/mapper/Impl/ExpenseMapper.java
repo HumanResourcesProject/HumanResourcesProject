@@ -8,6 +8,8 @@ import com.hrp.repository.entity.enums.ExpenseCurrency;
 import com.hrp.repository.entity.enums.ExpenseType;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class ExpenseMapper implements IExpenseMapper {
     @Override
@@ -20,6 +22,7 @@ public class ExpenseMapper implements IExpenseMapper {
         expense.setCompany(model.getCompany());
         expense.setStatus(0);
         expense.setSpendingDate(model.getSpendingDate());
+        expense.setRequestDate(LocalDate.now().toString());
         expense.setInvoiceUrl(model.getInvoiceUrl());
         expense.setCompany(model.getCompany());
         expense.setManagerId(model.getManagerId());
@@ -39,7 +42,7 @@ public class ExpenseMapper implements IExpenseMapper {
         dto.setType(expense.getType().name());
         dto.setStatus(expense.getStatus()==0 ? "Pending" : (expense.getStatus()==1 ? "Approved" : "Rejected"));
         dto.setSpendingDate(expense.getSpendingDate());
-        dto.setRequestDate(expense.getRequestDate());
+        dto.setRequestDate(expense.getRequestDate().split("T")[0]);
         dto.setApprovalDate(expense.getApprovalDate());
         dto.setInvoiceUrl(expense.getInvoiceUrl());
         return dto;

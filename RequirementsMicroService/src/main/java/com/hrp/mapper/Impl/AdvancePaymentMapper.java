@@ -41,7 +41,7 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         baseAdvancePaymentResponseDto.setCurrency(advancedPayment.getCurrency().name());
         baseAdvancePaymentResponseDto.setComment(advancedPayment.getComment());
         baseAdvancePaymentResponseDto.setAdvancedPaymentDate(advancedPayment.getAdvancedPaymentDate());
-        baseAdvancePaymentResponseDto.setRequestDate(advancedPayment.getRequestDate());
+        baseAdvancePaymentResponseDto.setRequestDate(advancedPayment.getRequestDate().split("T")[0]);
         baseAdvancePaymentResponseDto.setApprovalDate(advancedPayment.getApprovalDate());
         baseAdvancePaymentResponseDto.setStatus(advancedPayment.getStatus()==0 ?"Pending" : (advancedPayment.getStatus()==1 ? "Approved" : "Rejected"));
         return baseAdvancePaymentResponseDto;
