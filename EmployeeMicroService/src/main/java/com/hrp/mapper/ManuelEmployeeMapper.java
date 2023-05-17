@@ -1,5 +1,6 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.EmployeeUpdateNoPhotoRequestDto;
 import com.hrp.dto.request.EmployeeUpdateRequestDto;
 import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
@@ -128,5 +129,12 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         model.setAvatar(employee.getAvatar());
         model.setSalary(employee.getSalary());
         return model;
+    }
+
+    @Override
+    public Employee toEmployee(Employee employee, EmployeeUpdateNoPhotoRequestDto dto) {
+        employee.setAddress(dto.getAddress());
+        employee.setPhone(dto.getPhone());
+        return employee;
     }
 }

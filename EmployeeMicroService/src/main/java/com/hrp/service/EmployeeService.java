@@ -3,6 +3,7 @@ package com.hrp.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.BaseEmployeeRequestDto;
+import com.hrp.dto.request.EmployeeUpdateNoPhotoRequestDto;
 import com.hrp.dto.request.EmployeeUpdateRequestDto;
 import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
@@ -103,7 +104,7 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         update(newEmployee);
 return true;
     }
-    public Boolean updateEmployeeNoPhoto(EmployeeUpdateRequestDto dto) {
+    public Boolean updateEmployeeNoPhoto(EmployeeUpdateNoPhotoRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
         Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);

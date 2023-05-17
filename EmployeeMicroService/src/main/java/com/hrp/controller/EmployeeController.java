@@ -1,6 +1,7 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.BaseEmployeeRequestDto;
+import com.hrp.dto.request.EmployeeUpdateNoPhotoRequestDto;
 import com.hrp.dto.request.EmployeeUpdateRequestDto;
 import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
@@ -34,8 +35,8 @@ public class EmployeeController {
     }
     @PutMapping("/updateemployeenophoto")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateEmployeeNophoto(@RequestBody EmployeeUpdateRequestDto dto){
-        return ResponseEntity.ok(employeeService.updateEmployee(dto));
+    public ResponseEntity<Boolean> updateEmployeeNophoto(@RequestBody EmployeeUpdateNoPhotoRequestDto dto){
+        return ResponseEntity.ok(employeeService.updateEmployeeNoPhoto(dto));
     }
     // find me
     @PostMapping("/findme")
