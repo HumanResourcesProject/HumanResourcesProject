@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
 import javax.persistence.*;
 
 @Data
@@ -19,6 +18,7 @@ public class Leave extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String employeeId;
+    private Long authId;
     private Long managerId;
     private String company;
     @Enumerated(EnumType.STRING)

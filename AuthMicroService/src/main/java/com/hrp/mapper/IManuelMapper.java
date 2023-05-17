@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 public interface IManuelMapper {
     ModelRegisterAdmin authToModelRegisterAdmin(Auth auth, RegisterAdminRequestDto dto) ;
-    public ModelRegisterManager authToModelRegisterManager(Auth auth, RegisterManagerRequestDto dto) ;
-    public ModelRegisterEmployee authToModelRegisterEmployee(Auth auth, RegisterEmployeeRequestDto dto) ;
+     ModelRegisterManager authToModelRegisterManager(Auth auth, RegisterManagerRequestDto dto) ;
+     ModelRegisterEmployee authToModelRegisterEmployee(Auth auth, RegisterEmployeeRequestDto dto,Long managerId) ;
 
     }

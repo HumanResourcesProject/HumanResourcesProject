@@ -11,7 +11,7 @@ import com.hrp.dto.response.BaseEmployeeResponseDto;
 import com.hrp.exception.EErrorType;
 import com.hrp.exception.EmployeeException;
 import com.hrp.mapper.IManuelEmployeeMapper;
-import com.hrp.rabbitmq.model.ModelRegisterEmployee;
+import com.hrp.rabbitmq.model.*;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IEmployeeRepository;
 import com.hrp.repository.entity.Employee;
@@ -42,27 +42,12 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
 
 
     public void createEmployee(ModelRegisterEmployee model){
-        Employee employee= iManuelEmployeeMapper.modelToEmployee(model);
+        Employee employee= iManuelEmployeeMapper.ToEmployee(model);
         employee.setSalary(5000L);
         employee.setAvatar("https://gcavocats.ca/wp-content/uploads/2018/09/man-avatar-icon-flat-vector-19152370-1.jpg");
         save(employee);
     }
 
-
-    public List<BaseEmployeeResponseDto> findAll(BaseEmployeeRequestDto dto) {
-        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        Optional<Employee> employee= employeeRepository.findOptionalByAuthId(id.get());
-        if (dto.getRole().equals("ADMIN")){
-            return findAll().stream()
-                    .map(x-> iManuelEmployeeMapper.toBaseEmployeeDto(x))
-                    .collect(Collectors.toList());
-        }else {
-            return findAll().stream().filter(x->x.getCompany()==employee.get().getCompany())
-                    .map(x-> iManuelEmployeeMapper.toBaseEmployeeDto(x))
-                    .collect(Collectors.toList());
-        }
-
-    }
 
     public Boolean createAdvancePayment(AdvancePaymentRequestDto dto) {
         Long authId = jwtTokenManager.validToken(dto.getToken()).get();
@@ -75,6 +60,7 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
             return null;
         }
 
+        System.out.println("advance payment metodu model ici:"+ iManuelEmployeeMapper.toEmployeeAdvancePaymentModel(employee.get(),dto));
         directProducer.sendAdvanceEmployee(iManuelEmployeeMapper.toEmployeeAdvancePaymentModel(employee.get(),dto));
         return true;
     }
@@ -85,6 +71,7 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         if (employee.isEmpty()){
             throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
         }
+        System.out.println("create leave metodu model ici: "+iManuelEmployeeMapper.toEmployeeLeaveModel(employee.get(),dto));
         directProducer.sendLeaveEmployee(iManuelEmployeeMapper.toEmployeeLeaveModel(employee.get(),dto));
         System.out.println("create leave metodu calisti");
         return true;
@@ -97,8 +84,11 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         if (employee.isEmpty()){
             throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
         }
-
-        directProducer.sendExpenseEmployee(iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(), dto));
+        ModelEmployeeExpense modelEmployeeExpense=new ModelEmployeeExpense();
+        modelEmployeeExpense = iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(),dto);
+        modelEmployeeExpense.setInvoiceUrl(toTurnStringAvatar(dto.getInvoiceUrl()));
+        System.out.println("createExpnse metodu modelin ici: "+ modelEmployeeExpense.toString());
+        directProducer.sendExpenseEmployee(modelEmployeeExpense);
         System.out.println("create expense metodu calisti");
         return true;
     }
@@ -136,7 +126,6 @@ return true;
             return null;
         }
     }
-
     public List<BaseEmployeeResponseDto> findAllEmployee(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
@@ -150,4 +139,5 @@ return true;
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
         return iManuelEmployeeMapper.toBaseEmployeeDto(employee.get());
     }
+
 }

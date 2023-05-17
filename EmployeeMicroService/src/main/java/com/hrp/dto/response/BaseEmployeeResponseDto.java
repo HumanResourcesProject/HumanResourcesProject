@@ -13,6 +13,7 @@ public class BaseEmployeeResponseDto {
     String name;
     String middleName;
     String surname;
+    Long managerId;
     String birthDate;
     String birthPlace;
     Long salary;

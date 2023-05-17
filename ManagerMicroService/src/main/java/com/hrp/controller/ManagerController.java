@@ -2,16 +2,12 @@ package com.hrp.controller;
 
 import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
-import com.hrp.dto.response.AllLeaveFormResponseDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -44,19 +40,6 @@ public class ManagerController {
         System.out.println("find me metodu");
         return ResponseEntity.ok(managerService.findMe(dto));
     }
-
-    @PostMapping("/findallleave")
-    @CrossOrigin("*")
-    public ResponseEntity<List<ModelTurnAllLeaveRequest>> findAllLeave (@RequestBody TokenDto dto){
-        System.out.println("findall leave metodu");
-        return ResponseEntity.ok(managerService.findAllLeave(dto));
-    }
-
-    // Genel bir findAll leave, expense, adv.
-    // leave, expense, adv. findAll onaylananmais
-    // leave, expense, adv. findAll onaylanmis.
-
-    // Detay sayfası.(Later)
 
     // onaylama ve reddetme islemleri
 

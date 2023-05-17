@@ -16,5 +16,7 @@ public class ModelEmployeeLeave implements Serializable {
     private String finishDate;
     private String company;
     private int amountOfDay;
+    private Long managerId;
+    private Long authId;
 
 }
