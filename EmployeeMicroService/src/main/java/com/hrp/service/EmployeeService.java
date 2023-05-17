@@ -99,15 +99,17 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
         Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
-        System.out.println("********************************************");
-        System.out.println("eski employe bilgileri"+employee.get().toString());
-        System.out.println("----------*****************************-----------------");
-        System.out.println("new employee bilgileri"+newEmployee.toString());
-        //newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
-        System.out.println("116 da ki avatar cevirmeden sonra new employee bilgileri"+newEmployee.toString());
-        System.out.println("********************************************");
+        newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
         update(newEmployee);
 return true;
+    }
+    public Boolean updateEmployeeNoPhoto(EmployeeUpdateRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
+        //newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
+        update(newEmployee);
+        return true;
     }
 
 
@@ -138,13 +140,11 @@ return true;
                 .map(x-> iManuelEmployeeMapper.toBaseEmployeeDto(x))
                 .collect(Collectors.toList());
     }
-
     public BaseEmployeeResponseDto findMe(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
         return iManuelEmployeeMapper.toBaseEmployeeDto(employee.get());
     }
-
     public void findAllMyEmployeeForManager(ModelBaseEmployee model) {
         Optional<List<Employee>> employees = employeeRepository.findOptionalByCompany(model.getCompany());
         Optional<List<ModelBaseEmployee>> modelEmployess= Optional.of(new ArrayList<>());

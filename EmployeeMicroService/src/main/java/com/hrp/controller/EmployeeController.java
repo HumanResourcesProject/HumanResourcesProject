@@ -32,6 +32,11 @@ public class EmployeeController {
     public ResponseEntity<Boolean> updateEmployee(EmployeeUpdateRequestDto dto){
         return ResponseEntity.ok(employeeService.updateEmployee(dto));
     }
+    @PutMapping("/updateemployeenophoto")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> updateEmployeeNophoto(@RequestBody EmployeeUpdateRequestDto dto){
+        return ResponseEntity.ok(employeeService.updateEmployee(dto));
+    }
     // find me
     @PostMapping("/findme")
     @CrossOrigin("*")
