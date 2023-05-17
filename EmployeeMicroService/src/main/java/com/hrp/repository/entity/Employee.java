@@ -20,6 +20,7 @@ public class Employee extends BaseEntity{
     @Id
     private String id;
     private Long authId;
+    private Long managerId;
     private String identityNumber;
     private String name;
     private String middleName;

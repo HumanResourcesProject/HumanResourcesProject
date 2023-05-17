@@ -6,8 +6,6 @@ import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
-import com.hrp.dto.response.MyLeaveResponseDto;
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -58,11 +56,6 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.createExpnse(dto));
     }
 
-    @PostMapping("/myleavefindall")
-    @CrossOrigin("*")
-    public ResponseEntity<List<ModelTurnAllLeaveRequest>> myLeaveFindAll(@RequestBody BaseEmployeeRequestDto dto){
-        return ResponseEntity.ok(employeeService.myLeaveFindAll(dto));
-    }
 
 
 }

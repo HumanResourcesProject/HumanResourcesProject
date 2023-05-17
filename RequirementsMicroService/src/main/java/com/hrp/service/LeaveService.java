@@ -1,12 +1,13 @@
 package com.hrp.service;
 
-import com.hrp.mapper.IManuelRequirementsMapper;
-import com.hrp.rabbitmq.model.ModelBaseRequirmentFindAll;
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
+import com.hrp.dto.request.BaseRequestDto;
+import com.hrp.dto.response.BaseLeaveResponseDto;
+import com.hrp.mapper.IAdvancePaymentMapper;
+import com.hrp.mapper.ILeaveMapper;
 import com.hrp.rabbitmq.model.ModelEmployeeLeave;
-import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.ILeaveRepository;
 import com.hrp.repository.entity.Leave;
+import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
 
@@ -17,40 +18,30 @@ import java.util.Optional;
 @Service
 public class LeaveService extends ServiceManagerImpl<Leave, Long> {
     private final ILeaveRepository leaveRepository;
-    private final IManuelRequirementsMapper manuelRequirementsMapper;
-    private final DirectProducer directProducer;
+    private final JwtTokenManager jwtTokenManager;
+    private final ILeaveMapper leaveMapper;
 
-    public LeaveService(ILeaveRepository leaveRepository, IManuelRequirementsMapper manuelRequirementsMapper, DirectProducer directProducer) {
+    public LeaveService(ILeaveRepository leaveRepository, JwtTokenManager jwtTokenManager, ILeaveMapper leaveMapper) {
         super(leaveRepository);
         this.leaveRepository = leaveRepository;
-        this.manuelRequirementsMapper = manuelRequirementsMapper;
-        this.directProducer = directProducer;
+        this.leaveMapper = leaveMapper;
+        this.jwtTokenManager = jwtTokenManager;
     }
     public void createLeave(ModelEmployeeLeave modelEmployeeLeave){
         System.out.println("leave kayıt ici");
-        save(manuelRequirementsMapper.toLeave(modelEmployeeLeave));
+        save(leaveMapper.toLeave(modelEmployeeLeave));
         System.out.println("leave kayıt ici ve kayit sonrasi");
 
     }
 
-
-    public void findAllLeaveRequestByCompany(ModelBaseRequirmentFindAll modelBaseRequirmentFindAll) {
-        Optional<List<Leave>> leaveList =leaveRepository.findOptionalByCompany(modelBaseRequirmentFindAll.getCompany());
-        System.out.println("leaveList..: " + leaveList.get());
-        List<ModelTurnAllLeaveRequest> turnAllLeaveRequests = new ArrayList<>();
-        for (Leave leave: leaveList.get()){
-            turnAllLeaveRequests.add(manuelRequirementsMapper.toModelTurnAllLeaveRequest(leave));
-        }
-        directProducer.turnAllLeaveEmployee(turnAllLeaveRequests);
-    }
-
-    public void myLeaveFindAll(ModelEmployeeLeave model) {
-        System.out.println("asdsadas");
-        Optional<List<Leave>> leaves=leaveRepository.findOptionalByEmployeeId(model.getEmployeeId());
-        List<ModelTurnAllLeaveRequest> turnAllLeaveRequests = new ArrayList<>();
+    public List<BaseLeaveResponseDto> findAllMyLeavesForEmployee(BaseRequestDto dto) {
+        Optional<Long> authId=  jwtTokenManager.validToken(dto.getToken());
+        Optional<List<Leave>> leaves= leaveRepository.findOptionalByAuthId(authId.get());
+        List<BaseLeaveResponseDto> dtos= new ArrayList<>();
         for (Leave leave: leaves.get()){
-            turnAllLeaveRequests.add( manuelRequirementsMapper.toModelTurnAllLeaveRequest(leave));
+            dtos.add(leaveMapper.toResponseDto(leave));
         }
-        directProducer.turnMyLeaveFindAll(turnAllLeaveRequests);
+
+        return dtos;
     }
 }
