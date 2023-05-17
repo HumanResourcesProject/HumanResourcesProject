@@ -27,7 +27,5 @@ public class DirectProducer {
         System.out.println("Expense employee produceri");
         rabbitTemplate.convertAndSend("exchange-direct","binding-key-expense-employee",model);
     }
-    public void sendMyLeaveFindAll(ModelEmployeeLeave model){
-        rabbitTemplate.convertAndSend("exchange-direct", "binding-key-my-leave",model);
-    }
+
 }

@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class ModelRegisterEmployee implements Serializable {
     private Long authId;
     private String identityNumber;
+    private Long managerId;
     private String name;
     private String middleName;
     private String surname;

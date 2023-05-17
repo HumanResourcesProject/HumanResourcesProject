@@ -1,6 +1,6 @@
 package com.hrp.repository.entity.enums;
 
-public enum SpendingCurrency {
+public enum ExpenseCurrency {
     TL,
     EURO,
     DOLAR,
