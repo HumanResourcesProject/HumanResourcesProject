@@ -1,10 +1,7 @@
 package com.hrp.mapper;
 
 
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
-import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
-import com.hrp.rabbitmq.model.ModelEmployeeExpense;
-import com.hrp.rabbitmq.model.ModelEmployeeLeave;
+import com.hrp.rabbitmq.model.*;
 import com.hrp.repository.entity.AdvancedPayment;
 import com.hrp.repository.entity.Leave;
 import com.hrp.repository.entity.Spending;
@@ -77,5 +74,38 @@ public class ManuelRequirementsMapper implements IManuelRequirementsMapper {
        request.setAmountOfDay(leave.getAmountOfDay());
        request.setManagerId(leave.getManagerId());
        return request;
+    }
+
+    @Override
+    public ModelTurnAllExpenseRequest toModelTurnAllExpenseRequest(Spending spending) {
+        ModelTurnAllExpenseRequest request = new ModelTurnAllExpenseRequest();
+        request.setAmount(spending.getAmount());
+        request.setApprovalDate(spending.getApprovalDate());
+        request.setCompany(spending.getCompany());
+        request.setType(String.valueOf(spending.getType()));
+        request.setStatus(spending.getStatus());
+        request.setCurrency(String.valueOf(spending.getCurrency()));
+        request.setManagerId(spending.getManagerId());
+        request.setEmployeeId(spending.getEmployeeId());
+        request.setInvoiceUrl(spending.getInvoiceUrl());
+        request.setSpendingDate(spending.getSpendingDate());
+        request.setRequestDate(spending.getRequestDate());
+        return request;
+    }
+
+    @Override
+    public ModelTurnAllAdvancePaymentRequest toModelTurnAllAdvancePaymentRequest(AdvancedPayment advancedPayment) {
+        ModelTurnAllAdvancePaymentRequest request = new ModelTurnAllAdvancePaymentRequest();
+        request.setAdvancedPaymentDate(advancedPayment.getAdvancedPaymentDate());
+        request.setRequestDate(advancedPayment.getRequestDate());
+        request.setCompany(advancedPayment.getCompany());
+        request.setAmount(advancedPayment.getAmount());
+        request.setComment(advancedPayment.getComment());
+        request.setEmployeeId(advancedPayment.getEmployeeId());
+        request.setManagerId(advancedPayment.getManagerId());
+        request.setStatus(advancedPayment.getStatus());
+        request.setCurrency(String.valueOf(advancedPayment.getCurrency()));
+        request.setApprovalDate(advancedPayment.getApprovalDate());
+        return request;
     }
 }

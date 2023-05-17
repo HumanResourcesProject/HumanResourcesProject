@@ -1,6 +1,8 @@
 package com.hrp.rabbitmq.consumer;
 
 import com.hrp.rabbitmq.model.ModelRegisterManager;
+import com.hrp.rabbitmq.model.ModelTurnAllAdvancePaymentRequest;
+import com.hrp.rabbitmq.model.ModelTurnAllExpenseRequest;
 import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.service.ManagerService;
 import com.hrp.utility.StaticValues;
@@ -22,7 +24,17 @@ public class Consumer {
 
     @RabbitListener(queues = "queue-turnallleave-employee")
     public void turnAllLeaveRequest(List<ModelTurnAllLeaveRequest> model){
-        StaticValues.findAllLeave=model;
+        StaticValues.findAllLeave = model;
+    }
+
+    @RabbitListener(queues = "queue-turnallexpense-employee")
+    public void turnAllExpenseRequest(List<ModelTurnAllExpenseRequest> model){
+        StaticValues.findAllExpense = model;
+    }
+
+    @RabbitListener(queues = "queue-turnalladvancepayment-employee")
+    public void turnAllAdvancePaymentRequest(List<ModelTurnAllAdvancePaymentRequest> model){
+        StaticValues.findAllAdvancePayment = model;
     }
 
 

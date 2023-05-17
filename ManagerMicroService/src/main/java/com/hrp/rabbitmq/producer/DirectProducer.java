@@ -15,4 +15,11 @@ public class DirectProducer {
         rabbitTemplate.convertAndSend("exchange-direct","binding-key-findallleave-employee",model);
     }
 
+    public void sendFindAllExpense(ModelBaseRequirmentFindAll model){
+        rabbitTemplate.convertAndSend("exchange-direct","binding-key-findallexpense-employee",model);
+    }
+
+    public void sendfindAllAdvancePayment(ModelBaseRequirmentFindAll model) {
+        rabbitTemplate.convertAndSend("exchange-direct","binding-key-findalladvancepayment-employee",model);
+    }
 }

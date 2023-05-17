@@ -4,6 +4,8 @@ import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.AllLeaveFormResponseDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
+import com.hrp.rabbitmq.model.ModelTurnAllAdvancePaymentRequest;
+import com.hrp.rabbitmq.model.ModelTurnAllExpenseRequest;
 import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.service.ManagerService;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +52,20 @@ public class ManagerController {
     public ResponseEntity<List<ModelTurnAllLeaveRequest>> findAllLeave (@RequestBody TokenDto dto){
         System.out.println("findall leave metodu");
         return ResponseEntity.ok(managerService.findAllLeave(dto));
+    }
+
+    @PostMapping("/findallexpense")
+    @CrossOrigin("*")
+    public ResponseEntity<List<ModelTurnAllExpenseRequest>> findAllExpense (@RequestBody TokenDto dto){
+        System.out.println("findall expense metodu");
+        return ResponseEntity.ok(managerService.findAllExpense(dto));
+    }
+
+    @PostMapping("/findalladvancepayment")
+    @CrossOrigin("*")
+    public ResponseEntity<List<ModelTurnAllAdvancePaymentRequest>> findAllAdvancePayment (@RequestBody TokenDto dto){
+        System.out.println("findall advancepayment metodu");
+        return ResponseEntity.ok(managerService.findAllAdvancePayment(dto));
     }
 
     // Genel bir findAll leave, expense, adv.

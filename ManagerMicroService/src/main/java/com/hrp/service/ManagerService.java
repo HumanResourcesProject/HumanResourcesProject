@@ -9,9 +9,7 @@ import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.exception.ManagerException;
 import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IManuelManagerMapper;
-import com.hrp.rabbitmq.model.ModelBaseRequirmentFindAll;
-import com.hrp.rabbitmq.model.ModelRegisterManager;
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
+import com.hrp.rabbitmq.model.*;
 import com.hrp.rabbitmq.producer.DirectProducer;
 import com.hrp.repository.IManagerRepository;
 import com.hrp.repository.entity.Manager;
@@ -21,10 +19,7 @@ import com.hrp.utility.StaticValues;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -126,10 +121,44 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
                 .build());
         System.out.println("threadden önce");
         try {
-            Thread.sleep(4000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         return StaticValues.findAllLeave;
+    }
+
+    public List<ModelTurnAllExpenseRequest> findAllExpense(TokenDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        System.out.println("findall expense de auth id: "+id);
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(id.get());
+        directProducer.sendFindAllExpense((ModelBaseRequirmentFindAll.builder()
+                .company(manager.get().getCompany())
+                .build()));
+        System.out.println("threadden önce");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return StaticValues.findAllExpense;
+    }
+
+    public List<ModelTurnAllAdvancePaymentRequest> findAllAdvancePayment(TokenDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        System.out.println("findall advancepayment de auth id: "+id);
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(id.get());
+        directProducer.sendfindAllAdvancePayment((ModelBaseRequirmentFindAll.builder()
+                .company(manager.get().getCompany())
+                .build()));
+        System.out.println("threadden önce");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return StaticValues.findAllAdvancePayment;
     }
 }

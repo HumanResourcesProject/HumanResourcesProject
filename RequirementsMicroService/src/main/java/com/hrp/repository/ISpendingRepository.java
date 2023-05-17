@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ISpendingRepository extends JpaRepository<Spending,Long> {
 
+    Optional<List<Spending>> findOptionalByCompany(String company);
 }

@@ -1,10 +1,7 @@
 package com.hrp.mapper;
 
 
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
-import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
-import com.hrp.rabbitmq.model.ModelEmployeeExpense;
-import com.hrp.rabbitmq.model.ModelEmployeeLeave;
+import com.hrp.rabbitmq.model.*;
 import com.hrp.repository.entity.AdvancedPayment;
 import com.hrp.repository.entity.Leave;
 import com.hrp.repository.entity.Spending;
@@ -16,4 +13,8 @@ public interface IManuelRequirementsMapper {
     Spending toSpending(ModelEmployeeExpense modelEmployeeExpense);
 
     ModelTurnAllLeaveRequest toModelTurnAllLeaveRequest(Leave leave);
+
+    ModelTurnAllExpenseRequest toModelTurnAllExpenseRequest(Spending spending);
+
+    ModelTurnAllAdvancePaymentRequest toModelTurnAllAdvancePaymentRequest(AdvancedPayment advancedPayment);
 }

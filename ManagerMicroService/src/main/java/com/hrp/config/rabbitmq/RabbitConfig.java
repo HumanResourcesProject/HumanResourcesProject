@@ -18,6 +18,8 @@ public class RabbitConfig {
     private String bindingKeyRegisterManager= "binding-key-register-manager" ;
     private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
     private String bindingKeyFindAllLeaveEmployee= "binding-key-findallleave-employee" ;
+    private String bindingKeyFindAllExpenseEmployee= "binding-key-findallexpense-employee" ;
+    private String bindingKeyFindAllAdvancePaymentEmployee= "binding-key-findalladvancepayment-employee" ;
 
 
     // Queue
@@ -26,6 +28,8 @@ public class RabbitConfig {
     private  String queueRegisterManager = "queue-register-manager";
     private  String queueRegisterEmployee= "queue-register-employee";
     private  String queueFindAllLeaveEmployee= "queue-findallleave-employee";
+    private  String queueFindAllExpenseEmployee= "queue-findallexpense-employee";
+    private  String queueFindAllAdvancePaymentEmployee= "queue-findalladvancepayment-employee";
 
 
     /**
@@ -74,6 +78,16 @@ public class RabbitConfig {
     Queue queueFindAllLeaveEmployee(){
         return new Queue(queueFindAllLeaveEmployee);
     }
+    @Bean
+    Queue queueFindAllExpenseEmployee(){
+        return new Queue(queueFindAllExpenseEmployee);
+    }
+
+    @Bean
+    Queue queueFindAllAdvancePaymentEmployee(){
+        return new Queue(queueFindAllAdvancePaymentEmployee);
+    }
+
 
     /**
      * ---- Binding ----
@@ -98,6 +112,15 @@ public class RabbitConfig {
     @Bean
     public Binding bindingFindAllLeaveEmployee(final Queue queueFindAllLeaveEmployee,final DirectExchange directExchange){
         return BindingBuilder.bind(queueFindAllLeaveEmployee).to(directExchange).with(bindingKeyFindAllLeaveEmployee);
+    }
+
+    @Bean
+    public Binding bindingFindAllExpenseEmployee(final Queue queueFindAllExpenseEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueFindAllExpenseEmployee).to(directExchange).with(bindingKeyFindAllExpenseEmployee);
+    }
+    @Bean
+    public Binding bindingFindAllAdvancePaymentEmployee(final Queue queueFindAllAdvancePaymentEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueFindAllAdvancePaymentEmployee).to(directExchange).with(bindingKeyFindAllAdvancePaymentEmployee);
     }
 
 
