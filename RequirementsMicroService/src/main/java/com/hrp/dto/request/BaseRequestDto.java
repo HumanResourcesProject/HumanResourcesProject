@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class BaseRequestDto {
-    private String token; // auth idyi bulucak
+     String token; // auth idyi bulucak
 
 }
