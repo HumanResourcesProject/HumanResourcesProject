@@ -42,13 +42,15 @@ public class ExpenseMapper implements IExpenseMapper {
         dto.setAmount(expense.getAmount());
         dto.setCurrency(expense.getCurrency().name());
         dto.setType(expense.getType().name());
+        // entity'den gelen statusü dtoya icin string dönüsümü yapildi.
         dto.setStatus(expense.getStatus()==0 ? "Pending" : (expense.getStatus()==1 ? "Approved" : "Rejected"));
         dto.setSpendingDate(expense.getSpendingDate());
-        dto.setRequestDate(expense.getRequestDate().split("T")[0]);
-        dto.setApprovalDate(expense.getApprovalDate());
+        dto.setRequestDate(expense.getRequestDate());
+        dto.setApprovalDate(expense.getApprovalDate()==null ? "No Answer Yet" : expense.getApprovalDate().split("T")[0]);
         dto.setInvoiceUrl(expense.getInvoiceUrl());
         dto.setEmployeeName(expense.getEmployeeName());
         dto.setEmployeeSurname(expense.getEmployeeSurname());
+        dto.setExpenseId(expense.getId());
         return dto;
 
     }
