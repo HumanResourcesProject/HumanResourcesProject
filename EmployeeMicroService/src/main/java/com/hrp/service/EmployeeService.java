@@ -155,4 +155,15 @@ return true;
         System.out.println("geri dönüste producer a gelmeden hemen önce 151 servis");
         directProducer.sendEmployeeListForManager(modelEmployess.get());
     }
+
+    public Long myManagerCount(BaseEmployeeRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        Optional<List<Employee>> companys= employeeRepository.findOptionalByCompany(employee.get().getCompany());
+        List<Long> managerIds=new ArrayList<>();
+        for(Employee employee1 : companys.get()){
+            managerIds.add(employee1.getManagerId());
+        }
+        return managerIds.stream().distinct().count();
+    }
 }
