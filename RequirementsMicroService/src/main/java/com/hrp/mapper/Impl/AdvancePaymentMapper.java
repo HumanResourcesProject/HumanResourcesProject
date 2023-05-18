@@ -28,6 +28,8 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         advancedPayment.setRequestDate(LocalDateTime.now().toString());
         advancedPayment.setManagerId(model.getManagerId());
         advancedPayment.setAuthId(model.getAuthId());
+        advancedPayment.setEmployeeName(model.getEmployeeName());
+        advancedPayment.setEmployeeSurname(model.getEmployeeSurname());
         return advancedPayment;
     }
     @Override
@@ -44,6 +46,8 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         baseAdvancePaymentResponseDto.setRequestDate(advancedPayment.getRequestDate().split("T")[0]);
         baseAdvancePaymentResponseDto.setApprovalDate(advancedPayment.getApprovalDate());
         baseAdvancePaymentResponseDto.setStatus(advancedPayment.getStatus()==0 ?"Pending" : (advancedPayment.getStatus()==1 ? "Approved" : "Rejected"));
+        baseAdvancePaymentResponseDto.setEmployeeName(advancedPayment.getEmployeeName());
+        baseAdvancePaymentResponseDto.setEmployeeSurname(advancedPayment.getEmployeeSurname());
         return baseAdvancePaymentResponseDto;
     }
 

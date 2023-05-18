@@ -25,6 +25,8 @@ public class ExpenseMapper implements IExpenseMapper {
         expense.setRequestDate(LocalDate.now().toString());
         expense.setInvoiceUrl(model.getInvoiceUrl());
         expense.setCompany(model.getCompany());
+        expense.setEmployeeName(model.getEmployeeName());
+        expense.setEmployeeSurname(model.getEmployeeSurname());
         expense.setManagerId(model.getManagerId());
         expense.setAuthId(model.getAuthId());
         return expense;
@@ -45,6 +47,8 @@ public class ExpenseMapper implements IExpenseMapper {
         dto.setRequestDate(expense.getRequestDate().split("T")[0]);
         dto.setApprovalDate(expense.getApprovalDate());
         dto.setInvoiceUrl(expense.getInvoiceUrl());
+        dto.setEmployeeName(expense.getEmployeeName());
+        dto.setEmployeeSurname(expense.getEmployeeSurname());
         return dto;
 
     }
