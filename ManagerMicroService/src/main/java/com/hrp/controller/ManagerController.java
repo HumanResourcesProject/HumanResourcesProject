@@ -20,7 +20,6 @@ public class ManagerController {
     @PostMapping("/findall")
     @CrossOrigin("*")
     public ResponseEntity<List<BaseManagerResponseDto>> findAll(@RequestBody TokenDto dto){
-        System.out.println("find all");
         return ResponseEntity.ok(managerService.findAllManager(dto));
     }
 
@@ -38,20 +37,17 @@ public class ManagerController {
     @PostMapping("/getfindme")
     @CrossOrigin("*")
     public ResponseEntity<BaseManagerResponseDto> findMe(@RequestBody TokenDto dto){
-        System.out.println("find me metodu");
         return ResponseEntity.ok(managerService.findMe(dto));
     }
     // findall employee
     @PostMapping("/findallmyemployee")
     @CrossOrigin("*")
     public ResponseEntity<List<EmployeeRequestAndResponseDto>> findAllMyEmployee(@RequestBody TokenDto dto){
-        System.out.println("find employee controller"+ dto.toString());
         return ResponseEntity.ok(managerService.findAllMyEmployee(dto));
     }
     @PostMapping("/findallmyemployeecount")
     @CrossOrigin("*")
     public ResponseEntity<Long> findAllMyEmployeeCount(@RequestBody TokenDto dto){
-        System.out.println("find employee controller"+ dto.toString());
         return ResponseEntity.ok(managerService.findAllMyEmployee(dto).stream().count());
     }
 
