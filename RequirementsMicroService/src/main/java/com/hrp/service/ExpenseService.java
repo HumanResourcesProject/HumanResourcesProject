@@ -1,5 +1,6 @@
 package com.hrp.service;
 
+import com.hrp.dto.request.BaseAnswerDto;
 import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseExpenseResponseDto;
 import com.hrp.mapper.IExpenseMapper;
@@ -10,6 +11,7 @@ import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,5 +66,24 @@ public class ExpenseService extends ServiceManagerImpl<Expense, Long> {
         }
         return dtos.stream().filter(x->x.getStatus()=="Pending").toList();
     }
+
+    public boolean approveExpense(BaseAnswerDto dto) {
+        Optional<Expense> expense = expenseRepository.findById(dto.getRequirementId());
+        expense.get().setStatus(1);
+        expense.get().setApprovalDate(LocalDateTime.now().toString());
+        update(expense.get());
+        return true;
+    }
+
+    //rejectExpense
+    public Boolean rejectExpense(BaseAnswerDto dto) {
+        Optional<Expense> expense = expenseRepository.findById(dto.getRequirementId());
+        expense.get().setStatus(2);
+        expense.get().setApprovalDate(LocalDateTime.now().toString());
+        update(expense.get());
+        return true;
+    }
+
+
 
 }

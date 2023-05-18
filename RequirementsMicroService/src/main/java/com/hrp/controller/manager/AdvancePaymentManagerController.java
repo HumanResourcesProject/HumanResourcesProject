@@ -1,5 +1,6 @@
 package com.hrp.controller.manager;
 
+import com.hrp.dto.request.BaseAnswerDto;
 import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseAdvancePaymentResponseDto;
 import com.hrp.service.AdvancePaymentService;
@@ -35,13 +36,13 @@ public class AdvancePaymentManagerController {
 
     @PutMapping("/approveadvancepayment")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> approveAdvancePayment(String employeeId) {
-        return ResponseEntity.ok(advancePaymentService.approveAdvancePayment(employeeId));
+    public ResponseEntity<Boolean> approveAdvancePayment(BaseAnswerDto dto) {
+        return ResponseEntity.ok(advancePaymentService.approveAdvancePayment(dto));
     }
 
     @PutMapping("/rejectvancepayment")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> rejectAdvancePayment(String employeeId) {
-        return ResponseEntity.ok(advancePaymentService.rejectAdvancePayment(employeeId));
+    public ResponseEntity<Boolean> rejectAdvancePayment(BaseAnswerDto dto) {
+        return ResponseEntity.ok(advancePaymentService.rejectAdvancePayment(dto));
     }
 }

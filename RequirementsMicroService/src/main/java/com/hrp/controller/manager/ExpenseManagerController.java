@@ -1,5 +1,6 @@
 package com.hrp.controller.manager;
 
+import com.hrp.dto.request.BaseAnswerDto;
 import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseExpenseResponseDto;
 import com.hrp.service.ExpenseService;
@@ -31,5 +32,16 @@ public class ExpenseManagerController {
     @CrossOrigin("*")
     public ResponseEntity<Long> findAllMyExpensesForManagerCount(@RequestBody BaseRequestDto dto) {
         return ResponseEntity.ok(expenseService.findAllMyExpensesPendingForManager(dto).stream().count());
+    }
+    @PutMapping("/approveexpense")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> approveexpense(BaseAnswerDto dto) {
+        return ResponseEntity.ok(expenseService.approveExpense(dto));
+    }
+
+    @PutMapping("/rejectexpense")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> rejectExpense(BaseAnswerDto dto) {
+        return ResponseEntity.ok(expenseService.rejectExpense(dto));
     }
 }

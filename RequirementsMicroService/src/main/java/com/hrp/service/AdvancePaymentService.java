@@ -1,13 +1,17 @@
 package com.hrp.service;
 
+import com.hrp.dto.request.BaseAnswerDto;
 import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseAdvancePaymentResponseDto;
+import com.hrp.exception.EErrorType;
+import com.hrp.exception.RequirementsMicroException;
 import com.hrp.mapper.IAdvancePaymentMapper;
 import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
 import com.hrp.repository.IAdvancePaymentRepository;
 import com.hrp.repository.entity.AdvancedPayment;
 import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -62,25 +66,25 @@ public class AdvancePaymentService extends ServiceManagerImpl<AdvancedPayment, L
         return dtos.stream().filter(x->x.getStatus()=="Pending").toList();
     }
 
-    public Boolean approveAdvancePayment(String employeeId) {
-        Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findOptionalByEmployeeId(employeeId);
+    public Boolean approveAdvancePayment(BaseAnswerDto dto) {
+        Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findById(dto.getRequirementId());
         if (advancedPayment.isEmpty()){
-            System.out.println("Istek bulunamadi");
-            return false;
+            throw new RequirementsMicroException(EErrorType.BAD_REQUEST_ERROR);
         }
         advancedPayment.get().setStatus(1);
-        advancedPayment.get().setApprovalDate(String.valueOf(LocalDateTime.now()));
+        advancedPayment.get().setApprovalDate(LocalDateTime.now().toString());
+        update(advancedPayment.get());
         return true;
     }
 
-    public Boolean rejectAdvancePayment(String employeeId) {
-        Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findOptionalByEmployeeId(employeeId);
+    public Boolean rejectAdvancePayment(BaseAnswerDto dto) {
+        Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findById(dto.getRequirementId());
         if (advancedPayment.isEmpty()){
-            System.out.println("Istek bulunamadi");
-            return false;
+            throw new RequirementsMicroException(EErrorType.BAD_REQUEST_ERROR);
         }
         advancedPayment.get().setStatus(2);
-        advancedPayment.get().setApprovalDate(String.valueOf(LocalDateTime.now()));
+        advancedPayment.get().setApprovalDate(LocalDateTime.now().toString());
+        update(advancedPayment.get());
         return true;
     }
 }

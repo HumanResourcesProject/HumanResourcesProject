@@ -60,6 +60,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
     }
 
+    /**
+     * update metoduna bakalıcak.
+     */
     public Boolean updateManager(UpdateManagerRequestDto dto) {
         Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
         if (companyManagerId.isEmpty()){
@@ -69,6 +72,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
+
+        String url = toTurnStringAvatar(dto.getAvatar());
+
         update(iManuelManagerMapper.toManager(manager.get(),dto));
         return true;
     }

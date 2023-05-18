@@ -41,7 +41,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     public BaseAdminResponseDto findMe(TokenDto dto){
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
-        Admin admin = adminRepository.findById(id).get();
+        Admin admin = adminRepository.findOptionalByAuthId(id).get();
         return iManuelAdminMapper.toBaseResponseDto(admin);
     }
 
