@@ -17,15 +17,15 @@ public class RabbitConfig {
     private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
     private String bindingKeyRegisterManager= "binding-key-register-manager" ;
     private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
-    private String bingingKeyFindAllMyEmployee = "binging-key-find-all-my-employee" ;
+    private String bindingKeyFindAllLeaveEmployee= "binding-key-findallleave-employee" ;
 
 
     // Queue
-    private String adminEmailQueue = "admin-email-queue";
-    private String queueRegisterAdmin = "queue-register-admin";
-    private String queueRegisterManager = "queue-register-manager";
-    private String queueRegisterEmployee= "queue-register-employee";
-    private String queueFindAllMyEmployee = "queue-find-all-my-employee";
+    private  String adminEmailQueue = "admin-email-queue";
+    private  String queueRegisterAdmin = "queue-register-admin";
+    private  String queueRegisterManager = "queue-register-manager";
+    private  String queueRegisterEmployee= "queue-register-employee";
+    private  String queueFindAllLeaveEmployee= "queue-findallleave-employee";
 
 
     /**
@@ -46,7 +46,6 @@ public class RabbitConfig {
     TopicExchange exchangeTopic() {
         return new TopicExchange(exchangeTopic);
     }
-
 
     /**
      * ---- Queue ----
@@ -72,10 +71,9 @@ public class RabbitConfig {
     }
 
     @Bean
-    Queue queueFindAllMyEmployee(){
-        return new Queue(queueFindAllMyEmployee);
+    Queue queueFindAllLeaveEmployee(){
+        return new Queue(queueFindAllLeaveEmployee);
     }
-
 
     /**
      * ---- Binding ----
@@ -96,13 +94,11 @@ public class RabbitConfig {
     public Binding bindingRegisterEmployee(final Queue queueRegisterEmployee,final DirectExchange directExchange){
         return BindingBuilder.bind(queueRegisterEmployee).to(directExchange).with(bindingKeyRegisterEmployee);
     }
+
     @Bean
-    public Binding bindingFindAllMyEmployee(final Queue queueFindAllMyEmployee,final DirectExchange directExchange){
-        return BindingBuilder.bind(queueFindAllMyEmployee).to(directExchange).with(bingingKeyFindAllMyEmployee);
+    public Binding bindingFindAllLeaveEmployee(final Queue queueFindAllLeaveEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueFindAllLeaveEmployee).to(directExchange).with(bindingKeyFindAllLeaveEmployee);
     }
-
-
-
 
 
 }

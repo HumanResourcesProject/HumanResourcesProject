@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 @NoArgsConstructor
 @ToString
 public class BaseLeaveResponseDto {
+    private Long leaveId;
     private String employeeId;
     private Long authId;
     private Long managerId;

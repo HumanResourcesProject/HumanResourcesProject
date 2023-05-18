@@ -1,5 +1,6 @@
 package com.hrp.service;
 
+import com.hrp.dto.request.BaseAnswerDto;
 import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseLeaveResponseDto;
 import com.hrp.mapper.IAdvancePaymentMapper;
@@ -11,6 +12,7 @@ import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +67,21 @@ public class LeaveService extends ServiceManagerImpl<Leave, Long> {
             dtos.add(leaveMapper.toResponseDto(leave));
         }
         return dtos.stream().filter(x->x.getStatus()=="Pending").toList();
+    }
+
+    public Boolean approveleave(BaseAnswerDto dto) {
+        Optional<Leave> leave= leaveRepository.findById(dto.getRequirementId());
+        leave.get().setStatus(1);
+        leave.get().setApprovalDate(LocalDateTime.now().toString());
+        update(leave.get());
+        return true;
+    }
+    public Boolean rejectleave(BaseAnswerDto dto) {
+        Optional<Leave> leave= leaveRepository.findById(dto.getRequirementId());
+        leave.get().setStatus(2);
+        leave.get().setApprovalDate(LocalDateTime.now().toString());
+        update(leave.get());
+        return true;
     }
 
 }

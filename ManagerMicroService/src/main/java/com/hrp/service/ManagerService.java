@@ -48,11 +48,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public List<BaseManagerResponseDto> findAllManager(TokenDto dto) {
         Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
-        System.out.println("gelen id: find all manager da : "+ id);
         if(dto.getRole().equals("MANAGER")){
-            System.out.println("findall manager if den sonra");
             Manager manager = managerRepository.findOptionalByAuthId(id.get()).get();
-            return findAll().stream().filter(x->x.getCompany()==manager.getCompany()).
+            return findAll().stream().filter(x->x.getCompany().equals(manager.getCompany())).
                     map(x-> iManuelManagerMapper
                             .toBaseManagerResponseDto(x)).collect(Collectors.toList());
         }else{
@@ -62,6 +60,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
     }
 
+    /**
+     * update metoduna bakalıcak.
+     */
     public Boolean updateManager(UpdateManagerRequestDto dto) {
         Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
         if (companyManagerId.isEmpty()){
@@ -71,6 +72,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
+
+        String url = toTurnStringAvatar(dto.getAvatar());
+
         update(iManuelManagerMapper.toManager(manager.get(),dto));
         return true;
     }
