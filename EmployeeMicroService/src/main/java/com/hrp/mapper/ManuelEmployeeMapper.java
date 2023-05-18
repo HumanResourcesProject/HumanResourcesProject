@@ -1,5 +1,6 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.EmployeeUpdateNoPhotoRequestDto;
 import com.hrp.dto.request.EmployeeUpdateRequestDto;
 import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
@@ -65,6 +66,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         model.setManagerId(employee.getManagerId());
         model.setAdvancedPaymentDate(dto.getAdvancedPaymentDate());
         model.setAuthId(employee.getAuthId());
+        model.setEmployeeName(employee.getName());
+        model.setEmployeeSurname(employee.getSurname());
         return model;
     }
 
@@ -79,6 +82,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeLeave.setAmountOfDay(dto.getAmountOfDay());
         modelEmployeeLeave.setManagerId(employee.getManagerId());
         modelEmployeeLeave.setAuthId(employee.getAuthId());
+        modelEmployeeLeave.setEmployeeName(employee.getName());
+        modelEmployeeLeave.setEmployeeSurname(employee.getSurname());
         return modelEmployeeLeave;
     }
 
@@ -97,6 +102,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeExpense.setCompany(employee.getCompany());
         modelEmployeeExpense.setManagerId(employee.getManagerId());
         modelEmployeeExpense.setAuthId(employee.getAuthId());
+        modelEmployeeExpense.setEmployeeName(employee.getName());
+        modelEmployeeExpense.setEmployeeSurname(employee.getSurname());
         return modelEmployeeExpense;
     }
 
@@ -128,5 +135,12 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         model.setAvatar(employee.getAvatar());
         model.setSalary(employee.getSalary());
         return model;
+    }
+
+    @Override
+    public Employee toEmployee(Employee employee, EmployeeUpdateNoPhotoRequestDto dto) {
+        employee.setAddress(dto.getAddress());
+        employee.setPhone(dto.getPhone());
+        return employee;
     }
 }

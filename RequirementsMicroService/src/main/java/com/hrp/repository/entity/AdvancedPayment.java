@@ -21,6 +21,9 @@ public class AdvancedPayment extends BaseEntity{
     private String employeeId;
     private Long authId;
     private Long managerId;
+    private String employeeName;
+    private String employeeSurname;
+
     private String company;
     private Long amount;
     @Enumerated(EnumType.STRING)

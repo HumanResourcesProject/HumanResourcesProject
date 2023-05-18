@@ -30,6 +30,6 @@ public class ExpenseManagerController {
     @PostMapping("/findallmyexpensescount")
     @CrossOrigin("*")
     public ResponseEntity<Long> findAllMyExpensesForManagerCount(@RequestBody BaseRequestDto dto) {
-        return ResponseEntity.ok(expenseService.findAllMyExpensesForManager(dto).stream().count());
+        return ResponseEntity.ok(expenseService.findAllMyExpensesPendingForManager(dto).stream().count());
     }
 }

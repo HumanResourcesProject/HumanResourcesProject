@@ -19,4 +19,6 @@ public class BaseAdvancePaymentResponseDto {
     private String approvalDate;
     private String comment;
     private String status;
+    private String employeeName;
+    private String employeeSurname;
 }
