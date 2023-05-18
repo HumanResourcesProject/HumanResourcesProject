@@ -1,8 +1,7 @@
 package com.hrp.rabbitmq.consumer;
 
+import com.hrp.rabbitmq.model.ModelBaseEmployee;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
-import com.hrp.repository.entity.Employee;
 import com.hrp.service.EmployeeService;
 import com.hrp.utility.StaticValues;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +20,11 @@ public class Consumer {
         System.out.println("HHHHHHHHHHHHHHHH");
             employeeService.createEmployee(model);
     }
-
-    @RabbitListener(queues = "queue-turnmyleave-findall")
-    public void turnMyLeaveFindAll(List<ModelTurnAllLeaveRequest> model){
-        System.out.println("consumer 27");
-        System.out.println("consumer'e geldi 35");
-        StaticValues.myLeaveFindAll=model;
-        System.out.println("consumer 37");
-        System.out.println(StaticValues.myLeaveFindAll);
-        System.out.println("static değere atandi");
+    @RabbitListener(queues = "queue-find-all-my-employee")
+    public void findAllMyEmployee(ModelBaseEmployee model){
+        System.out.println("findall consumer 24");
+        employeeService.findAllMyEmployeeForManager(model);
     }
+
+
 }

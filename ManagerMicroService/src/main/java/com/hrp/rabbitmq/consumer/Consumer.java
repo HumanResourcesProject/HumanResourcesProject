@@ -1,7 +1,7 @@
 package com.hrp.rabbitmq.consumer;
 
+import com.hrp.rabbitmq.model.ModelBaseEmployee;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
-import com.hrp.rabbitmq.model.ModelTurnAllLeaveRequest;
 import com.hrp.service.ManagerService;
 import com.hrp.utility.StaticValues;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +20,11 @@ public class Consumer {
         managerService.createManager(model);
     }
 
-    @RabbitListener(queues = "queue-turnallleave-employee")
-    public void turnAllLeaveRequest(List<ModelTurnAllLeaveRequest> model){
-        StaticValues.findAllLeave=model;
+    @RabbitListener(queues = "queue-employee-list-for-manager")
+    public void registerEmployee(List<ModelBaseEmployee> model){
+        System.out.println("model icinde employee listeli olmalı o liste:  "+model.toString());
+        StaticValues.modelBaseEmployees=model;
     }
-
-
-
-
-
 
 
 

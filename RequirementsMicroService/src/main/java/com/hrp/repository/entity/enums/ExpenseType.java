@@ -1,6 +1,6 @@
 package com.hrp.repository.entity.enums;
 
-public enum SpendingType {
+public enum ExpenseType {
     TRANSPORTATION, //seyahat
     EDUCATION, // egitim
     ACCOMODATION, // konaklama

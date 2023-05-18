@@ -38,7 +38,7 @@ public class ManuelMapper implements IManuelMapper {
         modelRegisterManager.setJobStart(dto.getJobStart());
         return modelRegisterManager;
     }
-    public ModelRegisterEmployee authToModelRegisterEmployee(Auth auth, RegisterEmployeeRequestDto dto) {
+    public ModelRegisterEmployee authToModelRegisterEmployee(Auth auth, RegisterEmployeeRequestDto dto,Long managerId) {
         ModelRegisterEmployee modelRegisterEmployee = new ModelRegisterEmployee();
         modelRegisterEmployee.setAuthId(auth.getId());
         modelRegisterEmployee.setName(dto.getName());
@@ -54,6 +54,7 @@ public class ManuelMapper implements IManuelMapper {
         modelRegisterEmployee.setMiddleName(dto.getMiddleName());
         modelRegisterEmployee.setOccupation(dto.getOccupation());
         modelRegisterEmployee.setJobStart(dto.getJobStart());
+        modelRegisterEmployee.setManagerId(managerId);
         return modelRegisterEmployee;
     }
 }

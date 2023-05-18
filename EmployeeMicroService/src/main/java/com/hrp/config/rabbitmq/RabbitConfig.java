@@ -16,17 +16,13 @@ public class RabbitConfig {
 
 
     // Key
-
     private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
     private String bindingKeyRegisterManager= "binding-key-register-manager" ;
     private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
     private String bindingKeyAdvancePaymentEmployee = "binding-key-advance-payment-employee" ;
     private String bindingKeyLeaveEmployee = "binding-key-leave-employee" ;
     private String bindingKeyExpenseEmployee = "binding-key-expense-employee" ;
-    private String bindingKeyMyLeave = "binding-key-my-leave" ;
-
-
-
+    private String bindingKeyEmployeeListForManager= "binding-key-employee-list-for-manager" ;
 
 
     // Queue
@@ -36,12 +32,7 @@ public class RabbitConfig {
     private  String queueAdvancePaymentEmployee = "queue-advance-payment-employee";
     private  String queueLeaveEmployee = "queue-leave-employee";
     private  String queueExpenseEmployee = "queue-expense-employee";
-    private String  queueMyLeave = "queue-my-leave";
-
-
-
-
-
+    private String queueEmployeeListForManager = "queue-employee-list-for-manager";
 
     /**
      * ---- Exchange ----
@@ -86,8 +77,8 @@ public class RabbitConfig {
     }
 
     @Bean
-    Queue queueMyLeave(){
-        return new Queue(queueMyLeave);
+    Queue queueEmployeeListForManager(){
+        return new Queue(queueEmployeeListForManager);
     }
 
     /**
@@ -123,8 +114,8 @@ public class RabbitConfig {
         return BindingBuilder.bind(queueExpenseEmployee).to(directExchange).with(bindingKeyExpenseEmployee);
     }
     @Bean
-    public Binding bindingMyLeave(final Queue queueMyLeave,final DirectExchange directExchange){
-        return BindingBuilder.bind(queueMyLeave).to(directExchange).with(bindingKeyMyLeave);
+    public Binding bindingEmployeeListForManager(final Queue queueEmployeeListForManager,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueEmployeeListForManager).to(directExchange).with(bindingKeyEmployeeListForManager);
     }
 
 }
