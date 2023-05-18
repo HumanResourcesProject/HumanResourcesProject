@@ -1,16 +1,18 @@
-package com.hrp.dto.response;
+package com.hrp.rabbitmq.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class BaseAdvancePaymentResponseDto {
-    private Long advancePaymentId;
+@AllArgsConstructor
+@Builder
+public class ModelTurnAllAdvancePaymentRequest implements Serializable {
     private String employeeId;
-    private Long authId;
     private Long managerId;
     private String company;
     private Long amount;
@@ -19,7 +21,5 @@ public class BaseAdvancePaymentResponseDto {
     private String requestDate;
     private String approvalDate;
     private String comment;
-    private String status;
-    private String employeeName;
-    private String employeeSurname;
+    private int status;
 }

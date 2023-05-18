@@ -1,5 +1,6 @@
 package com.hrp.controller.manager;
 
+import com.hrp.dto.request.BaseAnswerDto;
 import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseAdvancePaymentResponseDto;
 import com.hrp.service.AdvancePaymentService;
@@ -31,5 +32,17 @@ public class AdvancePaymentManagerController {
     @CrossOrigin("*")
     public ResponseEntity<Long> findAllMyAdvancesForManagerCount(@RequestBody BaseRequestDto dto){
         return ResponseEntity.ok(advancePaymentService.findAllMyAdvancePaymentPendingForManager(dto).stream().count());
+    }
+
+    @PutMapping("/approveadvancepayment")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> approveAdvancePayment(BaseAnswerDto dto) {
+        return ResponseEntity.ok(advancePaymentService.approveAdvancePayment(dto));
+    }
+
+    @PutMapping("/rejectvancepayment")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> rejectAdvancePayment(BaseAnswerDto dto) {
+        return ResponseEntity.ok(advancePaymentService.rejectAdvancePayment(dto));
     }
 }

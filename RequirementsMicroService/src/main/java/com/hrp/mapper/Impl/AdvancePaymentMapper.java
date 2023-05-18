@@ -32,6 +32,8 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         advancedPayment.setEmployeeSurname(model.getEmployeeSurname());
         return advancedPayment;
     }
+
+    // baseResponse cevirirken tamamen dto odaklı yapıldı.
     @Override
     public BaseAdvancePaymentResponseDto toBaseAdvancePaymentResponse(AdvancedPayment advancedPayment) {
         BaseAdvancePaymentResponseDto baseAdvancePaymentResponseDto = new BaseAdvancePaymentResponseDto();
@@ -44,10 +46,12 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         baseAdvancePaymentResponseDto.setComment(advancedPayment.getComment());
         baseAdvancePaymentResponseDto.setAdvancedPaymentDate(advancedPayment.getAdvancedPaymentDate());
         baseAdvancePaymentResponseDto.setRequestDate(advancedPayment.getRequestDate().split("T")[0]);
-        baseAdvancePaymentResponseDto.setApprovalDate(advancedPayment.getApprovalDate());
+        baseAdvancePaymentResponseDto.setApprovalDate(advancedPayment.getApprovalDate()==null ? "No Answer Yet" : advancedPayment.getApprovalDate().split("T")[0]);
+        // entity'den gelen statusü dtoya icin string dönüsümü yapildi.
         baseAdvancePaymentResponseDto.setStatus(advancedPayment.getStatus()==0 ?"Pending" : (advancedPayment.getStatus()==1 ? "Approved" : "Rejected"));
         baseAdvancePaymentResponseDto.setEmployeeName(advancedPayment.getEmployeeName());
         baseAdvancePaymentResponseDto.setEmployeeSurname(advancedPayment.getEmployeeSurname());
+        baseAdvancePaymentResponseDto.setAdvancePaymentId(advancedPayment.getId());
         return baseAdvancePaymentResponseDto;
     }
 

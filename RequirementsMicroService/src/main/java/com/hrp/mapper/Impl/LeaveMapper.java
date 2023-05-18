@@ -39,13 +39,15 @@ public class LeaveMapper implements ILeaveMapper {
         dto.setCompany(leave.getCompany());
         dto.setType(leave.getType().name());
         dto.setRequestDate(leave.getRequestDate().split("T")[0]);
-        dto.setStartDate(leave.getStartDate());
-        dto.setFinishDate(leave.getFinishDate());
-        dto.setApprovalDate(leave.getApprovalDate());
+        dto.setStartDate(leave.getStartDate().split("T")[0]);
+        dto.setFinishDate(leave.getFinishDate().split("T")[0]);
+        dto.setApprovalDate(leave.getApprovalDate()==null ? "No Answer Yet" : leave.getApprovalDate().split("T")[0]);
+        // entity'den gelen statusü dtoya icin string dönüsümü yapildi.
         dto.setStatus(leave.getStatus()==0 ? "Pending" : (leave.getStatus()==1 ? "Approved" : "Rejected"));
         dto.setAmountOfDay(leave.getAmountOfDay());
         dto.setEmployeeName(leave.getEmployeeName());
         dto.setEmployeeSurname(leave.getEmployeeSurname());
+        dto.setLeaveId(leave.getId());
         return dto;
 
     }
