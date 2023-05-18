@@ -66,6 +66,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         model.setManagerId(employee.getManagerId());
         model.setAdvancedPaymentDate(dto.getAdvancedPaymentDate());
         model.setAuthId(employee.getAuthId());
+        model.setEmployeeName(employee.getName());
+        model.setEmployeeSurname(employee.getSurname());
         return model;
     }
 
@@ -80,6 +82,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeLeave.setAmountOfDay(dto.getAmountOfDay());
         modelEmployeeLeave.setManagerId(employee.getManagerId());
         modelEmployeeLeave.setAuthId(employee.getAuthId());
+        modelEmployeeLeave.setEmployeeName(employee.getName());
+        modelEmployeeLeave.setEmployeeSurname(employee.getSurname());
         return modelEmployeeLeave;
     }
 
@@ -98,6 +102,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeExpense.setCompany(employee.getCompany());
         modelEmployeeExpense.setManagerId(employee.getManagerId());
         modelEmployeeExpense.setAuthId(employee.getAuthId());
+        modelEmployeeExpense.setEmployeeName(employee.getName());
+        modelEmployeeExpense.setEmployeeSurname(employee.getSurname());
         return modelEmployeeExpense;
     }
 

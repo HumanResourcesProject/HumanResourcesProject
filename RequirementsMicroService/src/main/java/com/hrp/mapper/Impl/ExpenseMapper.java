@@ -8,6 +8,8 @@ import com.hrp.repository.entity.enums.ExpenseCurrency;
 import com.hrp.repository.entity.enums.ExpenseType;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class ExpenseMapper implements IExpenseMapper {
     @Override
@@ -20,8 +22,11 @@ public class ExpenseMapper implements IExpenseMapper {
         expense.setCompany(model.getCompany());
         expense.setStatus(0);
         expense.setSpendingDate(model.getSpendingDate());
+        expense.setRequestDate(LocalDate.now().toString());
         expense.setInvoiceUrl(model.getInvoiceUrl());
         expense.setCompany(model.getCompany());
+        expense.setEmployeeName(model.getEmployeeName());
+        expense.setEmployeeSurname(model.getEmployeeSurname());
         expense.setManagerId(model.getManagerId());
         expense.setAuthId(model.getAuthId());
         return expense;
@@ -39,9 +44,11 @@ public class ExpenseMapper implements IExpenseMapper {
         dto.setType(expense.getType().name());
         dto.setStatus(expense.getStatus()==0 ? "Pending" : (expense.getStatus()==1 ? "Approved" : "Rejected"));
         dto.setSpendingDate(expense.getSpendingDate());
-        dto.setRequestDate(expense.getRequestDate());
+        dto.setRequestDate(expense.getRequestDate().split("T")[0]);
         dto.setApprovalDate(expense.getApprovalDate());
         dto.setInvoiceUrl(expense.getInvoiceUrl());
+        dto.setEmployeeName(expense.getEmployeeName());
+        dto.setEmployeeSurname(expense.getEmployeeSurname());
         return dto;
 
     }

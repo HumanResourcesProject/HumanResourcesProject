@@ -30,6 +30,6 @@ public class AdvancePaymentManagerController {
     @PostMapping("/findallmyadvancescount")
     @CrossOrigin("*")
     public ResponseEntity<Long> findAllMyAdvancesForManagerCount(@RequestBody BaseRequestDto dto){
-        return ResponseEntity.ok(advancePaymentService.findAllMyAdvancePaymentForManager(dto).stream().count());
+        return ResponseEntity.ok(advancePaymentService.findAllMyAdvancePaymentPendingForManager(dto).stream().count());
     }
 }

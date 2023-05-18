@@ -30,6 +30,6 @@ public class LeaveManagerController {
     @CrossOrigin("*")
     public ResponseEntity<Long> findAllMyLeavesForManagerCount(@RequestBody BaseRequestDto dto){
         System.out.println("findall leave metodu"+dto.toString());
-        return ResponseEntity.ok(leaveService.findAllMyLeavesForManager(dto).stream().count());
+        return ResponseEntity.ok(leaveService.findAllMyLeavesPendingForManager(dto).stream().count());
     }
 }

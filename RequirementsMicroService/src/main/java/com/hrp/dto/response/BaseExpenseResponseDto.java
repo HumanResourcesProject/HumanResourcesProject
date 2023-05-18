@@ -20,4 +20,6 @@ public class BaseExpenseResponseDto {
     private String requestDate;
     private String approvalDate;
     private String invoiceUrl;
+    private String employeeName;
+    private String employeeSurname;
 }

@@ -70,5 +70,11 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.findAllMyEmployee(dto).stream().count());
     }
 
+    @PostMapping("/findallmymanagercount")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> myManagerCount(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.myManagerCount(dto));
+    }
+
 
 }
