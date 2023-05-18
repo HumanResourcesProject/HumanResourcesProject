@@ -102,7 +102,7 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
         newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
         update(newEmployee);
-return true;
+        return true;
     }
     public Boolean updateEmployeeNoPhoto(EmployeeUpdateNoPhotoRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
