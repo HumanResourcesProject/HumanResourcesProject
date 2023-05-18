@@ -156,6 +156,7 @@ return true;
         directProducer.sendEmployeeListForManager(modelEmployess.get());
     }
 
+    // bu istek değisecek.
     public Long myManagerCount(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
