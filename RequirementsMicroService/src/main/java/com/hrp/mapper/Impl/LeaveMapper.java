@@ -21,6 +21,8 @@ public class LeaveMapper implements ILeaveMapper {
         leave.setAmountOfDay(model.getAmountOfDay());
         leave.setStatus(0);
         leave.setFinishDate(model.getFinishDate());
+        leave.setEmployeeName(model.getEmployeeName());
+        leave.setEmployeeSurname(model.getEmployeeSurname());
         leave.setStartDate(model.getStartDate());
         leave.setRequestDate(LocalDateTime.now().toString());
         leave.setManagerId(model.getManagerId());
@@ -36,12 +38,14 @@ public class LeaveMapper implements ILeaveMapper {
         dto.setManagerId(leave.getManagerId());
         dto.setCompany(leave.getCompany());
         dto.setType(leave.getType().name());
-        dto.setRequestDate(leave.getRequestDate());
+        dto.setRequestDate(leave.getRequestDate().split("T")[0]);
         dto.setStartDate(leave.getStartDate());
         dto.setFinishDate(leave.getFinishDate());
         dto.setApprovalDate(leave.getApprovalDate());
-        dto.setStatus(leave.getStatus());
+        dto.setStatus(leave.getStatus()==0 ? "Pending" : (leave.getStatus()==1 ? "Approved" : "Rejected"));
         dto.setAmountOfDay(leave.getAmountOfDay());
+        dto.setEmployeeName(leave.getEmployeeName());
+        dto.setEmployeeSurname(leave.getEmployeeSurname());
         return dto;
 
     }

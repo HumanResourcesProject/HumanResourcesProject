@@ -23,6 +23,8 @@ public class BaseLeaveResponseDto {
     private String startDate;
     private String finishDate;
     private String approvalDate;
-    private int status;
+    private String status;
     private int amountOfDay;
+    private String employeeName;
+    private String employeeSurname;
 }

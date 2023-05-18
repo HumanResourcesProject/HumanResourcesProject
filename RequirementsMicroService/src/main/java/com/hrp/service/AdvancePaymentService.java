@@ -10,6 +10,7 @@ import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,5 +41,46 @@ public class AdvancePaymentService extends ServiceManagerImpl<AdvancedPayment, L
             dtos.add(manuelRequirementsMapper.toBaseAdvancePaymentResponse(advance));
         }
         return dtos;
+    }
+    public List<BaseAdvancePaymentResponseDto> findAllMyAdvancePaymentForManager(BaseRequestDto dto){
+        Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        Optional<List<AdvancedPayment>> advancedPayments= advancePaymentRepository.findOptionalByManagerId(authId.get());
+        List<BaseAdvancePaymentResponseDto> dtos = new ArrayList<>();
+        for ( AdvancedPayment advance : advancedPayments.get()){
+            dtos.add(manuelRequirementsMapper.toBaseAdvancePaymentResponse(advance));
+        }
+        return dtos;
+    }
+
+    public List<BaseAdvancePaymentResponseDto> findAllMyAdvancePaymentPendingForManager(BaseRequestDto dto){
+        Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        Optional<List<AdvancedPayment>> advancedPayments= advancePaymentRepository.findOptionalByManagerId(authId.get());
+        List<BaseAdvancePaymentResponseDto> dtos = new ArrayList<>();
+        for ( AdvancedPayment advance : advancedPayments.get()){
+            dtos.add(manuelRequirementsMapper.toBaseAdvancePaymentResponse(advance));
+        }
+        return dtos.stream().filter(x->x.getStatus()=="Pending").toList();
+    }
+
+    public Boolean approveAdvancePayment(String employeeId) {
+        Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findOptionalByEmployeeId(employeeId);
+        if (advancedPayment.isEmpty()){
+            System.out.println("Istek bulunamadi");
+            return false;
+        }
+        advancedPayment.get().setStatus(1);
+        advancedPayment.get().setApprovalDate(String.valueOf(LocalDateTime.now()));
+        return true;
+    }
+
+    public Boolean rejectAdvancePayment(String employeeId) {
+        Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findOptionalByEmployeeId(employeeId);
+        if (advancedPayment.isEmpty()){
+            System.out.println("Istek bulunamadi");
+            return false;
+        }
+        advancedPayment.get().setStatus(2);
+        advancedPayment.get().setApprovalDate(String.valueOf(LocalDateTime.now()));
+        return true;
     }
 }

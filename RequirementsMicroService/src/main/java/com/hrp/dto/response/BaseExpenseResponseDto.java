@@ -15,9 +15,11 @@ public class BaseExpenseResponseDto {
     private Long amount;
     private String currency;
     private String type;
-    private int status;
+    private String status;
     private String spendingDate;
     private String requestDate;
     private String approvalDate;
     private String invoiceUrl;
+    private String employeeName;
+    private String employeeSurname;
 }

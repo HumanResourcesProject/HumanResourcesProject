@@ -12,13 +12,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/requirements/employee")
 public class LeaveEmployeeController {
     private final LeaveService leaveService;
 
     @PostMapping("/findallmyleaves")
     @CrossOrigin("*")
     public ResponseEntity<List<BaseLeaveResponseDto>> findAllMyLeaves(@RequestBody BaseRequestDto dto){
+        System.out.println("findall leave metodu"+dto.toString());
         return ResponseEntity.ok(leaveService.findAllMyLeavesForEmployee(dto));
     }
 }

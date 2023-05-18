@@ -10,4 +10,7 @@ import java.util.Optional;
 @Repository
 public interface IAdvancePaymentRepository extends JpaRepository<AdvancedPayment,Long> {
     Optional<List<AdvancedPayment>> findOptionalByAuthId(Long authId);
+    Optional<List<AdvancedPayment>> findOptionalByManagerId(Long managerId);
+
+    Optional<AdvancedPayment> findOptionalByEmployeeId(String employeeId);
 }

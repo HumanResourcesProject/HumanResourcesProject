@@ -1,14 +1,12 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.EmployeeUpdateNoPhotoRequestDto;
 import com.hrp.dto.request.EmployeeUpdateRequestDto;
 import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
-import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
-import com.hrp.rabbitmq.model.ModelEmployeeExpense;
-import com.hrp.rabbitmq.model.ModelRegisterEmployee;
-import com.hrp.rabbitmq.model.ModelEmployeeLeave;
+import com.hrp.rabbitmq.model.*;
 import com.hrp.repository.entity.Employee;
 import org.springframework.stereotype.Component;
 
@@ -53,6 +51,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         baseEmployeeResponseDto.setCompany(employee.getCompany());
         baseEmployeeResponseDto.setAvatar(employee.getAvatar());
         baseEmployeeResponseDto.setManagerId(employee.getManagerId());
+        baseEmployeeResponseDto.setJobStart(employee.getJobStart());
         return baseEmployeeResponseDto;
     }
 
@@ -67,6 +66,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         model.setManagerId(employee.getManagerId());
         model.setAdvancedPaymentDate(dto.getAdvancedPaymentDate());
         model.setAuthId(employee.getAuthId());
+        model.setEmployeeName(employee.getName());
+        model.setEmployeeSurname(employee.getSurname());
         return model;
     }
 
@@ -81,6 +82,8 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeLeave.setAmountOfDay(dto.getAmountOfDay());
         modelEmployeeLeave.setManagerId(employee.getManagerId());
         modelEmployeeLeave.setAuthId(employee.getAuthId());
+        modelEmployeeLeave.setEmployeeName(employee.getName());
+        modelEmployeeLeave.setEmployeeSurname(employee.getSurname());
         return modelEmployeeLeave;
     }
 
@@ -99,11 +102,43 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         modelEmployeeExpense.setCompany(employee.getCompany());
         modelEmployeeExpense.setManagerId(employee.getManagerId());
         modelEmployeeExpense.setAuthId(employee.getAuthId());
+        modelEmployeeExpense.setEmployeeName(employee.getName());
+        modelEmployeeExpense.setEmployeeSurname(employee.getSurname());
         return modelEmployeeExpense;
     }
 
     @Override
     public Employee toEmployee(Employee employee,EmployeeUpdateRequestDto dto) {
+        employee.setAddress(dto.getAddress());
+        employee.setPhone(dto.getPhone());
+        return employee;
+    }
+
+    @Override
+    public ModelBaseEmployee toModel(Employee employee) {
+        ModelBaseEmployee model= new ModelBaseEmployee();
+        model.setAuthId(employee.getAuthId());
+        model.setManagerId(employee.getManagerId());
+        model.setIdentityNumber(employee.getIdentityNumber());
+        model.setName(employee.getName());
+        model.setMiddleName(employee.getMiddleName());
+        model.setSurname(employee.getSurname());
+        model.setBirthDate(employee.getBirthDate());
+        model.setBirthPlace(employee.getBirthPlace());
+        model.setJobStart(employee.getJobStart());
+        model.setOccupation(employee.getOccupation());
+        model.setDepartment(employee.getDepartment());
+        model.setEmail(employee.getEmail());
+        model.setPhone(employee.getPhone());
+        model.setAddress(employee.getAddress());
+        model.setCompany(employee.getCompany());
+        model.setAvatar(employee.getAvatar());
+        model.setSalary(employee.getSalary());
+        return model;
+    }
+
+    @Override
+    public Employee toEmployee(Employee employee, EmployeeUpdateNoPhotoRequestDto dto) {
         employee.setAddress(dto.getAddress());
         employee.setPhone(dto.getPhone());
         return employee;

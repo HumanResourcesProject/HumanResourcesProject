@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/requirements/employee")
 @RequiredArgsConstructor
 public class ExpenseEmployeeController {
     private final ExpenseService expenseService;

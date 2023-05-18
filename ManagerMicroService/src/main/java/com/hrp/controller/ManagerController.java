@@ -3,6 +3,7 @@ package com.hrp.controller;
 import com.hrp.dto.request.TokenDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
+import com.hrp.dto.response.EmployeeRequestAndResponseDto;
 import com.hrp.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,6 @@ public class ManagerController {
     @PostMapping("/findall")
     @CrossOrigin("*")
     public ResponseEntity<List<BaseManagerResponseDto>> findAll(@RequestBody TokenDto dto){
-        System.out.println("find all");
         return ResponseEntity.ok(managerService.findAllManager(dto));
     }
 
@@ -37,9 +37,20 @@ public class ManagerController {
     @PostMapping("/getfindme")
     @CrossOrigin("*")
     public ResponseEntity<BaseManagerResponseDto> findMe(@RequestBody TokenDto dto){
-        System.out.println("find me metodu");
         return ResponseEntity.ok(managerService.findMe(dto));
     }
+    // findall employee
+    @PostMapping("/findallmyemployee")
+    @CrossOrigin("*")
+    public ResponseEntity<List<EmployeeRequestAndResponseDto>> findAllMyEmployee(@RequestBody TokenDto dto){
+        return ResponseEntity.ok(managerService.findAllMyEmployee(dto));
+    }
+    @PostMapping("/findallmyemployeecount")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeCount(@RequestBody TokenDto dto){
+        return ResponseEntity.ok(managerService.findAllMyEmployee(dto).stream().count());
+    }
+
 
     // onaylama ve reddetme islemleri
 

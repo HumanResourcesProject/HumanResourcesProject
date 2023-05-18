@@ -20,6 +20,7 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         advancedPayment.setAmount(model.getAmount());
         advancedPayment.setEmployeeId(model.getEmployeeId());
         advancedPayment.setCompany(model.getCompany());
+        System.out.println("mapper ici tl ye bakıyoruz: "+ExpenseCurrency.valueOf(model.getCurrency().toUpperCase()));
         advancedPayment.setCurrency(ExpenseCurrency.valueOf(model.getCurrency()));
         advancedPayment.setComment(model.getComment());
         advancedPayment.setStatus(0);
@@ -27,6 +28,8 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         advancedPayment.setRequestDate(LocalDateTime.now().toString());
         advancedPayment.setManagerId(model.getManagerId());
         advancedPayment.setAuthId(model.getAuthId());
+        advancedPayment.setEmployeeName(model.getEmployeeName());
+        advancedPayment.setEmployeeSurname(model.getEmployeeSurname());
         return advancedPayment;
     }
     @Override
@@ -40,9 +43,11 @@ public class AdvancePaymentMapper implements IAdvancePaymentMapper {
         baseAdvancePaymentResponseDto.setCurrency(advancedPayment.getCurrency().name());
         baseAdvancePaymentResponseDto.setComment(advancedPayment.getComment());
         baseAdvancePaymentResponseDto.setAdvancedPaymentDate(advancedPayment.getAdvancedPaymentDate());
-        baseAdvancePaymentResponseDto.setRequestDate(advancedPayment.getRequestDate());
+        baseAdvancePaymentResponseDto.setRequestDate(advancedPayment.getRequestDate().split("T")[0]);
         baseAdvancePaymentResponseDto.setApprovalDate(advancedPayment.getApprovalDate());
-        baseAdvancePaymentResponseDto.setStatus(advancedPayment.getStatus()==0 ?"pending" : (advancedPayment.getStatus()==1 ? "approved" : "rejected"));
+        baseAdvancePaymentResponseDto.setStatus(advancedPayment.getStatus()==0 ?"Pending" : (advancedPayment.getStatus()==1 ? "Approved" : "Rejected"));
+        baseAdvancePaymentResponseDto.setEmployeeName(advancedPayment.getEmployeeName());
+        baseAdvancePaymentResponseDto.setEmployeeSurname(advancedPayment.getEmployeeSurname());
         return baseAdvancePaymentResponseDto;
     }
 

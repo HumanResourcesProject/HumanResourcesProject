@@ -22,6 +22,9 @@ public class Expense extends BaseEntity{
     private String employeeId;
     private Long managerId;
     private Long authId;
+    private String employeeName;
+    private String employeeSurname;
+
     private String company; // sirket
     private Long amount; // tutar
     @Enumerated(EnumType.STRING)

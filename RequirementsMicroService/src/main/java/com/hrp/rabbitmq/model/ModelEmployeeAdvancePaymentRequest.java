@@ -20,5 +20,8 @@ public class ModelEmployeeAdvancePaymentRequest implements Serializable {
     private String advancedPaymentDate;
     private Long managerId;
     private Long authId;
+    private String employeeName;
+    private String employeeSurname;
+
 
 }

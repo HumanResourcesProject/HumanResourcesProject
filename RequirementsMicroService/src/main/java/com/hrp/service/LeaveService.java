@@ -35,13 +35,36 @@ public class LeaveService extends ServiceManagerImpl<Leave, Long> {
     }
 
     public List<BaseLeaveResponseDto> findAllMyLeavesForEmployee(BaseRequestDto dto) {
+
         Optional<Long> authId=  jwtTokenManager.validToken(dto.getToken());
+        System.out.println("managerin auth id si olması lazım ");
         Optional<List<Leave>> leaves= leaveRepository.findOptionalByAuthId(authId.get());
         List<BaseLeaveResponseDto> dtos= new ArrayList<>();
         for (Leave leave: leaves.get()){
             dtos.add(leaveMapper.toResponseDto(leave));
         }
-
         return dtos;
     }
+
+    public List<BaseLeaveResponseDto> findAllMyLeavesForManager(BaseRequestDto dto) {
+        Optional<Long> authId=  jwtTokenManager.validToken(dto.getToken());
+        System.out.println("managerin auth id si olması lazım ");
+        Optional<List<Leave>> leaves= leaveRepository.findOptionalByManagerId(authId.get());
+        List<BaseLeaveResponseDto> dtos= new ArrayList<>();
+        for (Leave leave: leaves.get()){
+            dtos.add(leaveMapper.toResponseDto(leave));
+        }
+        return dtos;
+    }
+    public List<BaseLeaveResponseDto> findAllMyLeavesPendingForManager(BaseRequestDto dto) {
+        Optional<Long> authId=  jwtTokenManager.validToken(dto.getToken());
+        System.out.println("managerin auth id si olması lazım ");
+        Optional<List<Leave>> leaves= leaveRepository.findOptionalByManagerId(authId.get());
+        List<BaseLeaveResponseDto> dtos= new ArrayList<>();
+        for (Leave leave: leaves.get()){
+            dtos.add(leaveMapper.toResponseDto(leave));
+        }
+        return dtos.stream().filter(x->x.getStatus()=="Pending").toList();
+    }
+
 }

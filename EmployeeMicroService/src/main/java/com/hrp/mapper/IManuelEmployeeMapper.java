@@ -1,14 +1,12 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.EmployeeUpdateNoPhotoRequestDto;
 import com.hrp.dto.request.EmployeeUpdateRequestDto;
 import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
-import com.hrp.rabbitmq.model.ModelEmployeeAdvancePaymentRequest;
-import com.hrp.rabbitmq.model.ModelEmployeeExpense;
-import com.hrp.rabbitmq.model.ModelRegisterEmployee;
-import com.hrp.rabbitmq.model.ModelEmployeeLeave;
+import com.hrp.rabbitmq.model.*;
 import com.hrp.repository.entity.Employee;
 
 public interface IManuelEmployeeMapper {
@@ -19,4 +17,7 @@ public interface IManuelEmployeeMapper {
 
     ModelEmployeeExpense toEmployeeExpenseModel(Employee employee, ExpenseRequestDto dto);
     Employee toEmployee(Employee employee,EmployeeUpdateRequestDto dto);
+    ModelBaseEmployee toModel(Employee employee);
+    Employee toEmployee(Employee employee,EmployeeUpdateNoPhotoRequestDto dto);
+
 }

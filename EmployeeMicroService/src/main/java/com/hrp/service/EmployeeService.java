@@ -3,6 +3,7 @@ package com.hrp.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.BaseEmployeeRequestDto;
+import com.hrp.dto.request.EmployeeUpdateNoPhotoRequestDto;
 import com.hrp.dto.request.EmployeeUpdateRequestDto;
 import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +57,8 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         if (employee.isEmpty()){
             throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
         }
-        if(dto.getAmount()*3 > employee.get().getSalary()){
+        // gereksiz para kontrolü önde yapiliyor
+        if(dto.getAmount() > employee.get().getSalary()*3){
             System.out.println("Maasininizin 3 katindan fazla avans çekemezsiniz.");
             return null;
         }
@@ -97,15 +100,17 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
         Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
-        System.out.println("********************************************");
-        System.out.println("eski employe bilgileri"+employee.get().toString());
-        System.out.println("----------*****************************-----------------");
-        System.out.println("new employee bilgileri"+newEmployee.toString());
-        //newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
-        System.out.println("116 da ki avatar cevirmeden sonra new employee bilgileri"+newEmployee.toString());
-        System.out.println("********************************************");
+        newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
         update(newEmployee);
 return true;
+    }
+    public Boolean updateEmployeeNoPhoto(EmployeeUpdateNoPhotoRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
+        //newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
+        update(newEmployee);
+        return true;
     }
 
 
@@ -126,18 +131,40 @@ return true;
             return null;
         }
     }
-    public List<BaseEmployeeResponseDto> findAllEmployee(BaseEmployeeRequestDto dto) {
+    public List<BaseEmployeeResponseDto> findAllMyEmployee(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
-        return findAll().stream().filter(x->x.getCompany()==employee.get().getCompany())
+        System.out.println("bu find all stream dır.... "+findAll().stream().filter(x->x.getCompany().equals(employee.get().getCompany()))
+                .map(x-> iManuelEmployeeMapper.toBaseEmployeeDto(x))
+                .collect(Collectors.toList()));
+        return findAll().stream().filter(x->x.getCompany().equals(employee.get().getCompany()))
                 .map(x-> iManuelEmployeeMapper.toBaseEmployeeDto(x))
                 .collect(Collectors.toList());
     }
-
     public BaseEmployeeResponseDto findMe(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
         return iManuelEmployeeMapper.toBaseEmployeeDto(employee.get());
     }
+    public void findAllMyEmployeeForManager(ModelBaseEmployee model) {
+        Optional<List<Employee>> employees = employeeRepository.findOptionalByCompany(model.getCompany());
+        Optional<List<ModelBaseEmployee>> modelEmployess= Optional.of(new ArrayList<>());
+        for (Employee employe: employees.get()){
+            modelEmployess.get().add(iManuelEmployeeMapper.toModel(employe));
+        }
+        System.out.println("geri dönüste producer a gelmeden hemen önce 151 servis");
+        directProducer.sendEmployeeListForManager(modelEmployess.get());
+    }
 
+    // bu istek değisecek.
+    public Long myManagerCount(BaseEmployeeRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        Optional<List<Employee>> companys= employeeRepository.findOptionalByCompany(employee.get().getCompany());
+        List<Long> managerIds=new ArrayList<>();
+        for(Employee employee1 : companys.get()){
+            managerIds.add(employee1.getManagerId());
+        }
+        return managerIds.stream().distinct().count();
+    }
 }
