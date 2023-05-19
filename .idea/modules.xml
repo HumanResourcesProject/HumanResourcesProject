@@ -10,11 +10,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ConfigServer/HumanResourcesProject.ConfigServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ConfigServer/HumanResourcesProject.ConfigServer.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/EmployeeMicroService/HumanResourcesProject.EmployeeMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/EmployeeMicroService/HumanResourcesProject.EmployeeMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MailService/HumanResourcesProject.MailService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/MailService/HumanResourcesProject.MailService.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ManagerMicroService/HumanResourcesProject.ManagerMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ManagerMicroService/HumanResourcesProject.ManagerMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CompanyMicroService/Workspace.HumanResourcesProject.CompanyMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CompanyMicroService/Workspace.HumanResourcesProject.CompanyMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AdminMicroService/com.hrp.HumanResourcesProject.AdminMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AdminMicroService/com.hrp.HumanResourcesProject.AdminMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CompanyManagerMicroServiceApplication/com.hrp.HumanResourcesProject.CompanyManagerMicroServiceApplication.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CompanyManagerMicroServiceApplication/com.hrp.HumanResourcesProject.CompanyManagerMicroServiceApplication.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CompanyMicroService/com.hrp.HumanResourcesProject.CompanyMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/CompanyMicroService/com.hrp.HumanResourcesProject.CompanyMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ConfigServer/com.hrp.HumanResourcesProject.ConfigServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ConfigServer/com.hrp.HumanResourcesProject.ConfigServer.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/EmployeeMicroService/com.hrp.HumanResourcesProject.EmployeeMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/EmployeeMicroService/com.hrp.HumanResourcesProject.EmployeeMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AdminMicroService/hrp.HumanResourcesProject.AdminMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AdminMicroService/hrp.HumanResourcesProject.AdminMicroService.main.iml" />
@@ -23,7 +21,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/EmployeeMicroService/hrp.HumanResourcesProject.EmployeeMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/EmployeeMicroService/hrp.HumanResourcesProject.EmployeeMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApiGatewayService/intellij.HumanResourcesProject.ApiGatewayService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ApiGatewayService/intellij.HumanResourcesProject.ApiGatewayService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ConfigServer/intellij.HumanResourcesProject.ConfigServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ConfigServer/intellij.HumanResourcesProject.ConfigServer.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EmployeeMicroService/intellij.hrp.HumanResourcesProject.EmployeeMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/EmployeeMicroService/intellij.hrp.HumanResourcesProject.EmployeeMicroService.main.iml" />
     </modules>
   </component>
 </project>

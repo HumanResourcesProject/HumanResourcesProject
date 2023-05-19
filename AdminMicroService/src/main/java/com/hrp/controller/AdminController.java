@@ -13,6 +13,7 @@ import javax.servlet.annotation.HttpMethodConstraint;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 //Dropbox
 //App key: 3qvpw8qwqq2uyp6
@@ -36,7 +37,7 @@ public class AdminController {
     @CrossOrigin("*")
     @HttpMethodConstraint(value = "POST")
     public ResponseEntity<BaseAdminResponseDto> getFindMe(@RequestBody TokenDto dto){
-        System.out.println("find me metodu"+dto.getToken());
+        Logger.getLogger("logger namei burası");
         return ResponseEntity.ok(adminService.findMe(dto));
     }
 
