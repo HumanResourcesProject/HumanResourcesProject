@@ -8,6 +8,9 @@ import org.passay.PasswordGenerator;
 import static org.passay.IllegalCharacterRule.ERROR_CODE;
 
 public class CodeGenerator {
+    private CodeGenerator() {
+        throw new IllegalStateException("Code Generator error...");
+    }
 
     public static String generateCode(){
         PasswordGenerator gen = new PasswordGenerator();

@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class RegisterManagerRequestDto {
+    private String token;
     private String identityNumber;
     private String name;
     private String middleName;

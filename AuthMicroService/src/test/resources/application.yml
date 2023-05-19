@@ -1,0 +1,11 @@
+server:
+  port: 7170
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/HRPAuthDB
+    username: postgres
+    password: asd123asd
+  jpa:
+    hibernate:
+      ddl-auto: update
