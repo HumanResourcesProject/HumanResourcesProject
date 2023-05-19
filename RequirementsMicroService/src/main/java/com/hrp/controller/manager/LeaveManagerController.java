@@ -35,14 +35,14 @@ public class LeaveManagerController {
     }
     @PutMapping("/approveleave")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> approveleave(BaseAnswerDto dto) {
+    public ResponseEntity<Boolean> approveleave(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(leaveService.approveleave(dto));
     }
 
     //rejeect
     @PutMapping("/rejectleave")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> rejectleave(BaseAnswerDto dto) {
+    public ResponseEntity<Boolean> rejectleave(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(leaveService.rejectleave(dto));
     }
 

@@ -17,5 +17,6 @@ public class RegisterAdminRequestDto {
     private String email;
     private String phone;
     private String address;
+    private String token;
     private MultipartFile avatar;
 }

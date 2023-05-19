@@ -35,13 +35,13 @@ public class ExpenseManagerController {
     }
     @PutMapping("/approveexpense")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> approveexpense(BaseAnswerDto dto) {
+    public ResponseEntity<Boolean> approveexpense(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(expenseService.approveExpense(dto));
     }
 
     @PutMapping("/rejectexpense")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> rejectExpense(BaseAnswerDto dto) {
+    public ResponseEntity<Boolean> rejectExpense(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(expenseService.rejectExpense(dto));
     }
 }

@@ -1,5 +1,5 @@
 server:
-  port: 7071
+  port: 7070
 
 spring:
   servlet:
@@ -25,3 +25,19 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+rabbitmq:
+  exchange:
+    direct: "exchange-direct"
+    fanout: "exchange-fanout"
+    topic : "exchange-topic"
+  key:
+    register:
+      admin: "binding-key-register-admin"
+      manager: "binding-key-register-manager"
+      employee: "binding-key-register-employee"
+  queue:
+    register:
+      admin: "queue-register-admin"
+      manager: "queue-register-manager"
+      employee: "queue-register-employee"
