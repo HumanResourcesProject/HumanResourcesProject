@@ -40,7 +40,7 @@ public class AdvancePaymentManagerController {
         return ResponseEntity.ok(advancePaymentService.approveAdvancePayment(dto));
     }
 
-    @PutMapping("/rejectvadvancepayment")
+    @PutMapping("/rejectadvancepayment")
     @CrossOrigin("*")
     public ResponseEntity<Boolean> rejectAdvancePayment(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(advancePaymentService.rejectAdvancePayment(dto));
