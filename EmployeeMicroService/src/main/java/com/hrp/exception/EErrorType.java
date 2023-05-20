@@ -18,7 +18,6 @@ public enum EErrorType {
     AUTH_PASSWORD_ERROR(1301,"Passwords do not match",BAD_REQUEST),
     AUTH_USERNAME_ERROR(1302,"Username already registered",BAD_REQUEST),
     AUTH_EMAIL_OR_PASSWORD_INVALID(1303,"Email or password invalid",BAD_REQUEST),
-    AUTH_EMAIL_OR_PASSWORD_INVALID(1303,"Email or password invalid",BAD_REQUEST),
     ACTIVATE_CODE_ERROR(4113,"Activation code error",HttpStatus.BAD_REQUEST),
     AUTH_NOT_CREATED(4211,"Auth cannot be created",HttpStatus.BAD_REQUEST),
 
