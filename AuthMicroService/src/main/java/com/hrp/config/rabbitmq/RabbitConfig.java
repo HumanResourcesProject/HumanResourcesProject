@@ -13,7 +13,6 @@ public class RabbitConfig {
     // exchange
     @Value("${rabbitmq.exchange.direct}")
     private String exchangeDirect ;
-
     @Value("${rabbitmq.exchange.fanout}")
     private String exchangeFanout ;
     @Value("${rabbitmq.exchange.topic}")
@@ -29,9 +28,6 @@ public class RabbitConfig {
     private String bindingKeyRegisterEmployee ;
 
 
-
-
-
     // Queue
     @Value("${rabbitmq.queue.register.admin}")
     private  String queueRegisterAdmin ;
@@ -39,11 +35,6 @@ public class RabbitConfig {
     private  String queueRegisterManager ;
     @Value("${rabbitmq.queue.register.employee}")
     private  String queueRegisterEmployee;
-
-
-
-
-
 
 
     /**
