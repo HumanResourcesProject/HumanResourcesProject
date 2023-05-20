@@ -81,11 +81,13 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
     }
 
     public Boolean createExpnse(ExpenseRequestDto dto) {
-        System.out.println("asdsadas");
         Long authId= jwtTokenManager.validToken(dto.getToken()).get();
+        if(authId == null){
+            throw new EmployeeException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId);
         if (employee.isEmpty()){
-            throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
+            throw new EmployeeException(EErrorType.USER_NOT_BE_FOUND);
         }
         ModelEmployeeExpense modelEmployeeExpense=new ModelEmployeeExpense();
         modelEmployeeExpense = iManuelEmployeeMapper.toEmployeeExpenseModel(employee.get(),dto);
@@ -98,15 +100,27 @@ public class EmployeeService extends ServiceManagerImpl<Employee,String> {
 
     public Boolean updateEmployee(EmployeeUpdateRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        if(authId.isEmpty()){
+            throw new EmployeeException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.USER_NOT_BE_FOUND);
+        }
         Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
         newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
         update(newEmployee);
-return true;
+        return true;
     }
     public Boolean updateEmployeeNoPhoto(EmployeeUpdateNoPhotoRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new EmployeeException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.USER_NOT_BE_FOUND);
+        }
         Employee newEmployee=iManuelEmployeeMapper.toEmployee(employee.get(),dto);
         //newEmployee.setAvatar(toTurnStringAvatar(dto.getAvatar()));
         update(newEmployee);
@@ -133,7 +147,13 @@ return true;
     }
     public List<BaseEmployeeResponseDto> findAllMyEmployee(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new EmployeeException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.USER_NOT_BE_FOUND);
+        }
         System.out.println("bu find all stream dır.... "+findAll().stream().filter(x->x.getCompany().equals(employee.get().getCompany()))
                 .map(x-> iManuelEmployeeMapper.toBaseEmployeeDto(x))
                 .collect(Collectors.toList()));
@@ -143,7 +163,13 @@ return true;
     }
     public BaseEmployeeResponseDto findMe(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new EmployeeException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.USER_NOT_BE_FOUND);
+        }
         return iManuelEmployeeMapper.toBaseEmployeeDto(employee.get());
     }
     public void findAllMyEmployeeForManager(ModelBaseEmployee model) {
@@ -159,7 +185,13 @@ return true;
     // bu istek değisecek.
     public Long myManagerCount(BaseEmployeeRequestDto dto) {
         Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new EmployeeException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Employee> employee = employeeRepository.findOptionalByAuthId(authId.get());
+        if (employee.isEmpty()){
+            throw new EmployeeException(EErrorType.USER_NOT_BE_FOUND);
+        }
         Optional<List<Employee>> companys= employeeRepository.findOptionalByCompany(employee.get().getCompany());
         List<Long> managerIds=new ArrayList<>();
         for(Employee employee1 : companys.get()){
