@@ -4,6 +4,8 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.*;
 import com.hrp.dto.response.BaseAdminResponseDto;
+import com.hrp.exception.AdminException;
+import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IManuelAdminMapper;
 import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.repository.IAdminRepository;
@@ -31,6 +33,10 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     }
 
     public void adminRegister(ModelRegisterAdmin model){
+        Optional<Admin> adminTest = adminRepository.findOptionalByAuthId(model.getAuthId());
+        if (adminTest.isPresent()){
+            throw new AdminException(EErrorType.ADMIN_ALREADY_EXIST);
+        }
         Admin admin = iManuelAdminMapper.toAdmin(model);
         save(admin);
         System.out.println("admin register ici admin idsi: "+admin.getId());
@@ -41,6 +47,9 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     public BaseAdminResponseDto findMe(TokenDto dto){
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        if(id==null){
+            throw new AdminException(EErrorType.INVALID_TOKEN);
+        }
         Admin admin = adminRepository.findOptionalByAuthId(id).get();
         return iManuelAdminMapper.toBaseResponseDto(admin);
     }
@@ -48,6 +57,9 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     public String updateImage(MultipartFile file, String token) {
         Long id = jwtTokenManager.validToken(token).get();
+        if(id==null){
+            throw new AdminException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Admin> admin = adminRepository.findById(id);
         if (admin.isEmpty()){
             System.out.println("Kullanici bulunamadi");
@@ -59,8 +71,10 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     // bos gelirse db de ki alınacak
     public Boolean updateAdmin(BaseAdminRequestDto dto) {
-        System.out.println("dto ici update... "+ dto.toString());
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        if(id==null){
+            throw new AdminException(EErrorType.INVALID_TOKEN);
+        }
         Optional<Admin> admin = adminRepository.findById(id);
         admin.get().setAddress(dto.getAddress());
         admin.get().setPhone(dto.getPhone());
@@ -70,7 +84,6 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     // findalladmin
     public List<BaseAdminResponseDto> findAllAdmin() {
-        System.out.println("findall admin service");
         List<BaseAdminResponseDto> baseAdminResponseDtos = new ArrayList<>();
         for (Admin admin : adminRepository.findAll()) {
             baseAdminResponseDtos.add(iManuelAdminMapper.toBaseResponseDto(admin));
@@ -97,7 +110,11 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     }
 
     public Optional<Admin> findByAuthId(Long authId) {
-      return adminRepository.findOptionalByAuthId(authId);
+        Optional<Admin> admin = adminRepository.findOptionalByAuthId(authId);
+        if (admin.isEmpty()){
+            throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
+        }
+        return admin;
     }
 
 }

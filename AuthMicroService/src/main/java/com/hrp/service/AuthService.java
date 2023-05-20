@@ -44,8 +44,14 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
     public AuthLoginResponse authLogin(AuthLoginDto dto){
         System.out.println("aaaa"+dto.toString());
         Optional<Auth> auth =  authRepository.findOptionalByEmailAndPassword(dto.getEmail(),dto.getPassword());
+        if(auth.isEmpty()){
+            throw new AuthException(EErrorType.AUTH_EMAIL_OR_PASSWORD_INVALID);
+        }
         System.out.println("auth:xxx " +auth.toString());
         Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
+        if(token.isEmpty()){
+            throw new AuthException(EErrorType.INVALID_TOKEN);
+        }
         System.out.println("auth:ccc " +auth.toString());
         return AuthLoginResponse.builder()
                 .token(token.get())
@@ -64,7 +70,6 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
     public Boolean changePassword(ChangePasswordDto dto){
         Long id= jwtTokenManager.validToken(dto.getToken()).get();
         Auth auth= findById(id).get();
-
         if (auth==null) throw new AuthException(EErrorType.INVALID_TOKEN);
         if (auth.getPassword()!= dto.getOldpassword()) throw new AuthException(EErrorType.AUTH_PASSWORD_ERROR,"eski sifre ve yeni sifre eslesmiyor");
         if (dto.getNewpassword()!= dto.getConfirmpassword()) throw new AuthException(EErrorType.AUTH_PASSWORD_ERROR,"sifreler eslesmiyor");
@@ -103,6 +108,9 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         auth.setPassword(CodeGenerator.generateCode());
         save(auth);
         Optional<Long> managerId = jwtTokenManager.validToken(dto.getToken());
+        if(managerId.isEmpty()){
+            throw new AuthException(EErrorType.USER_NOT_BE_FOUND);
+        }
         ModelRegisterEmployee modelRegisterEmployee =iManuelMapper.authToModelRegisterEmployee(auth,dto,managerId.get());
         directProducer.sendRegisterEmployee(modelRegisterEmployee);
         return true;

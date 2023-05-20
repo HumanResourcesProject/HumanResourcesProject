@@ -81,13 +81,22 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public Boolean deleteManager(TokenDto dto) {
         Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
         deleteById(companyManagerId.get());
         return true;
     }
 
     public BaseManagerResponseDto findMe(TokenDto dto) {
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        if (id==null){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
         Manager manager = managerRepository.findOptionalByAuthId(id).get();
+        if (manager==null){
+            throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+        }
         return iManuelManagerMapper.toBaseManagerResponseDto(manager);
     }
 
@@ -111,8 +120,14 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public List<EmployeeRequestAndResponseDto> findAllMyEmployee(TokenDto dto) {
         Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
         System.out.println("serviste 113");
         Optional<Manager> manager= managerRepository.findOptionalByAuthId(authId.get());
+        if (manager.isEmpty()){
+            throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+        }
         directProducer.sendFindAllMyEmployee(iManuelManagerMapper.toModelBaseEmployee(manager.get()));
         try {
             Thread.sleep(1000);

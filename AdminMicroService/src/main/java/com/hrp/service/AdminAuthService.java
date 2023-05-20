@@ -1,5 +1,7 @@
 package com.hrp.service;
 
+import com.hrp.exception.AdminException;
+import com.hrp.exception.EErrorType;
 import com.hrp.repository.IAdminAuthRepository;
 import com.hrp.repository.entity.Admin;
 import com.hrp.repository.entity.AdminAuth;
@@ -26,6 +28,9 @@ public class AdminAuthService extends ServiceManagerImpl<AdminAuth,Long> {
                 .build());
     }
     public List<AdminRole> findMyAuthList(Long adminId){
+        if(adminId==null){
+            throw new AdminException(EErrorType.USERID_NOT_EMPTY);
+        }
         return adminAuthRepository.findOptionalByAdminId(adminId).get().stream().map(x->x.getAdminRole()).toList();
 
     }
