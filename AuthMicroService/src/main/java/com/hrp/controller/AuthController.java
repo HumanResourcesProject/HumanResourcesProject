@@ -37,10 +37,10 @@ public class AuthController {
         return ResponseEntity.ok(authService.changePassword(dto));
     }
 
-    @PostMapping("/forgatpassword")
+    @PostMapping("/forgotpassword")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> forgatPassword(@RequestBody AuthLoginDto dto) {
-        return ResponseEntity.ok(authService.forgatPassword(dto));
+    public ResponseEntity<Boolean> forgotPassword(@RequestBody AuthLoginDto dto) {
+        return ResponseEntity.ok(authService.forgotPassword(dto));
     }
 
     // register admin
@@ -66,6 +66,12 @@ public class AuthController {
     public ResponseEntity<Boolean> registerEmployee(@RequestBody RegisterEmployeeRequestDto dto) {
         RegisterErrorCheck.registerErrorInController(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPhone());
         return ResponseEntity.ok(authService.registerEmployee(dto));
+    }
+
+    @GetMapping("/getall")
+    @CrossOrigin("*")
+    public ResponseEntity<String> testDeneme(){
+        return ResponseEntity.ok("deneme basarili");
     }
 
 
