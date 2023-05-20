@@ -18,6 +18,7 @@ public class AdvancePaymentEmployeeController {
     @PostMapping("/findallmyadvances")
     @CrossOrigin("*")
     public ResponseEntity<List<BaseAdvancePaymentResponseDto>> findAllMyAdvances(@RequestBody BaseRequestDto dto){
+        System.out.println("findall advance payment metodu"+dto.toString());
         return ResponseEntity.ok(advancePaymentService.findAllMyAdvancePaymentForEmployee(dto));
     }
 
