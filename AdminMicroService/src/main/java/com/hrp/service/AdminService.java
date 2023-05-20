@@ -14,8 +14,10 @@ import com.hrp.utility.JwtTokenManager;
 import com.hrp.utility.ServiceManagerImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.webjars.NotFoundException;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
 public class AdminService extends ServiceManagerImpl<Admin, Long> {
@@ -24,6 +26,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     private final JwtTokenManager jwtTokenManager;
     private final IManuelAdminMapper iManuelAdminMapper;
     private final AdminAuthService adminAuthService;
+
     public AdminService(IAdminRepository adminRepository, JwtTokenManager jwtTokenManager, IManuelAdminMapper iManuelAdminMapper, AdminAuthService adminAuthService) {
         super(adminRepository);
         this.adminRepository = adminRepository;
@@ -32,58 +35,14 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         this.adminAuthService = adminAuthService;
     }
 
-    public void adminRegister(ModelRegisterAdmin model){
-        Optional<Admin> adminTest = adminRepository.findOptionalByAuthId(model.getAuthId());
-        if (adminTest.isPresent()){
-            throw new AdminException(EErrorType.ADMIN_ALREADY_EXIST);
-        }
+    public void adminRegister(ModelRegisterAdmin model) {
         Admin admin = iManuelAdminMapper.toAdmin(model);
         save(admin);
-        System.out.println("admin register ici admin idsi: "+admin.getId());
         adminAuthService.createAdminAuth(admin.getId());
     }
 
-
-
-    public BaseAdminResponseDto findMe(TokenDto dto){
-        Long id = jwtTokenManager.validToken(dto.getToken()).get();
-        if(id==null){
-            throw new AdminException(EErrorType.INVALID_TOKEN);
-        }
-        Admin admin = adminRepository.findOptionalByAuthId(id).get();
-        return iManuelAdminMapper.toBaseResponseDto(admin);
-    }
-
-
-    public String updateImage(MultipartFile file, String token) {
-        Long id = jwtTokenManager.validToken(token).get();
-        if(id==null){
-            throw new AdminException(EErrorType.INVALID_TOKEN);
-        }
-        Optional<Admin> admin = adminRepository.findById(id);
-        if (admin.isEmpty()){
-            System.out.println("Kullanici bulunamadi");
-        }
-       String url = toTurnStringAvatar(file);
-        return url;
-    }
-
-
-    // bos gelirse db de ki alınacak
-    public Boolean updateAdmin(BaseAdminRequestDto dto) {
-        Long id = jwtTokenManager.validToken(dto.getToken()).get();
-        if(id==null){
-            throw new AdminException(EErrorType.INVALID_TOKEN);
-        }
-        Optional<Admin> admin = adminRepository.findById(id);
-        admin.get().setAddress(dto.getAddress());
-        admin.get().setPhone(dto.getPhone());
-        update(admin.get());
-        return true;
-    }
-
-    // findalladmin
     public List<BaseAdminResponseDto> findAllAdmin() {
+        Logger.getLogger("My Message log mesajı");
         List<BaseAdminResponseDto> baseAdminResponseDtos = new ArrayList<>();
         for (Admin admin : adminRepository.findAll()) {
             baseAdminResponseDtos.add(iManuelAdminMapper.toBaseResponseDto(admin));
@@ -92,29 +51,60 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     }
 
 
+    public BaseAdminResponseDto findMe(TokenDto dto) {
+        Optional<Long> id = jwtTokenManager.validToken(dto.getToken());
+        if (id.isEmpty()) {
+            throw new NotFoundException("admin bulunamadi");
+        }
+        Long authId2 = id.get();
+
+        Admin admin = adminRepository.findOptionalByAuthId(authId2).get();
+        return iManuelAdminMapper.toBaseResponseDto(admin);
+    }
+
+
+    public String updateImage(MultipartFile file, String token) {
+        Long id = jwtTokenManager.validToken(token).get();
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isEmpty()) {
+            throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
+        }
+        String url = toTurnStringAvatar(file);
+        return url;
+    }
+
+
+    // bos gelirse db de ki alınacak
+    public Boolean updateAdmin(BaseAdminRequestDto dto) {
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        Optional<Admin> admin = adminRepository.findById(id);
+        admin.get().setAddress(dto.getAddress());
+        admin.get().setPhone(dto.getPhone());
+        update(admin.get());
+        return true;
+    }
+
+    // findalladmin
+
+
     private String toTurnStringAvatar(MultipartFile file) {
         Map config = new HashMap();
         config.put("cloud_name", "doqksh0xh");
         config.put("api_key", "871216635594134");
         config.put("api_secret", "6b3zcRZyWKeuiW6qIq4XvWnhVno");
         Cloudinary cloudinary = new Cloudinary(config);
-        try{
+        try {
             Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
             String url = (String) result.get("url");
-            System.out.println(url+" --------------------------");
             return url;
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
     public Optional<Admin> findByAuthId(Long authId) {
-        Optional<Admin> admin = adminRepository.findOptionalByAuthId(authId);
-        if (admin.isEmpty()){
-            throw new AdminException(EErrorType.ADMIN_NOT_FOUND);
-        }
-        return admin;
+        return adminRepository.findOptionalByAuthId(authId);
     }
 
 }

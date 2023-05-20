@@ -36,13 +36,13 @@ public class AdvancePaymentManagerController {
 
     @PutMapping("/approveadvancepayment")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> approveAdvancePayment(BaseAnswerDto dto) {
+    public ResponseEntity<Boolean> approveAdvancePayment(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(advancePaymentService.approveAdvancePayment(dto));
     }
 
-    @PutMapping("/rejectvancepayment")
+    @PutMapping("/rejectadvancepayment")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> rejectAdvancePayment(BaseAnswerDto dto) {
+    public ResponseEntity<Boolean> rejectAdvancePayment(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(advancePaymentService.rejectAdvancePayment(dto));
     }
 }
