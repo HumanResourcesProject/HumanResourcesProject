@@ -37,6 +37,12 @@ public class AuthController {
         return ResponseEntity.ok(authService.changePassword(dto));
     }
 
+    @PostMapping("/forgotpassword")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> forgatPassword(@RequestBody AuthLoginDto dto) {
+        return ResponseEntity.ok(authService.forgatPassword(dto));
+    }
+
     // register admin
     @PostMapping("/registeradmin")
     @CrossOrigin("*")

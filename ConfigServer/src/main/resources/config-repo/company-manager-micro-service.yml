@@ -9,14 +9,14 @@ spring:
       name: company-manager-service
   rabbitmq:
     host: localhost
-    port: 5672
     username: user
     password: user
+    port: 5672
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPCompanyManagerDB
     username: postgres
-    password: 4628 # ortam degiskeni yapialacak
+    password: root # ortam degiskeni yapialacak
   jpa:
     hibernate:
       ddl-auto: update

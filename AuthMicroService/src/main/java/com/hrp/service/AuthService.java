@@ -135,4 +135,11 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         }
     }
 
+    public boolean forgatPassword(AuthLoginDto dto) {
+        Optional<Auth> auth= authRepository.findOptionalByEmail(dto.getEmail());
+        if (auth.isEmpty()) {throw new AuthException(EErrorType.USER_NOT_FOUNT);}
+        auth.get().setPassword(CodeGenerator.generateCode());
+        update(auth.get());
+        return true;
+    }
 }
