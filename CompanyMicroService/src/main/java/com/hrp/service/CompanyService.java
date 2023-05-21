@@ -55,7 +55,7 @@ public class CompanyService extends ServiceManagerImpl<Company, Long> {
 
 
     private String toTurnStringAvatar(MultipartFile avatar) {
-        Map config = new HashMap();
+        Map<String,String> config = new HashMap<>();
         config.put("cloud_name", "doqksh0xh");
         config.put("api_key", "871216635594134");
         config.put("api_secret", "6b3zcRZyWKeuiW6qIq4XvWnhVno");
@@ -63,11 +63,10 @@ public class CompanyService extends ServiceManagerImpl<Company, Long> {
         try{
             Map<?, ?> result = cloudinary.uploader().upload(avatar.getBytes(), ObjectUtils.emptyMap());
             String url = (String) result.get("url");
-            System.out.println(url+" --------------------------");
             return url;
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            e.getMessage();
+        return null;
         }
     }
 

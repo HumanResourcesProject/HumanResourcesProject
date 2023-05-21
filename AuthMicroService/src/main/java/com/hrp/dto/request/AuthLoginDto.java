@@ -1,6 +1,7 @@
 package com.hrp.dto.request;
 
 import lombok.*;
+import okhttp3.RequestBody;
 
 @Data
 @Builder
