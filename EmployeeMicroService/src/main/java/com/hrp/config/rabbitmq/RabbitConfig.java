@@ -4,35 +4,53 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
     // exchange
-    private String exchangeDirect = "exchange-direct";
-    private String exchangeFanout = "exchange-fanout";
-    private String exchangeTopic = "exchange-topic";
+    @Value("${rabbitmq.exchange.direct}")
+    private String exchangeDirect ;
+    @Value("${rabbitmq.exchange.fanout}")
+    private String exchangeFanout ;
+    @Value("${rabbitmq.exchange.topic}")
+    private String exchangeTopic ;
 
 
     // Key
-    private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
-    private String bindingKeyRegisterManager= "binding-key-register-manager" ;
-    private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
-    private String bindingKeyAdvancePaymentEmployee = "binding-key-advance-payment-employee" ;
-    private String bindingKeyLeaveEmployee = "binding-key-leave-employee" ;
-    private String bindingKeyExpenseEmployee = "binding-key-expense-employee" ;
-    private String bindingKeyEmployeeListForManager= "binding-key-employee-list-for-manager" ;
+    @Value("${rabbitmq.key.register.admin}")
+    private String bindingKeyRegisterAdmin ;
+    @Value("${rabbitmq.key.register.manager}")
+    private String bindingKeyRegisterManager;
+    @Value("${rabbitmq.key.register.employee}")
+    private String bindingKeyRegisterEmployee ;
+    @Value("${rabbitmq.key.requirements.payment}")
+    private String bindingKeyAdvancePaymentEmployee;
+    @Value("${rabbitmq.key.requirements.leave}")
+    private String bindingKeyLeaveEmployee;
+    @Value("${rabbitmq.key.requirements.expense}")
+    private String bindingKeyExpenseEmployee;
+    @Value("${rabbitmq.key.list.employee}")
+    private String bindingKeyEmployeeListForManager;
 
 
     // Queue
-    private  String queueRegisterAdmin = "queue-register-admin";
-    private  String queueRegisterManager = "queue-register-manager";
-    private  String queueRegisterEmployee= "queue-register-employee";
-    private  String queueAdvancePaymentEmployee = "queue-advance-payment-employee";
-    private  String queueLeaveEmployee = "queue-leave-employee";
-    private  String queueExpenseEmployee = "queue-expense-employee";
-    private String queueEmployeeListForManager = "queue-employee-list-for-manager";
+    @Value("${rabbitmq.queue.register.admin}")
+    private  String queueRegisterAdmin ;
+    @Value("${rabbitmq.queue.register.manager}")
+    private  String queueRegisterManager ;
+    @Value("${rabbitmq.queue.register.employee}")
+    private  String queueRegisterEmployee;
+    @Value("${rabbitmq.queue.requirements.payment}")
+    private  String queueAdvancePaymentEmployee;
+    @Value("${rabbitmq.queue.requirements.leave}")
+    private  String queueLeaveEmployee;
+    @Value("${rabbitmq.queue.requirements.expense}")
+    private  String queueExpenseEmployee ;
+    @Value("${rabbitmq.queue.list.employee}")
+    private String queueEmployeeListForManager;
 
     /**
      * ---- Exchange ----
