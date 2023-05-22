@@ -24,8 +24,8 @@ public class TestAndRun {
     public void run (){
         if (authService.findAll().isEmpty()){
             Auth auth = new Auth();
-            auth.setEmail("admin");
-            auth.setPassword("admin");
+            auth.setEmail("admin@admin.com");
+            auth.setPassword("Aa12345**");
             auth.setRole(ERole.ADMIN);
             auth.setCreateDate(LocalDate.now().toString());
             authService.save(auth);

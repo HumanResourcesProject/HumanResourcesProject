@@ -45,7 +45,6 @@ public class AdminController {
 
     @CrossOrigin("*")
     public ResponseEntity<String> updateImage(@RequestParam("file") MultipartFile file,String token) throws IOException {
-        System.out.println("upload image cloud metodu");
         return ResponseEntity.ok(adminService.updateImage(file,token));
     }
 
@@ -53,7 +52,6 @@ public class AdminController {
 
     @CrossOrigin("*")
     public ResponseEntity<Boolean> updateAdmin (@RequestBody BaseAdminRequestDto dto){
-        System.out.println("update admin metodu");
         return ResponseEntity.ok(adminService.updateAdmin(dto));
     }
 
@@ -61,7 +59,6 @@ public class AdminController {
 
     @HttpMethodConstraint(value = "GET")
     public ResponseEntity<List<BaseAdminResponseDto>> getAll(){
-        System.out.println("get all metodu ");
         return ResponseEntity.ok(adminService.findAllAdmin());
     }
 
@@ -77,7 +74,6 @@ public class AdminController {
 
     @CrossOrigin("*")
     public ResponseEntity<String> securityDeneme2(){
-        System.out.println("2.metod ");
         return ResponseEntity.ok("security denemesi 2. metodu");
     }
 

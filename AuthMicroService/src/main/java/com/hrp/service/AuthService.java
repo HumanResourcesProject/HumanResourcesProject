@@ -44,7 +44,8 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
 
 
     public AuthLoginResponse authLogin(AuthLoginDto dto){
-        Optional<Auth> auth =  authRepository.findOptionalByEmailAndPassword(dto.getEmail(),dto.getPassword());
+        Optional<Auth> auth =  authRepository.findOptionalByEmailAndPassword(dto.getEmail()
+                ,dto.getPassword());
         if (auth.isEmpty()) {throw new AuthException(EErrorType.USER_NOT_FOUNT);}
         Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
         if (token.isEmpty()) {throw new AuthException(EErrorType.INVALID_TOKEN);}
@@ -69,8 +70,7 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         Optional<Long> adminId = jwtTokenManager.validToken(dto.getToken());
         if (adminId.isEmpty()) {throw new AuthException(EErrorType.INVALID_TOKEN);}
         if (authRepository.findOptionalByEmail(dto.getEmail()).isPresent()) {
-            throw new AuthException(EErrorType.EMAIL_ALREADY_HAVE);
-        }
+            throw new AuthException(EErrorType.EMAIL_ALREADY_HAVE);}
         Auth auth=Auth.builder()
                 .email(dto.getEmail())
                 .role(ERole.ADMIN)
@@ -78,18 +78,15 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
                 .build();
         save(auth);
         ModelRegisterAdmin modelRegisterAdmin=iManuelMapper.authToModelRegisterAdmin(auth,dto);
-        if (modelRegisterAdmin.getEmail().isEmpty()){
-            throw new AuthException(EErrorType.BAD_REQUEST_ERROR, "EMAIL USE PRESENT");
-        }
-        modelRegisterAdmin.setAvatar(uploadImageCloudWithoutToken(dto.getAvatar()));
+        new Thread(()->{
+            modelRegisterAdmin.setAvatar(uploadImageCloudWithoutToken(dto.getAvatar()));
+        }).start();
         directProducer.sendRegisterAdmin(modelRegisterAdmin);
         return true;
     }
-
     public Boolean registerManager(RegisterManagerRequestDto dto) {
         Optional<Long> adminId = jwtTokenManager.validToken(dto.getToken());
         if (adminId.isEmpty()) {throw new AuthException(EErrorType.INVALID_TOKEN);}
-
         Auth auth = Auth.builder()
                 .email(dto.getEmail())
                 .role(ERole.MANAGER)
@@ -97,13 +94,9 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
                 .build();
         save(auth);
         ModelRegisterManager modelRegisterManager=iManuelMapper.authToModelRegisterManager(auth,dto);
-        if (modelRegisterManager.getEmail().isEmpty()){
-            throw new AuthException(EErrorType.BAD_REQUEST_ERROR,"EMAIL USE PRESENT");
-        }
         directProducer.sendRegisterManager(modelRegisterManager);
         return true;
     }
-
     public Boolean registerEmployee(RegisterEmployeeRequestDto dto) {
         Optional<Long> managerId = jwtTokenManager.validToken(dto.getToken());
         if (managerId.isEmpty()) throw new AuthException(EErrorType.INVALID_TOKEN);
@@ -114,11 +107,9 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
                 .build();
         save(auth);
         ModelRegisterEmployee modelRegisterEmployee =iManuelMapper.authToModelRegisterEmployee(auth,dto,managerId.get());
-        if (modelRegisterEmployee.getEmail().isEmpty()) throw new AuthException(EErrorType.BAD_REQUEST_ERROR,"E MAIL NOT CANNOT BE EMPTY");
         directProducer.sendRegisterEmployee(modelRegisterEmployee);
         return true;
     }
-
     public String uploadImageCloudWithoutToken(MultipartFile file) {
         Map<String,String> config = new HashMap<>();
         config.put("cloud_name", "doqksh0xh");
@@ -135,11 +126,12 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         }
     }
 
-    public boolean forgatPassword(AuthLoginDto dto) {
+
+
+    public boolean forgotPassword(AuthLoginDto dto) {
         Optional<Auth> auth= authRepository.findOptionalByEmail(dto.getEmail());
         if (auth.isEmpty()) {throw new AuthException(EErrorType.USER_NOT_FOUNT);}
         auth.get().setPassword(CodeGenerator.generateCode());
         update(auth.get());
-        return true;
-    }
+        return true;}
 }

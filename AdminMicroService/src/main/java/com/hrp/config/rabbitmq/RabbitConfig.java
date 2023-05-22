@@ -1,9 +1,6 @@
 package com.hrp.config.rabbitmq;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -43,6 +40,14 @@ public class RabbitConfig {
     @Bean
     DirectExchange exchangeDirect() {
         return new DirectExchange(exchangeDirect);
+    }
+    @Bean
+    FanoutExchange exchangeFanout() {
+        return new FanoutExchange(exchangeFanout);
+    }
+    @Bean
+    TopicExchange exchangeTopic(){
+        return new TopicExchange(exchangeTopic);
     }
 
 

@@ -88,7 +88,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
 
     private String toTurnStringAvatar(MultipartFile file) {
-        Map config = new HashMap();
+        Map<String,String> config = new HashMap<>();
         config.put("cloud_name", "doqksh0xh");
         config.put("api_key", "871216635594134");
         config.put("api_secret", "6b3zcRZyWKeuiW6qIq4XvWnhVno");
