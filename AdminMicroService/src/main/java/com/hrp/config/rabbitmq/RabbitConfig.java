@@ -1,31 +1,44 @@
 package com.hrp.config.rabbitmq;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
     // exchange
-    private String exchangeDirect = "exchange-direct";
-    private String exchangeFanout = "exchange-fanout";
-    private String exchangeTopic = "exchange-topic";
+    @Value("${rabbitmq.exchange.direct}")
+    private String exchangeDirect ;
+    @Value("${rabbitmq.exchange.fanout}")
+    private String exchangeFanout ;
+    @Value("${rabbitmq.exchange.topic}")
+    private String exchangeTopic ;
 
 
     // Key
 
-    private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
-    private String bindingKeyRegisterManager= "binding-key-register-manager" ;
-    private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
+    @Value("${rabbitmq.key.register.admin}")
+    private String bindingKeyRegisterAdmin ;
+    @Value("${rabbitmq.key.register.manager}")
+    private String bindingKeyRegisterManager;
+    @Value("${rabbitmq.key.register.employee}")
+    private String bindingKeyRegisterEmployee ;
 
 
 
 
 
     // Queue
-    private  String queueRegisterAdmin = "queue-register-admin";
-    private  String queueRegisterManager = "queue-register-manager";
-    private  String queueRegisterEmployee= "queue-register-employee";
+    @Value("${rabbitmq.queue.register.admin}")
+    private  String queueRegisterAdmin ;
+    @Value("${rabbitmq.queue.register.manager}")
+    private  String queueRegisterManager ;
+    @Value("${rabbitmq.queue.register.employee}")
+    private  String queueRegisterEmployee;
 
 
 
@@ -40,14 +53,6 @@ public class RabbitConfig {
     @Bean
     DirectExchange exchangeDirect() {
         return new DirectExchange(exchangeDirect);
-    }
-    @Bean
-    FanoutExchange exchangeFanout() {
-        return new FanoutExchange(exchangeFanout);
-    }
-    @Bean
-    TopicExchange exchangeTopic(){
-        return new TopicExchange(exchangeTopic);
     }
 
 
