@@ -22,7 +22,6 @@ public class Leave extends BaseEntity{
     private Long managerId;
     private String employeeName;
     private String employeeSurname;
-
     private String company;
     @Enumerated(EnumType.STRING)
     private LeaveType type;

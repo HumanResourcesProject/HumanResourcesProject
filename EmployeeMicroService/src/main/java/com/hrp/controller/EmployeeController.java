@@ -111,7 +111,11 @@ public class EmployeeController {
     }
 
 
-
+    @PostMapping("/findallmyemployeecountformanager")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeCountForManager(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyEmployeeCountForManager(dto));
+    }
 
 
 
