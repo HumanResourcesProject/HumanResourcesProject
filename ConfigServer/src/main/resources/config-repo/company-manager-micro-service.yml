@@ -24,3 +24,26 @@ spring:
     properties:
       hibernate:
         format_sql: true
+rabbitmq:
+  exchange:
+    direct: "exchange-direct"
+    fanout: "exchange-fanout"
+    topic : "exchange-topic"
+  key:
+    mail:
+      admin: "admin-email-key"
+    register:
+      admin: "binding-key-register-admin"
+      manager: "binding-key-register-manager"
+      employee: "binding-key-register-employee"
+    list:
+      leave: "binding-key-findallleave-employee"
+  queue:
+    mail:
+      admin: "admin-email-queue"
+    register:
+      admin: "queue-register-admin"
+      manager: "queue-register-manager"
+      employee: "queue-register-employee"
+    list:
+      leave: "binding-queue-findallleave-employee"

@@ -244,7 +244,7 @@ public class EmployeeService extends ServiceManagerImpl<Employee, String> {
         Long totalAge= 0L;
         for (Employee employee:employees.get()) {
             employeeCount++;
-            totalAge +=2023-Long.parseLong(employee.getBirthDate().substring(0,3));
+            totalAge +=2023-Long.parseLong(employee.getBirthDate().substring(0,4));
         }
         return totalAge/employeeCount;
     }
@@ -263,10 +263,27 @@ public class EmployeeService extends ServiceManagerImpl<Employee, String> {
             Optional<List<Employee>> employeesOfCompany = employeeRepository.findOptionalByCompany(employees.get().get(0).getCompany());
             for (Employee employee:employeesOfCompany.get()) {
                 employeeCount++;
-                totalAge +=2023-Long.parseLong(employee.getBirthDate().substring(0,3));
+                totalAge =totalAge+(2023-Long.parseLong(employee.getBirthDate().substring(0,4)));
             }
         }
 
         return totalAge/employeeCount;
+    }
+
+
+    public Long findAllMyEmployeeCountForManager(BaseEmployeeRequestDto dto) {
+        Optional<Long> authId = jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()) {
+            throw new EmployeeException(EErrorType.INVALID_TOKEN);
+        }
+        Optional<List<Employee>> employees = employeeRepository.findOptionalByManagerId(authId.get());
+        Long employeeCount = 0L;
+        if (employees.isPresent()){
+            Optional<List<Employee>> employeesOfCompany = employeeRepository.findOptionalByCompany(employees.get().get(0).getCompany());
+            for (Employee employee:employeesOfCompany.get()) {
+                employeeCount++;
+            }
+        }
+        return employeeCount;
     }
 }
