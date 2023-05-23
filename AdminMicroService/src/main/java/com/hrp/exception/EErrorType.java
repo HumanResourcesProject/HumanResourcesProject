@@ -15,6 +15,7 @@ public enum EErrorType {
     INVALID_TOKEN(4001,"Invalid token information",BAD_REQUEST),
     BAD_REQUEST_ERROR(1202,"You have entered an invalid parameter",BAD_REQUEST),
     ADMIN_NOT_FOUND(1303,"Admin cannot be found",HttpStatus.BAD_REQUEST),
+    ADMIN_ALREADY_EXIST(1315,"Admin already exist",HttpStatus.BAD_REQUEST),
     USER_NOT_ACTIVE(1304,"User is not active",HttpStatus.BAD_REQUEST),
     USER_NOT_LOGIN(1305,"User is not login",HttpStatus.BAD_REQUEST),
     USER_NOT_PERMISSION(1306,"User is not permission",HttpStatus.BAD_REQUEST),

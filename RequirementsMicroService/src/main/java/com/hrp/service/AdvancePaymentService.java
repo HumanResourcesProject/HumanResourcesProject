@@ -48,7 +48,13 @@ public class AdvancePaymentService extends ServiceManagerImpl<AdvancedPayment, L
     }
     public List<BaseAdvancePaymentResponseDto> findAllMyAdvancePaymentForManager(BaseRequestDto dto){
         Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new RequirementsMicroException(EErrorType.INVALID_TOKEN);
+        }
         Optional<List<AdvancedPayment>> advancedPayments= advancePaymentRepository.findOptionalByManagerId(authId.get());
+        if (advancedPayments.isEmpty()){
+            throw new RequirementsMicroException(EErrorType.REQUIREMENTS_NOT_FOUND);
+        }
         List<BaseAdvancePaymentResponseDto> dtos = new ArrayList<>();
         for ( AdvancedPayment advance : advancedPayments.get()){
             dtos.add(manuelRequirementsMapper.toBaseAdvancePaymentResponse(advance));
@@ -58,7 +64,13 @@ public class AdvancePaymentService extends ServiceManagerImpl<AdvancedPayment, L
 
     public List<BaseAdvancePaymentResponseDto> findAllMyAdvancePaymentPendingForManager(BaseRequestDto dto){
         Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new RequirementsMicroException(EErrorType.INVALID_TOKEN);
+        }
         Optional<List<AdvancedPayment>> advancedPayments= advancePaymentRepository.findOptionalByManagerId(authId.get());
+        if (advancedPayments.isEmpty()){
+            throw new RequirementsMicroException(EErrorType.REQUIREMENTS_NOT_FOUND);
+        }
         List<BaseAdvancePaymentResponseDto> dtos = new ArrayList<>();
         for ( AdvancedPayment advance : advancedPayments.get()){
             dtos.add(manuelRequirementsMapper.toBaseAdvancePaymentResponse(advance));
@@ -69,7 +81,7 @@ public class AdvancePaymentService extends ServiceManagerImpl<AdvancedPayment, L
     public Boolean approveAdvancePayment(BaseAnswerDto dto) {
         Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findById(dto.getRequirementId());
         if (advancedPayment.isEmpty()){
-            throw new RequirementsMicroException(EErrorType.BAD_REQUEST_ERROR);
+            throw new RequirementsMicroException(EErrorType.REQUIREMENTS_NOT_FOUND);
         }
         advancedPayment.get().setStatus(1);
         advancedPayment.get().setApprovalDate(LocalDateTime.now().toString());
@@ -80,7 +92,7 @@ public class AdvancePaymentService extends ServiceManagerImpl<AdvancedPayment, L
     public Boolean rejectAdvancePayment(BaseAnswerDto dto) {
         Optional<AdvancedPayment> advancedPayment = advancePaymentRepository.findById(dto.getRequirementId());
         if (advancedPayment.isEmpty()){
-            throw new RequirementsMicroException(EErrorType.BAD_REQUEST_ERROR);
+            throw new RequirementsMicroException(EErrorType.REQUIREMENTS_NOT_FOUND);
         }
         advancedPayment.get().setStatus(2);
         advancedPayment.get().setApprovalDate(LocalDateTime.now().toString());

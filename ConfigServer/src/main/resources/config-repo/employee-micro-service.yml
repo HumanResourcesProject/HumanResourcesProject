@@ -19,3 +19,31 @@ spring:
       username: "user"
       password: "root"
       database: HRPEmployeeDB
+rabbitmq:
+  exchange:
+    direct: "exchange-direct"
+    fanout: "exchange-fanout"
+    topic : "exchange-topic"
+  key:
+    register:
+      admin: "binding-key-register-admin"
+      manager: "binding-key-register-manager"
+      employee: "binding-key-register-employee"
+    requirements:
+      payment: "binding-key-advance-payment-employee"
+      leave: "binding-key-leave-employee"
+      expense: "binding-key-expense-employee"
+    list:
+      employee: "binding-key-employee-list-for-manager"
+  queue:
+    register:
+      admin: "queue-register-admin"
+      manager: "queue-register-manager"
+      employee: "queue-register-employee"
+    requirements:
+      payment: "queue-advance-payment-employee"
+      leave: "queue-leave-employee"
+      expense: "queue-expense-employee"
+    list:
+      employee: "queue-employee-list-for-manager"
+

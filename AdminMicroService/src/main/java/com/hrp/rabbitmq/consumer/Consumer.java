@@ -13,8 +13,6 @@ public class Consumer {
 
     @RabbitListener(queues = "queue-register-admin")
     public void registerAdmin(ModelRegisterAdmin model){
-        System.out.println("consumer ici");
-        System.out.println(model.toString());
         adminService.adminRegister(model);
     }
 
