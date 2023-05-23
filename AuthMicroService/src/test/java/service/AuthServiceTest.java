@@ -101,7 +101,6 @@ public class AuthServiceTest {
         when(authRepository.findOptionalByEmailAndPassword("xxx@gmail.com","asd"))
                 .thenReturn(Optional.ofNullable(Auth.builder().build()));
         assertThrows(AuthException.class,() ->{authService.authLogin(dto);});
-//        assertThrows(NullPointerException.class,authService::authLogin);
     }
 
 
@@ -112,6 +111,14 @@ public class AuthServiceTest {
         authService.update(Auth.builder().build());
         boolean  check=authService.changePassword(ChangePasswordDto.builder().token("ccc").newpassword("ggg").confirmpassword("ggg").oldpassword("asd").build());
         assertTrue(check);
+    }
+    @Test
+    void changePassword_TokenIsEmpty (){
+        ChangePasswordDto changePasswordDto= ChangePasswordDto.builder()
+                .newpassword("asd")
+                .confirmpassword("asd")
+                .build();
+//        authService.changePassword(changePasswordDto,)
     }
 
     @Test
