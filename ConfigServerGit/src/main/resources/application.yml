@@ -1,0 +1,19 @@
+server:
+  port: 8888
+spring:
+  zipkin:
+    enabled: true
+    base-url: ${ZIPKIN_URL}
+    service:
+      name: config-server
+  application:
+    name: config-server-git
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/HumanResourcesProject/ConfigGit.git"
+          default-label: main
+          skip-ssl-validation: true
+          username: MFurkanTurkmen
+          password: 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

@@ -1,0 +1,20 @@
+
+a	java:S112‡"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+J
+java:S3740h"/Provide the parametrized type for this generic.(©®Úíûÿÿÿÿ
+J
+java:S3740h"/Provide the parametrized type for this generic.(©®Úíûÿÿÿÿ
+_
+java:S36554"DCall "id.isPresent()" or "!id.isEmpty()" before accessing the value.(õşîÆÿÿÿÿÿ
+_
+java:S2583H"DChange this condition so that it does not always evaluate to "false"(ãÀÁüşÿÿÿÿ
+S	java:S106*"9Replace this use of System.out or System.err by a logger.(ŞæËÓøÿÿÿÿ
+R
+java:S1854L"7Remove this useless assignment to local variable "url".(˜íĞ£ÿÿÿÿÿ
+C
+java:S1481L"(Remove this unused "url" local variable.(˜íĞ£ÿÿÿÿÿ
+S	java:S106p"9Replace this use of System.out or System.err by a logger.(¿ä”“ÿÿÿÿÿ
+S	java:S106s"9Replace this use of System.out or System.err by a logger.(©şêÜúÿÿÿÿ
+N	java:S106~"9Replace this use of System.out or System.err by a logger.(àË¨…
+u
+java:S2142†"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€

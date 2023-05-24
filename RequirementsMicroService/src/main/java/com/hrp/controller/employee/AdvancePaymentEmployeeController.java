@@ -22,6 +22,11 @@ public class AdvancePaymentEmployeeController {
     }
 
 
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
 

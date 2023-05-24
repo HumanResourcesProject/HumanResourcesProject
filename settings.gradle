@@ -7,4 +7,5 @@ include 'AuthMicroService'
 include 'MailService'
 include 'CompanyMicroService'
 include 'RequirementsMicroService'
+include 'ConfigServerGit'
 

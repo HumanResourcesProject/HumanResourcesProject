@@ -7,8 +7,6 @@ u
 ECompanyMicroService/src/main/java/com/hrp/service/CompanyService.java,1/a/1a7d5abc640b5a144dd1417c80b750811055e5d5
 Ä
 P.idea/modules/ApiGatewayService/HumanResourcesProject.ApiGatewayService.main.iml,a/5/a5954245f01de9b3bb22de4529e9aeb7cf3b4e42
-Ñ
-T.idea/modules/ManagerMicroService/HumanResourcesProject.ManagerMicroService.main.iml,0/f/0f80b6f8f8dc8e5f61fc00117c0af72cb6e65e99
 t
 DAuthMicroService/src/main/java/com/hrp/dto/request/AuthLoginDto.java,6/5/655fca6b3fbd92f8424c77e6339c7bb25cc7f142
 ~
@@ -53,24 +51,18 @@ KRequirementsMicroService/src/main/java/com/hrp/repository/entity/Leave.java,3/
 RAuthMicroService/src/main/java/com/hrp/dto/request/RegisterEmployeeRequestDto.java,4/0/404a2f8b55b5a8d1a4c11d41aa242dca9af26b55
 Ö
 URequirementsMicroService/src/main/java/com/hrp/repository/entity/AdvancedPayment.java,d/2/d2ec78d8d1300317f2266ad99cbe6cebb71c9fb6
-}
-MEmployeeMicroService/src/main/java/com/hrp/controller/EmployeeController.java,b/7/b790b833dc8a287eb44c04ac01cefd833bccea62
 Ñ
 TEmployeeMicroService/src/main/java/com/hrp/rabbitmq/model/ModelRegisterEmployee.java,5/f/5f1e500bf517cd2b8bd9324ecedf0980e96cc3fc
 x
 HManagerMicroService/src/main/java/com/hrp/repository/entity/Manager.java,3/c/3c3231e00bf1028d48455b5dee0039858f26f0a5
 u
 EManagerMicroService/src/main/java/com/hrp/service/ManagerService.java,c/9/c9f975d8a65f50629500e8f3fb0c6e4acc0c6a85
-{
-KManagerMicroService/src/main/java/com/hrp/controller/ManagerController.java,2/c/2caffba18c8d72ce8fdab6cbc4b9c92345ba2096
 Ç
 RManagerMicroService/src/main/java/com/hrp/dto/response/BaseManagerResponseDto.java,0/4/0442fe7a2ff005ded22dcee10c8cd9ee44bcf426
 w
 GEmployeeMicroService/src/main/java/com/hrp/service/EmployeeService.java,0/7/07c5341a4dfbf782e885b8bf622b96523d9ce9ae
 M
 AuthMicroService/build.gradle,1/8/18b384ed982738fb78cd0af553c30bf1017c0646
-P
- ManagerMicroService/build.gradle,3/0/30015ddae1715b06e3f90cdf4937e384a9814947
 I
 ConfigServer/build.gradle,f/a/fa11b4e11818f8908a8d4af4bec40b2e95070692
 C
@@ -142,14 +134,16 @@ Q.idea/sonarlint/securityhotspotstore/7/c/7c3b7bee0b4dd9246d22cae7073d393f771c39
 Å
 Q.idea/sonarlint/securityhotspotstore/5/1/515bb3789f60ea8037a4b8ca655eed07b46ce6dc,2/6/267f9564c7e2a09126cb45ecb96afd8f9d75f3c8
 w
-G.idea/sonarlint/issuestore/b/1/b17fe17c27bb816bb755e0df3f1a206cbc013379,4/1/410ae5d72b5abe72346acb4cda0b263ac2042416
-w
 G.idea/sonarlint/issuestore/a/5/a5954245f01de9b3bb22de4529e9aeb7cf3b4e42,4/b/4b8b3f5fd72634390aa649eeb68a55dd80deea7c
-Å
-Q.idea/sonarlint/securityhotspotstore/b/1/b17fe17c27bb816bb755e0df3f1a206cbc013379,4/0/40e67d8015e9360533772d32761c9f61ef269577
 Å
 Q.idea/sonarlint/securityhotspotstore/a/5/a5954245f01de9b3bb22de4529e9aeb7cf3b4e42,3/5/3595e26a6c0b1951b2052a7cd9862e1cd540ca84
 k
 ;AuthMicroService/src/test/java/service/AuthServiceTest.java,b/e/be1abfd7c039e40e3e81e4014f3b3905614fde04
 N
 ApiGatewayService/build.gradle,4/7/47df38ab30c4f42a8e396ffe66378d0082decc9e
+ì
+c.idea/modules/EmployeeMicroService/intellij.hrp.HumanResourcesProject.EmployeeMicroService.main.iml,f/5/f58a547500745de590439c8fc99d1363b2f29928
+å
+\.idea/modules/CompanyMicroService/com.hrp.HumanResourcesProject.CompanyMicroService.main.iml,3/e/3edbb1fce71a35aa53ca1a15e2c6651579ebdbd8
+é
+^.idea/modules/RequirementsMicroService/HumanResourcesProject.RequirementsMicroService.main.iml,d/9/d9f6e9dacf2198832f017cd1368eb54cb87638e6

@@ -75,6 +75,11 @@ public class AuthController {
     public ResponseEntity<String> testDeneme(){
         return ResponseEntity.ok("deneme basarili");
     }
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
 }
