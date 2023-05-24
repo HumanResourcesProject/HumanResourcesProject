@@ -62,6 +62,11 @@ public class AdminController {
     public ResponseEntity<List<BaseAdminResponseDto>> getAll(){
         return ResponseEntity.ok(adminService.findAllAdmin());
     }
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
     @GetMapping("/securitydeneme1")
