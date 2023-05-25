@@ -28,6 +28,8 @@ public class RabbitConfig {
     private String bindingKeyRegisterManager;
     @Value("${rabbitmq.key.register.employee}")
     private String bindingKeyRegisterEmployee ;
+    @Value("${rabbitmq.key.leave.count}")
+    private String bindingKeyLeaveCount;
 
 
     // Queue
@@ -37,6 +39,7 @@ public class RabbitConfig {
     private  String queueRegisterManager ;
     @Value("${rabbitmq.queue.register.employee}")
     private  String queueRegisterEmployee;
+
 
 
 
@@ -72,7 +75,6 @@ public class RabbitConfig {
     /**
      * ---- Binding ----
      */
-
 
     @Bean
     public Binding bindingRegisterAdmin(final Queue queueRegisterAdmin,final DirectExchange directExchange){

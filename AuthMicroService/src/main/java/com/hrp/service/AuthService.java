@@ -80,8 +80,9 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
         ModelRegisterAdmin modelRegisterAdmin=iManuelMapper.authToModelRegisterAdmin(auth,dto);
         new Thread(()->{
             modelRegisterAdmin.setAvatar(uploadImageCloudWithoutToken(dto.getAvatar()));
+            directProducer.sendRegisterAdmin(modelRegisterAdmin);
         }).start();
-        directProducer.sendRegisterAdmin(modelRegisterAdmin);
+
         return true;
     }
     public Boolean registerManager(RegisterManagerRequestDto dto) {

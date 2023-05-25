@@ -31,11 +31,15 @@ rabbitmq:
     fanout: "exchange-fanout"
     topic : "exchange-topic"
   key:
+    leave:
+      count: "binding-key-leave-count"
     register:
       admin: "binding-key-register-admin"
       manager: "binding-key-register-manager"
       employee: "binding-key-register-employee"
   queue:
+    leave:
+      count: "queue-leave-count"
     register:
       admin: "queue-register-admin"
       manager: "queue-register-manager"

@@ -1,5 +1,8 @@
 
-v
-java:S1488H"[Immediately return this expression instead of assigning it to the temporary variable "url".(½‡’όÿÿÿÿ
-v
-java:S1488b"[Immediately return this expression instead of assigning it to the temporary variable "url".(£άΨούÿÿÿÿ
+g	java:S112Z"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òιόÿÿÿÿ8Ύ™…–…1
+}
+java:S1488H"[Immediately return this expression instead of assigning it to the temporary variable "url".(½‡’όÿÿÿÿ8ήÿ‚–…1
+}
+java:S1488k"[Immediately return this expression instead of assigning it to the temporary variable "url".(£άΨούÿÿÿÿ8¤Κƒ–…1
+{
+java:S2142Y"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(δ Ή€8Ϋ™…–…1

@@ -32,9 +32,8 @@ public class LeaveService extends ServiceManagerImpl<Leave, Long> {
         this.jwtTokenManager = jwtTokenManager;
     }
     public void createLeave(ModelEmployeeLeave modelEmployeeLeave){
-        System.out.println("leave kayıt ici");
         save(leaveMapper.toLeave(modelEmployeeLeave));
-        System.out.println("leave kayıt ici ve kayit sonrasi");
+
 
     }
 
@@ -54,6 +53,8 @@ public class LeaveService extends ServiceManagerImpl<Leave, Long> {
         }
         return dtos;
     }
+
+
 
     public List<BaseLeaveResponseDto> findAllMyLeavesForManager(BaseRequestDto dto) {
         Optional<Long> authId=  jwtTokenManager.validToken(dto.getToken());
