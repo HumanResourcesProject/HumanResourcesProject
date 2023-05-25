@@ -17,8 +17,7 @@ import java.util.List;
 public class Consumer {
 
     private final EmployeeService employeeService;
-    @Value("${rabbitmq.queues.leave.count}")
-    private String queueLeaveCount;
+
     @RabbitListener(queues = "queue-register-employee")
     public void registerEmployee(ModelRegisterEmployee model){
         System.out.println("HHHHHHHHHHHHHHHH");
@@ -29,10 +28,7 @@ public class Consumer {
         System.out.println("findall consumer 24");
         employeeService.findAllMyEmployeeForManager(model);
     }
-    @RabbitListener(queues = "queue-leave-count")
-    public void leaveCount(ModelLeaveCount model){
-        employeeService.updateLeaveCount(model);
-    }
+
 
 
 }

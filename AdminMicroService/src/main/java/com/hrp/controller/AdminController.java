@@ -55,7 +55,7 @@ public class AdminController {
     @PutMapping("/updateadminnophoto")
     //  @PreAuthorize("hasAuthority('ADMINLEVEL1')")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdminNoPhoto ( BaseAdminNoPhotoRequestDto dto){
+    public ResponseEntity<Boolean> updateAdminNoPhoto (@RequestBody BaseAdminNoPhotoRequestDto dto){
         return ResponseEntity.ok(adminService.updateAdminNoPhoto(dto));
     }
 
