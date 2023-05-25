@@ -50,6 +50,11 @@ public class ManagerController {
     public ResponseEntity<Long> findAllMyEmployeeCount(@RequestBody TokenDto dto){
         return ResponseEntity.ok(managerService.findAllMyEmployee(dto).stream().count());
     }
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
     // onaylama ve reddetme islemleri

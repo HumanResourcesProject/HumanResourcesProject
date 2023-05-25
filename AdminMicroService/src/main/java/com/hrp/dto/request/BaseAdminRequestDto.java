@@ -1,6 +1,7 @@
 package com.hrp.dto.request;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -12,6 +13,7 @@ public class BaseAdminRequestDto {
     private String phone;
     private String address;
     private String email;
+    private MultipartFile avatar;
 
 
 }

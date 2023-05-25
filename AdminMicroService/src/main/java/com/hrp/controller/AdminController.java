@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 public class AdminController {
     private final AdminService adminService;
 
-
     //@RolesAllowed("ADMINLEVEL1")
     //@HttpMethodConstraint(value = "POST",rolesAllowed = "ADMINLEVEL1")
     //@PreAuthorize("hasAuthority('ADMINLEVEL1')")
@@ -51,7 +50,7 @@ public class AdminController {
     @PutMapping("/updateadmin")
 
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdmin (@RequestBody BaseAdminRequestDto dto){
+    public ResponseEntity<Boolean> updateAdmin ( BaseAdminRequestDto dto){
         return ResponseEntity.ok(adminService.updateAdmin(dto));
     }
 
@@ -61,6 +60,11 @@ public class AdminController {
     public ResponseEntity<List<BaseAdminResponseDto>> getAll(){
         return ResponseEntity.ok(adminService.findAllAdmin());
     }
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
     @GetMapping("/securitydeneme1")

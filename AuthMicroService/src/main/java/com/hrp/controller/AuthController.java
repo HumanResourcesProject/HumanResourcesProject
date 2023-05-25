@@ -17,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@CrossOrigin(origins = "*")
 public class AuthController {
     private final AuthService authService;
 
@@ -48,6 +49,7 @@ public class AuthController {
     @CrossOrigin("*")
     public ResponseEntity<Boolean> registerAdmin(RegisterAdminRequestDto dto) {
 
+        System.out.println("kontroller öncesi");
         RegisterErrorCheck.registerErrorInController(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPhone());
         return ResponseEntity.ok(authService.registerAdmin(dto));
     }
@@ -73,6 +75,11 @@ public class AuthController {
     public ResponseEntity<String> testDeneme(){
         return ResponseEntity.ok("deneme basarili");
     }
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
 }

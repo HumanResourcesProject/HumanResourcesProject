@@ -117,6 +117,11 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.findAllMyEmployeeCountForManager(dto));
     }
 
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
 }
