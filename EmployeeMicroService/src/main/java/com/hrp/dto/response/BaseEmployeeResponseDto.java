@@ -26,4 +26,5 @@ public class BaseEmployeeResponseDto {
     String phone;
     String company;
     String avatar;
+    int leaveCount;
 }

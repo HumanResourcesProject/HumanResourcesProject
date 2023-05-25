@@ -3,6 +3,7 @@ package com.hrp.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.TokenDto;
+import com.hrp.dto.request.UpdateManagerNoPhotoRequestDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.dto.response.EmployeeRequestAndResponseDto;
@@ -74,6 +75,21 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
 
         String url = toTurnStringAvatar(dto.getAvatar());
+         manager.get().setAvatar(url);
+        update(iManuelManagerMapper.toManager(manager.get(),dto));
+        return true;
+    }
+
+
+    public Boolean updateManagerNoPhoto(UpdateManagerNoPhotoRequestDto dto) {
+        Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(companyManagerId.get());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+        }
 
         update(iManuelManagerMapper.toManager(manager.get(),dto));
         return true;
@@ -141,4 +157,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
         return dtos;
     }
+
+
+
+
+
 }

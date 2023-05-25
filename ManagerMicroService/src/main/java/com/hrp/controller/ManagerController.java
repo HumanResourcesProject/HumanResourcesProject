@@ -1,6 +1,7 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.TokenDto;
+import com.hrp.dto.request.UpdateManagerNoPhotoRequestDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.dto.response.EmployeeRequestAndResponseDto;
@@ -28,6 +29,11 @@ public class ManagerController {
     public ResponseEntity<Boolean> updateCompanyManager(UpdateManagerRequestDto dto){
         return ResponseEntity.ok(managerService.updateManager(dto));
     }
+    @PutMapping("/updatemanagernophoto")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> updateCompanyManagerNoPhoto(UpdateManagerNoPhotoRequestDto dto){
+        return ResponseEntity.ok(managerService.updateManagerNoPhoto(dto));
+    }
     @PostMapping("/deletemanager")
     @CrossOrigin("*")
     public ResponseEntity<Boolean> deleteCompanyManager (TokenDto dto){
@@ -50,6 +56,11 @@ public class ManagerController {
     public ResponseEntity<Long> findAllMyEmployeeCount(@RequestBody TokenDto dto){
         return ResponseEntity.ok(managerService.findAllMyEmployee(dto).stream().count());
     }
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 
     // onaylama ve reddetme islemleri

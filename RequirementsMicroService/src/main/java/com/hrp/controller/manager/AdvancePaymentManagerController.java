@@ -45,4 +45,11 @@ public class AdvancePaymentManagerController {
     public ResponseEntity<Boolean> rejectAdvancePayment(@RequestBody BaseAnswerDto dto) {
         return ResponseEntity.ok(advancePaymentService.rejectAdvancePayment(dto));
     }
+
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
+
 }

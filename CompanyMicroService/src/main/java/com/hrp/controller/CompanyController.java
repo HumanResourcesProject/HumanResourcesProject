@@ -36,5 +36,10 @@ public class CompanyController {
     }
 
 
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
 
 }
