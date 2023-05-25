@@ -41,5 +41,8 @@ public class CompanyController {
         return ResponseEntity.ok("api denemesi");
     }
 
-
+    @GetMapping("/getallcompanycount")
+    public ResponseEntity<Long> getAllcompanyCount(){
+        return ResponseEntity.ok(companyService.findAll().stream().count());
+    }
 }

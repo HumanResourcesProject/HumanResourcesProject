@@ -70,7 +70,11 @@ public class AdminController {
         return ResponseEntity.ok("api denemesi");
     }
 
-
+    @GetMapping("/getalladmincount")
+    public ResponseEntity<Long> getAllAdmin(){
+        System.out.println("admin count");
+        return ResponseEntity.ok(adminService.findAll().stream().count());
+    }
 
     @GetMapping("/securitydeneme1")
 

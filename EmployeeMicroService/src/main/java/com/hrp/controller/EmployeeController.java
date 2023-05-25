@@ -122,6 +122,10 @@ public class EmployeeController {
         return ResponseEntity.ok("api denemesi");
     }
 
+    @GetMapping("/getallemployeecount")
+    public ResponseEntity<Long> getAllEmployeeCount(){
+        return ResponseEntity.ok(employeeService.findAll().stream().count());
+    }
 
 
 }

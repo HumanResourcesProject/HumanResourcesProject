@@ -15,13 +15,13 @@ spring:
     host: localhost
     port: 5672
     username: user
-    password: user
+    password: password
 
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPAdminDB
     username: postgres
-    password: 4628 # ortam degiskeni yapialacak
+    password: asd123asd # ortam degiskeni yapialacak
   jpa:
     hibernate:
       ddl-auto: update

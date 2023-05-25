@@ -61,7 +61,10 @@ public class ManagerController {
         return ResponseEntity.ok("api denemesi");
     }
 
-
+    @GetMapping("/getallmanagercount")
+    public ResponseEntity<Long> getAllManagerCount(){
+        return ResponseEntity.ok(managerService.findAll().stream().count());
+    }
 
     // onaylama ve reddetme islemleri
 
