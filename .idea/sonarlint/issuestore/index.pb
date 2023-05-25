@@ -327,10 +327,6 @@ N
 AdminMicroService/build.gradle,0/7/07530a6dc2a5fa8eec70c511cb2c6368fdba64e4
 y
 IAdminMicroService/src/main/java/com/hrp/config/rabbitmq/RabbitConfig.java,2/e/2efb9cb5852f191abbf46794e1a87b644d9a4c8f
-u
-EManagerMicroService/src/main/java/com/hrp/service/ManagerService.java,c/9/c9f975d8a65f50629500e8f3fb0c6e4acc0c6a85
-{
-KManagerMicroService/src/main/java/com/hrp/controller/ManagerController.java,2/c/2caffba18c8d72ce8fdab6cbc4b9c92345ba2096
 |
 LAdminMicroService/src/main/java/com/hrp/dto/request/BaseAdminRequestDto.java,1/f/1fc3920042ef6e914683979d255ab14e4957672f
 q
@@ -339,8 +335,6 @@ w
 GAdminMicroService/src/main/java/com/hrp/controller/AdminController.java,0/b/0b589b14f174b001c0320443b9f04f4330c807c4
 ˜
 hRequirementsMicroService/src/main/java/com/hrp/controller/employee/AdvancePaymentEmployeeController.java,4/9/496e3601a840381ca2e7d11ccc08835dc970f8c2
-‚
-RManagerMicroService/src/main/java/com/hrp/dto/request/UpdateManagerRequestDto.java,a/8/a8f8478f72480d9f07d492f3f9f42f86b4f2b346
 n
 >AuthMicroService/src/main/java/com/hrp/utility/TestAndRun.java,b/a/bafca529f79f5b5981d5b00ee17c6a5a73c89ba3
 t

@@ -329,12 +329,6 @@ N
 hRequirementsMicroService/src/main/java/com/hrp/controller/employee/AdvancePaymentEmployeeController.java,4/9/496e3601a840381ca2e7d11ccc08835dc970f8c2
 y
 IAdminMicroService/src/main/java/com/hrp/config/rabbitmq/RabbitConfig.java,2/e/2efb9cb5852f191abbf46794e1a87b644d9a4c8f
-{
-KManagerMicroService/src/main/java/com/hrp/controller/ManagerController.java,2/c/2caffba18c8d72ce8fdab6cbc4b9c92345ba2096
-‚
-RManagerMicroService/src/main/java/com/hrp/dto/request/UpdateManagerRequestDto.java,a/8/a8f8478f72480d9f07d492f3f9f42f86b4f2b346
-u
-EManagerMicroService/src/main/java/com/hrp/service/ManagerService.java,c/9/c9f975d8a65f50629500e8f3fb0c6e4acc0c6a85
 q
 AAdminMicroService/src/main/java/com/hrp/service/AdminService.java,5/5/55ed32b5b11b1f0a3fa67a262df7de4d3073865b
 w

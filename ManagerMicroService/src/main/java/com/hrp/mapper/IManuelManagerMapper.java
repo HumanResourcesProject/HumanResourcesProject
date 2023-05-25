@@ -1,5 +1,6 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.UpdateManagerNoPhotoRequestDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.dto.response.EmployeeRequestAndResponseDto;
@@ -13,5 +14,6 @@ public interface IManuelManagerMapper {
      Manager toManager (Manager manager,UpdateManagerRequestDto dto);
      ModelBaseEmployee toModelBaseEmployee(Manager manager);
      EmployeeRequestAndResponseDto toEmployeeDto(ModelBaseEmployee model);
+      Manager toManager(Manager manager, UpdateManagerNoPhotoRequestDto dto);
 
     }

@@ -1,6 +1,7 @@
 package com.hrp.controller;
 
 import com.hrp.dto.request.TokenDto;
+import com.hrp.dto.request.UpdateManagerNoPhotoRequestDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.dto.response.EmployeeRequestAndResponseDto;
@@ -27,6 +28,11 @@ public class ManagerController {
     @CrossOrigin("*")
     public ResponseEntity<Boolean> updateCompanyManager(UpdateManagerRequestDto dto){
         return ResponseEntity.ok(managerService.updateManager(dto));
+    }
+    @PutMapping("/updatemanagernophoto")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> updateCompanyManagerNoPhoto(UpdateManagerNoPhotoRequestDto dto){
+        return ResponseEntity.ok(managerService.updateManagerNoPhoto(dto));
     }
     @PostMapping("/deletemanager")
     @CrossOrigin("*")
