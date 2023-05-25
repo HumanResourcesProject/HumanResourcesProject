@@ -31,7 +31,7 @@ public class ManagerController {
     }
     @PutMapping("/updatemanagernophoto")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateCompanyManagerNoPhoto(UpdateManagerNoPhotoRequestDto dto){
+    public ResponseEntity<Boolean> updateCompanyManagerNoPhoto(@RequestBody UpdateManagerNoPhotoRequestDto dto){
         return ResponseEntity.ok(managerService.updateManagerNoPhoto(dto));
     }
     @PostMapping("/deletemanager")
