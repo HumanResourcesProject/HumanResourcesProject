@@ -76,6 +76,8 @@ public class EmployeeService extends ServiceManagerImpl<Employee, String> {
         if (employee.isEmpty()) {
             throw new EmployeeException(EErrorType.BAD_REQUEST_ERROR);
         }
+        employee.get().setLeaveCount(employee.get().getLeaveCount()-dto.getAmountOfDay());
+        update(employee.get());
         System.out.println("create leave metodu model ici: " + iManuelEmployeeMapper.toEmployeeLeaveModel(employee.get(), dto));
         directProducer.sendLeaveEmployee(iManuelEmployeeMapper.toEmployeeLeaveModel(employee.get(), dto));
         System.out.println("create leave metodu calisti");
@@ -286,4 +288,5 @@ public class EmployeeService extends ServiceManagerImpl<Employee, String> {
         }
         return employeeCount;
     }
+
 }

@@ -36,6 +36,8 @@ rabbitmq:
     list:
       employee: "binding-key-employee-list-for-manager"
   queue:
+    leave:
+      count: "queue-leave-count"
     register:
       admin: "queue-register-admin"
       manager: "queue-register-manager"
