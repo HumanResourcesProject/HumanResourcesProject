@@ -48,7 +48,6 @@ public class AdminController {
     }
 
     @PutMapping("/updateadmin")
-
     @CrossOrigin("*")
     public ResponseEntity<Boolean> updateAdmin ( BaseAdminRequestDto dto){
         return ResponseEntity.ok(adminService.updateAdmin(dto));

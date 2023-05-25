@@ -17,7 +17,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPRequirementsDB
     username: postgres
-    password: root # ortam degiskeni yapialacak
+    password: 4628 # ortam degiskeni yapialacak
   jpa:
     hibernate:
       ddl-auto: update
