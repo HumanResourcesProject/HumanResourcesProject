@@ -18,6 +18,7 @@
         <module name="HumanResourcesProject.ManagerMicroService.main" />
         <module name="HumanResourcesProject.ApiGatewayService.main" />
         <module name="com.hrp.HumanResourcesProject.CompanyMicroService.main" />
+        <module name="HumanResourcesProject.ConfigServerGit.main" />
         <module name="HumanResourcesProject.ConfigServer.main" />
       </profile>
     </annotationProcessing>
