@@ -77,7 +77,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     // bos gelirse db de ki alınacak
     public Boolean updateAdmin(BaseAdminRequestDto dto) {
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
-        Optional<Admin> admin = adminRepository.findById(id);
+        Optional<Admin> admin = adminRepository.findOptionalByAuthId(id);
         admin.get().setAddress(dto.getAddress());
         admin.get().setPhone(dto.getPhone());
         String avatarUrl;
@@ -95,7 +95,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
 
     public Boolean updateAdminNoPhoto(BaseAdminNoPhotoRequestDto dto) {
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
-        Optional<Admin> admin = adminRepository.findById(id);
+        Optional<Admin> admin = adminRepository.findOptionalByAuthId(id);
         admin.get().setAddress(dto.getAddress());
         admin.get().setPhone(dto.getPhone());
         String avatarUrl;
