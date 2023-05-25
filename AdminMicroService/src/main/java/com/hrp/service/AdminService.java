@@ -93,6 +93,24 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
         return true;
     }
 
+    public Boolean updateAdminNoPhoto(BaseAdminNoPhotoRequestDto dto) {
+        Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        Optional<Admin> admin = adminRepository.findById(id);
+        admin.get().setAddress(dto.getAddress());
+        admin.get().setPhone(dto.getPhone());
+        String avatarUrl;
+        //avatarUrl= toTurnStringAvatar(dto.getAvatar());
+        try {
+            Thread.sleep(1400);
+            //admin.get().setAvatar(avatarUrl);
+            update(admin.get());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return true;
+    }
+
     // findalladmin
 
 
