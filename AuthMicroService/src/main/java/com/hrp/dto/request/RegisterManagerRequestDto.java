@@ -1,6 +1,7 @@
 package com.hrp.dto.request;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -22,4 +23,5 @@ public class RegisterManagerRequestDto {
     private String phone;
     private String address;
     private String company;
+    private MultipartFile avatar;
 }

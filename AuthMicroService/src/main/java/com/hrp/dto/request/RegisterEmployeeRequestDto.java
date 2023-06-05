@@ -2,6 +2,7 @@ package com.hrp.dto.request;
 
 import lombok.*;
 import org.intellij.lang.annotations.RegExp;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 
@@ -28,4 +29,6 @@ public class RegisterEmployeeRequestDto {
     private String phone;
     private String address;
     private String company;
+    private MultipartFile avatar;
+    private Long salary;
 }

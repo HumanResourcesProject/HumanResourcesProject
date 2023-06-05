@@ -27,4 +27,5 @@ public class ModelRegisterManager implements Serializable {
     private String phone;
     private String address;
     private String company;
+    private String avatar;
 }

@@ -78,14 +78,13 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
                 .build();
         save(auth);
         ModelRegisterAdmin modelRegisterAdmin=iManuelMapper.authToModelRegisterAdmin(auth,dto);
-        new Thread(()->{
             modelRegisterAdmin.setAvatar(uploadImageCloudWithoutToken(dto.getAvatar()));
             directProducer.sendRegisterAdmin(modelRegisterAdmin);
-        }).start();
 
         return true;
     }
     public Boolean registerManager(RegisterManagerRequestDto dto) {
+
         Optional<Long> adminId = jwtTokenManager.validToken(dto.getToken());
         if (adminId.isEmpty()) {throw new AuthException(EErrorType.INVALID_TOKEN);}
         Auth auth = Auth.builder()
@@ -95,6 +94,7 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
                 .build();
         save(auth);
         ModelRegisterManager modelRegisterManager=iManuelMapper.authToModelRegisterManager(auth,dto);
+        modelRegisterManager.setAvatar(uploadImageCloudWithoutToken(dto.getAvatar()));
         directProducer.sendRegisterManager(modelRegisterManager);
         return true;
     }
@@ -108,6 +108,10 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
                 .build();
         save(auth);
         ModelRegisterEmployee modelRegisterEmployee =iManuelMapper.authToModelRegisterEmployee(auth,dto,managerId.get());
+        modelRegisterEmployee.setAvatar(uploadImageCloudWithoutToken(dto.getAvatar()));
+        System.out.println(modelRegisterEmployee+"      hopppaaa");
+        System.out.println(dto.toString()+"      hopppaaa");
+        modelRegisterEmployee.setSalary(dto.getSalary());
         directProducer.sendRegisterEmployee(modelRegisterEmployee);
         return true;
     }

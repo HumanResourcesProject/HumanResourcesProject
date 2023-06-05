@@ -36,6 +36,7 @@ public class AdminService extends ServiceManagerImpl<Admin, Long> {
     }
 
     public void adminRegister(ModelRegisterAdmin model) {
+        System.out.println(model.getAvatar()+" -------------");
         Admin admin = iManuelAdminMapper.toAdmin(model);
         save(admin);
         adminAuthService.createAdminAuth(admin.getId());

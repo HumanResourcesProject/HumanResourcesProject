@@ -47,8 +47,8 @@ public class EmployeeService extends ServiceManagerImpl<Employee, String> {
 
     public void createEmployee(ModelRegisterEmployee model) {
         Employee employee = iManuelEmployeeMapper.ToEmployee(model);
-        employee.setSalary(5000L);
-        employee.setAvatar("https://gcavocats.ca/wp-content/uploads/2018/09/man-avatar-icon-flat-vector-19152370-1.jpg");
+        employee.setAvatar(model.getAvatar());
+        employee.setSalary(model.getSalary());
         save(employee);
     }
 

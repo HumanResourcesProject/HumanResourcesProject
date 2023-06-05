@@ -48,7 +48,7 @@ public class AuthController {
     @PostMapping("/registeradmin")
     @CrossOrigin("*")
     public ResponseEntity<Boolean> registerAdmin(RegisterAdminRequestDto dto) {
-
+        System.out.println(dto.getAvatar());
         System.out.println("kontroller öncesi");
         RegisterErrorCheck.registerErrorInController(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPhone());
         return ResponseEntity.ok(authService.registerAdmin(dto));
@@ -57,7 +57,7 @@ public class AuthController {
     // register Manager
     @PostMapping("/registermanager")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> registerManager(@RequestBody RegisterManagerRequestDto dto) {
+    public ResponseEntity<Boolean> registerManager(RegisterManagerRequestDto dto) {
         RegisterErrorCheck.registerErrorInController(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPhone());
         return ResponseEntity.ok(authService.registerManager(dto));
     }
@@ -65,7 +65,7 @@ public class AuthController {
     // register employee
     @PostMapping("/registeremployee")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> registerEmployee(@RequestBody RegisterEmployeeRequestDto dto) {
+    public ResponseEntity<Boolean> registerEmployee(RegisterEmployeeRequestDto dto) {
         RegisterErrorCheck.registerErrorInController(dto.getEmail(), dto.getName(), dto.getSurname(), dto.getPhone());
         return ResponseEntity.ok(authService.registerEmployee(dto));
     }
