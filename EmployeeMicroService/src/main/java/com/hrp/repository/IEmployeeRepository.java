@@ -12,4 +12,5 @@ public interface IEmployeeRepository extends MongoRepository<Employee,String> {
     Optional<Employee> findOptionalByAuthId(Long authId);
     Optional<List<Employee>> findOptionalByCompany(String company);
     Optional<List<Employee>> findOptionalByManagerId(Long managerId);
+
 }

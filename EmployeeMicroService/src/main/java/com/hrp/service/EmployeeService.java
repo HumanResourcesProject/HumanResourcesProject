@@ -289,4 +289,12 @@ public class EmployeeService extends ServiceManagerImpl<Employee, String> {
         return employeeCount;
     }
 
+    public List<Employee> findNewEmployees(){
+        List<Employee> newEmployeeList = findAll().stream().sorted(Comparator.comparing(Employee::getCreatedate).reversed())
+                .limit(4)
+                .collect(Collectors.toList());
+
+        return newEmployeeList;
+    }
+
 }

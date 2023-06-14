@@ -7,6 +7,7 @@ import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
+import com.hrp.repository.entity.Employee;
 import com.hrp.service.EmployeeService;
 import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
@@ -118,13 +119,20 @@ public class EmployeeController {
     }
 
     @GetMapping("/apideneme")
+    @CrossOrigin("*")
     public ResponseEntity<String> apideneme(){
         return ResponseEntity.ok("api denemesi");
     }
 
     @GetMapping("/getallemployeecount")
+    @CrossOrigin("*")
     public ResponseEntity<Long> getAllEmployeeCount(){
         return ResponseEntity.ok(employeeService.findAll().stream().count());
+    }
+    @GetMapping("/newemployees")
+    @CrossOrigin("*")
+    public ResponseEntity<List<Employee>> getNewEmployees(){
+        return ResponseEntity.ok(employeeService.findNewEmployees());
     }
 
 
