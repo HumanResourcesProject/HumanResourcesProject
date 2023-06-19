@@ -9,15 +9,15 @@ spring:
       name: employee-service
   rabbitmq:
     host: localhost
-    username: user
-    password: user
+    username: ${RBUSERNAME}
+    password: ${RBPASS}
     port: 5672
   data:
     mongodb:
       host: localhost
       port: 29005
-      username: "user"
-      password: "root"
+      username: ${MONGOUSERNAME}
+      password: ${MONGOPASS}
       database: HRPEmployeeDB
 rabbitmq:
   exchange:

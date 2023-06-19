@@ -5,5 +5,5 @@ spring:
   config:
     import: "configserver:"
   application:
-    name: api-gateway-service2
+    name: api-gateway-service
 

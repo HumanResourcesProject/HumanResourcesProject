@@ -100,7 +100,8 @@ public class AuthService extends ServiceManagerImpl<Auth,Long> {
     }
     public Boolean registerEmployee(RegisterEmployeeRequestDto dto) {
         Optional<Long> managerId = jwtTokenManager.validToken(dto.getToken());
-        if (managerId.isEmpty()) throw new AuthException(EErrorType.INVALID_TOKEN);
+        if (managerId.isEmpty())
+            throw new AuthException(EErrorType.INVALID_TOKEN);
         Auth auth=Auth.builder()
                 .email(dto.getEmail())
                 .role(ERole.EMPLOYEE)

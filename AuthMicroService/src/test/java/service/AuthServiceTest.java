@@ -4,6 +4,7 @@ import com.cloudinary.api.exceptions.BadRequest;
 import com.hrp.dto.request.*;
 import com.hrp.dto.response.AuthLoginResponse;
 import com.hrp.exception.AuthException;
+import com.hrp.exception.EErrorType;
 import com.hrp.mapper.IManuelMapper;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
 import com.hrp.rabbitmq.producer.DirectProducer;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.*;
 import org.mockito.Mockito;
+import org.mockito.exceptions.misusing.PotentialStubbingProblem;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,19 +53,6 @@ public class AuthServiceTest {
 //    public void setup(){
 //        MockitoAnnotations.openMocks(this);
 //    }
-    @Test
-    void registerManager(){
-        when(jwtTokenManager.validToken("ccc")).thenReturn(Optional.of(2L));
-        when(authRepository.save(ArgumentMatchers.any(Auth.class))).thenReturn(Auth.builder()
-                        .email("sadas@gmail.com")
-                .build());
-      boolean check=  authService.registerManager(RegisterManagerRequestDto.builder()
-                      .email("asd@gmail.com")
-                      .token("ccc")
-              .build());
-        assertNotNull(check,"boolean geldi herhalde");
-    }
-
     /**
      * exceptionları kontrol etmedim login kontrolü sadece bu metod
      * ama yine de exception durumlarını geçti sayıyor neden ki acaba?
@@ -113,51 +102,33 @@ public class AuthServiceTest {
         assertTrue(check);
     }
     @Test
-    void changePassword_TokenIsEmpty (){
-        ChangePasswordDto changePasswordDto= ChangePasswordDto.builder()
-                .newpassword("asd")
-                .confirmpassword("asd")
-                .build();
-//        authService.changePassword(changePasswordDto,)
+    void changePassword_UnexpectedToken (){
+        when(jwtTokenManager.validToken("aaa")).thenReturn(Optional.ofNullable(null));
+        assertThrows(AuthException.class,() ->{authService.changePassword(ChangePasswordDto.builder()
+                        .token("aaa")
+                .build());});
     }
 
     @Test
-    void registerEmployee(){
-        when(jwtTokenManager.validToken("ccc")).thenReturn(Optional.of(2L));
-        when(authRepository.save(ArgumentMatchers.any(Auth.class))).thenReturn(Auth.builder()
-                .email("asd@gmail.com")
-                .build());
-        boolean check=  authService.registerEmployee(RegisterEmployeeRequestDto.builder()
-                .email("asd@gmail.com")
-                .token("ccc")
-                .build());
-
-        assertNotNull(check,"boolean geldi herhalde");
+    void changePassword_AuthIsEmpty (){
+        when(jwtTokenManager.validToken("bbb")).thenReturn(Optional.of(1L));
+        when(authService.findById(1L)).thenReturn(Optional.ofNullable(null));
+        assertThrows(AuthException.class,()->authService.changePassword(ChangePasswordDto.builder()
+                        .token("bbb")
+                .build()));
     }
 
     @Test
-    void registerAdminNoPhoto(){
-        when(jwtTokenManager.validToken("ccc")).thenReturn(Optional.of(2L));
-        when(authRepository.save(ArgumentMatchers.any(Auth.class))).thenReturn(Auth.builder()
-                .email("asd@gmail.com")
-                .build());
-        boolean check=  authService.registerAdmin(RegisterAdminRequestDto.builder()
-                .email("asd@gmail.com")
-                .token("ccc")
-                .build());
-
-        assertNotNull(check,"boolean geldi herhalde");
+    void changePassword_PasswordsDoNotMatch (){
+        when(jwtTokenManager.validToken("bbb")).thenReturn(Optional.of(1L));
+        when(authService.findById(1L)).thenReturn(Optional.of(Auth.builder()
+                        .password("Abc")
+                .build()));
+     assertThrows(AuthException.class, ()->authService.changePassword(ChangePasswordDto.builder()
+                     .oldpassword("123")
+                     .token("bbb")
+             .build()));
     }
-
-    @Test
-    void forgotPassword(){
-        when(authRepository.findOptionalByEmail("ccc@gmail.com"))
-                .thenReturn(Optional.ofNullable(Auth.builder().email("ccc@gmail.com").build()));
-        authService.update(Auth.builder().build());
-        boolean check=authService.forgotPassword(AuthLoginDto.builder().email("ccc@gmail.com").build());
-        assertTrue(check,"yanlis vaar");
-    }
-
     @Test
     void registerAdmin(){
         when(jwtTokenManager.validToken("ccc")).thenReturn(Optional.of(2L));
@@ -174,14 +145,76 @@ public class AuthServiceTest {
 
         boolean check=  authService.registerAdmin(RegisterAdminRequestDto.builder()
                 .email("asd@gmail.com")
-                        .avatar(multipartFile)
+                .avatar(multipartFile)
+                .token("ccc")
+                .build());
+
+        assertNotNull(check,"boolean geldi herhalde");
+    }
+    @Test
+    void registerAdminNoPhoto(){
+        when(jwtTokenManager.validToken("ccc")).thenReturn(Optional.of(2L));
+        when(authRepository.save(ArgumentMatchers.any(Auth.class))).thenReturn(Auth.builder()
+                .email("asd@gmail.com")
+                .build());
+        boolean check=  authService.registerAdmin(RegisterAdminRequestDto.builder()
+                .email("asd@gmail.com")
+                .token("ccc")
+                .build());
+
+        assertNotNull(check,"boolean geldi herhalde");
+    }
+    @Test
+    void registerAdmin_UnexpectedToken(){
+        when(jwtTokenManager.validToken("aaa")).thenReturn(Optional.ofNullable(null));
+        assertThrows(AuthException.class, ()-> authService.registerAdmin(RegisterAdminRequestDto.builder()
+                        .token("aaa")
+                .build()));
+    }
+    @Test
+    void registerAdmin_EmailAlreadyExists(){
+        when(jwtTokenManager.validToken("aaa")).thenReturn(Optional.ofNullable(1L));
+        when(authRepository.findOptionalByEmail("abc@company.com")).thenReturn(Optional.of(Auth.builder().build()));
+        assertThrows(AuthException.class, ()->authService.registerAdmin(RegisterAdminRequestDto.builder()
+                        .token("aaa")
+                        .email("abc@company.com")
+                .build()));
+    }
+    //directProducer ı kontrol etme
+
+    @Test
+    void registerManager(){
+        when(jwtTokenManager.validToken("ccc")).thenReturn(Optional.of(2L));
+        when(authRepository.save(ArgumentMatchers.any(Auth.class))).thenReturn(Auth.builder()
+                .email("sadas@gmail.com")
+                .build());
+        boolean check=  authService.registerManager(RegisterManagerRequestDto.builder()
+                .email("asd@gmail.com")
+                .token("ccc")
+                .build());
+        assertNotNull(check,"boolean geldi herhalde");
+    }
+    @Test
+    void registerEmployee(){
+        when(jwtTokenManager.validToken("ccc")).thenReturn(Optional.of(2L));
+        when(authRepository.save(ArgumentMatchers.any(Auth.class))).thenReturn(Auth.builder()
+                .email("asd@gmail.com")
+                .build());
+        boolean check=  authService.registerEmployee(RegisterEmployeeRequestDto.builder()
+                .email("asd@gmail.com")
                 .token("ccc")
                 .build());
 
         assertNotNull(check,"boolean geldi herhalde");
     }
 
-
-
+    @Test
+    void forgotPassword(){
+        when(authRepository.findOptionalByEmail("ccc@gmail.com"))
+                .thenReturn(Optional.ofNullable(Auth.builder().email("ccc@gmail.com").build()));
+        authService.update(Auth.builder().build());
+        boolean check=authService.forgotPassword(AuthLoginDto.builder().email("ccc@gmail.com").build());
+        assertTrue(check,"yanlis vaar");
+    }
 
 }

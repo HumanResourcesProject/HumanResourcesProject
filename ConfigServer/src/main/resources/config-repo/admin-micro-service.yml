@@ -2,10 +2,6 @@ server:
   port: 7071
 
 spring:
-#  security:
-#    user:
-#      name: "furkan"
-#      password: "123"
   zipkin:
     enabled: true
     base-url: http://localhost:9411
@@ -14,14 +10,14 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: user
-    password: user
+    username: ${RBUSERNAME}
+    password: ${RBPASS}
 
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPAdminDB
-    username: postgres
-    password: root # ortam degiskeni yapialacak
+    username: ${PGUSERNAME}
+    password: ${PGPASS}
   jpa:
     hibernate:
       ddl-auto: update
