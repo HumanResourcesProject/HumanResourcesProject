@@ -1,31 +1,45 @@
 package com.hrp.config.rabbitmq;
 
 import org.springframework.amqp.core.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfig {
     // exchange
-    private String exchangeDirect = "exchange-direct";
-    private String exchangeFanout = "exchange-fanout";
-    private String exchangeTopic = "exchange-topic";
+    @Value("${rabbitmq.exchange.direct}")
+    private String exchangeDirect ;
+    @Value("${rabbitmq.exchange.fanout}")
+    private String exchangeFanout ;
+    @Value("${rabbitmq.exchange.topic}")
+    private String exchangeTopic ;
 
 
     // Key
+    @Value("${rabbitmq.key.mail.admin}")
     private String adminEmailKey = "admin-email-key";
-    private String bindingKeyRegisterAdmin= "binding-key-register-admin" ;
-    private String bindingKeyRegisterManager= "binding-key-register-manager" ;
-    private String bindingKeyRegisterEmployee= "binding-key-register-employee" ;
-    private String bingingKeyFindAllMyEmployee = "binging-key-find-all-my-employee" ;
+    @Value("${rabbitmq.key.register.admin}")
+    private String bindingKeyRegisterAdmin ;
+    @Value("${rabbitmq.key.register.manager}")
+    private String bindingKeyRegisterManager;
+    @Value("${rabbitmq.key.register.employee}")
+    private String bindingKeyRegisterEmployee ;
+    @Value("${rabbitmq.key.list.leave}")
+    private String bindingKeyFindAllLeaveEmployee;
 
 
     // Queue
-    private String adminEmailQueue = "admin-email-queue";
-    private String queueRegisterAdmin = "queue-register-admin";
-    private String queueRegisterManager = "queue-register-manager";
-    private String queueRegisterEmployee= "queue-register-employee";
-    private String queueFindAllMyEmployee = "queue-find-all-my-employee";
+    @Value("${rabbitmq.queue.mail.admin}")
+    private  String adminEmailQueue = "admin-email-queue";
+    @Value("${rabbitmq.queue.register.admin}")
+    private  String queueRegisterAdmin ;
+    @Value("${rabbitmq.queue.register.manager}")
+    private  String queueRegisterManager ;
+    @Value("${rabbitmq.queue.register.employee}")
+    private  String queueRegisterEmployee;
+    @Value("${rabbitmq.queue.list.leave}")
+    private  String queueFindAllLeaveEmployee;
 
 
     /**
@@ -46,7 +60,6 @@ public class RabbitConfig {
     TopicExchange exchangeTopic() {
         return new TopicExchange(exchangeTopic);
     }
-
 
     /**
      * ---- Queue ----
@@ -72,10 +85,9 @@ public class RabbitConfig {
     }
 
     @Bean
-    Queue queueFindAllMyEmployee(){
-        return new Queue(queueFindAllMyEmployee);
+    Queue queueFindAllLeaveEmployee(){
+        return new Queue(queueFindAllLeaveEmployee);
     }
-
 
     /**
      * ---- Binding ----
@@ -96,13 +108,11 @@ public class RabbitConfig {
     public Binding bindingRegisterEmployee(final Queue queueRegisterEmployee,final DirectExchange directExchange){
         return BindingBuilder.bind(queueRegisterEmployee).to(directExchange).with(bindingKeyRegisterEmployee);
     }
+
     @Bean
-    public Binding bindingFindAllMyEmployee(final Queue queueFindAllMyEmployee,final DirectExchange directExchange){
-        return BindingBuilder.bind(queueFindAllMyEmployee).to(directExchange).with(bingingKeyFindAllMyEmployee);
+    public Binding bindingFindAllLeaveEmployee(final Queue queueFindAllLeaveEmployee,final DirectExchange directExchange){
+        return BindingBuilder.bind(queueFindAllLeaveEmployee).to(directExchange).with(bindingKeyFindAllLeaveEmployee);
     }
-
-
-
 
 
 }

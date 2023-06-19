@@ -12,4 +12,5 @@ public interface IAdvancePaymentRepository extends JpaRepository<AdvancedPayment
     Optional<List<AdvancedPayment>> findOptionalByAuthId(Long authId);
     Optional<List<AdvancedPayment>> findOptionalByManagerId(Long managerId);
 
+    Optional<AdvancedPayment> findOptionalByEmployeeId(String employeeId);
 }

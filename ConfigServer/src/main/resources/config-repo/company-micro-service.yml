@@ -9,13 +9,28 @@ spring:
       name: company-service
   rabbitmq:
     host: localhost
-    username: user
-    password: password
+    username: ${RBUSERNAME}
+    password: ${RBPASS}
     port: 5672
   data:
     mongodb:
       host: localhost
-      port: 27000
-      username: "user"
-      password: "root"
+      port: 29005
+      username: ${MONGOUSERNAME}
+      password: ${MONGOPASS}
       database: HRPCompanyDB
+rabbitmq:
+  exchange:
+    direct: "exchange-direct"
+    fanout: "exchange-fanout"
+    topic : "exchange-topic"
+  key:
+    register:
+      admin: "binding-key-register-admin"
+      manager: "binding-key-register-manager"
+      employee: "binding-key-register-employee"
+  queue:
+    register:
+      admin: "queue-register-admin"
+      manager: "queue-register-manager"
+      employee: "queue-register-employee"

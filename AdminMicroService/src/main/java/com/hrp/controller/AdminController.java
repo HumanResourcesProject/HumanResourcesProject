@@ -5,7 +5,6 @@ import com.hrp.dto.response.BaseAdminResponseDto;
 import com.hrp.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +13,7 @@ import javax.servlet.annotation.HttpMethodConstraint;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 //Dropbox
 //App key: 3qvpw8qwqq2uyp6
@@ -27,59 +27,69 @@ import java.util.List;
 public class AdminController {
     private final AdminService adminService;
 
-
     //@RolesAllowed("ADMINLEVEL1")
     //@HttpMethodConstraint(value = "POST",rolesAllowed = "ADMINLEVEL1")
     //@PreAuthorize("hasAuthority('ADMINLEVEL1')")
     //@CrossOrigin("*")
     @PostMapping("/getfindme")
-   // @PreAuthorize("hasAuthority('ADMINLEVEL1')")
+
     @CrossOrigin("*")
     @HttpMethodConstraint(value = "POST")
     public ResponseEntity<BaseAdminResponseDto> getFindMe(@RequestBody TokenDto dto){
-        System.out.println("find me metodu"+dto.getToken());
+        Logger.getLogger("logger namei burası");
         return ResponseEntity.ok(adminService.findMe(dto));
     }
 
     @PostMapping("/updateimage")
-   // @PreAuthorize("hasAuthority('ADMINLEVEL1')")
+
     @CrossOrigin("*")
     public ResponseEntity<String> updateImage(@RequestParam("file") MultipartFile file,String token) throws IOException {
-        System.out.println("upload image cloud metodu");
         return ResponseEntity.ok(adminService.updateImage(file,token));
     }
 
     @PutMapping("/updateadmin")
-  //  @PreAuthorize("hasAuthority('ADMINLEVEL1')")
     @CrossOrigin("*")
-    public ResponseEntity<Boolean> updateAdmin (@RequestBody BaseAdminRequestDto dto){
-        System.out.println("update admin metodu");
+    public ResponseEntity<Boolean> updateAdmin ( BaseAdminRequestDto dto){
         return ResponseEntity.ok(adminService.updateAdmin(dto));
+    }
+    @PutMapping("/updateadminnophoto")
+    //  @PreAuthorize("hasAuthority('ADMINLEVEL1')")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> updateAdminNoPhoto (@RequestBody BaseAdminNoPhotoRequestDto dto){
+        return ResponseEntity.ok(adminService.updateAdminNoPhoto(dto));
     }
 
     @GetMapping("/getalladmin")
-   // @PreAuthorize("hasAuthority('ADMINLEVEL1')")
+
     @HttpMethodConstraint(value = "GET")
     public ResponseEntity<List<BaseAdminResponseDto>> getAll(){
-        System.out.println("get all metodu ");
         return ResponseEntity.ok(adminService.findAllAdmin());
     }
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
 
+    @GetMapping("/getalladmincount")
+    public ResponseEntity<Long> getAllAdmin(){
+        System.out.println("admin count");
+        return ResponseEntity.ok(adminService.findAll().stream().count());
+    }
 
     @GetMapping("/securitydeneme1")
-   // @PreAuthorize("hasAuthority('ADMINLEVEL1')")
+
     @CrossOrigin("*")
     public ResponseEntity<String> securityDeneme1(){
         return ResponseEntity.ok("security denemesi 1. metodu");
     }
 
     @GetMapping("/securitydeneme2")
-  //  @PreAuthorize("hasAuthority('ADMINLEVEL2')")
+
     @CrossOrigin("*")
     public ResponseEntity<String> securityDeneme2(){
-        System.out.println("2.metod ");
         return ResponseEntity.ok("security denemesi 2. metodu");
     }
+
 
 
 }

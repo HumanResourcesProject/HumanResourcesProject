@@ -7,8 +7,7 @@ import com.hrp.rabbitmq.model.ModelRegisterAdmin;
 import com.hrp.rabbitmq.model.ModelRegisterEmployee;
 import com.hrp.rabbitmq.model.ModelRegisterManager;
 import com.hrp.repository.entity.Auth;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 
 public interface IManuelMapper {
     ModelRegisterAdmin authToModelRegisterAdmin(Auth auth, RegisterAdminRequestDto dto) ;

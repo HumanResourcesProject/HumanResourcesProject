@@ -1,5 +1,6 @@
 package com.hrp.mapper;
 
+import com.hrp.dto.request.UpdateManagerNoPhotoRequestDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.dto.response.EmployeeRequestAndResponseDto;
@@ -58,6 +59,14 @@ public class ManuelManagerMapper implements IManuelManagerMapper {
         return manager;
     }
 
+    @Override
+    public Manager toManager(Manager manager, UpdateManagerNoPhotoRequestDto dto) {
+        manager.setEmail(dto.getEmail());
+        manager.setAddress(dto.getAddress());
+        manager.setPhone(dto.getPhone());
+        manager.setCompany(dto.getCompany());
+        return manager;
+    }
     @Override
     public ModelBaseEmployee toModelBaseEmployee(Manager manager) {
         ModelBaseEmployee model= new ModelBaseEmployee();

@@ -7,6 +7,7 @@ import com.hrp.dto.request.requirements.ExpenseRequestDto;
 import com.hrp.dto.request.requirements.AdvancePaymentRequestDto;
 import com.hrp.dto.request.requirements.LeaveRequestDto;
 import com.hrp.dto.response.BaseEmployeeResponseDto;
+import com.hrp.repository.entity.Employee;
 import com.hrp.service.EmployeeService;
 import jdk.swing.interop.SwingInterOpUtils;
 import lombok.RequiredArgsConstructor;
@@ -74,6 +75,64 @@ public class EmployeeController {
     @CrossOrigin("*")
     public ResponseEntity<Long> myManagerCount(@RequestBody BaseEmployeeRequestDto dto){
         return ResponseEntity.ok(employeeService.myManagerCount(dto));
+    }
+
+    @PostMapping("/findallmyemployeesalaryformonth")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeSalary(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyEmployeeSalary(dto));
+    }
+
+    @PostMapping("/findallmycompanyexpenseformonth")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyCompanyExpenseForMonth(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyCompanyExpense(dto));
+    }
+    @PostMapping("/findallmycompanyexpenseforyear")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyCompanyExpenseForYear(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyCompanyExpense(dto)*12);
+    }
+    @PostMapping("/findallmyemployeesalaryforyear")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeSalaryForYear(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyEmployeeSalary(dto)*12);
+    }
+
+    @PostMapping("/findallmyemployeeavarageage")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeAgeAvarage(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyEmployeeAgeAvarage(dto));
+    }
+
+    @PostMapping("/findallmyemployeeavarageageforcompany")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeAgeAvarageForCompany(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyEmployeeAgeAvarageForCompany(dto));
+    }
+
+
+    @PostMapping("/findallmyemployeecountformanager")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> findAllMyEmployeeCountForManager(@RequestBody BaseEmployeeRequestDto dto){
+        return ResponseEntity.ok(employeeService.findAllMyEmployeeCountForManager(dto));
+    }
+
+    @GetMapping("/apideneme")
+    @CrossOrigin("*")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
+
+    @GetMapping("/getallemployeecount")
+    @CrossOrigin("*")
+    public ResponseEntity<Long> getAllEmployeeCount(){
+        return ResponseEntity.ok(employeeService.findAll().stream().count());
+    }
+    @GetMapping("/newemployees")
+    @CrossOrigin("*")
+    public ResponseEntity<List<Employee>> getNewEmployees(){
+        return ResponseEntity.ok(employeeService.findNewEmployees());
     }
 
 

@@ -3,6 +3,7 @@ package com.hrp.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.hrp.dto.request.TokenDto;
+import com.hrp.dto.request.UpdateManagerNoPhotoRequestDto;
 import com.hrp.dto.request.UpdateManagerRequestDto;
 import com.hrp.dto.response.BaseManagerResponseDto;
 import com.hrp.dto.response.EmployeeRequestAndResponseDto;
@@ -39,9 +40,8 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
     }
 
     public Boolean createManager(ModelRegisterManager model) {
-        System.out.println("asdsadas");
         Manager manager = iManuelManagerMapper.toManager(model);
-        manager.setAvatar("https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80");
+        manager.setAvatar(model.getAvatar());
         save(manager);
         return true;
     }
@@ -60,6 +60,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
     }
 
+    /**
+     * update metoduna bakalıcak.
+     */
     public Boolean updateManager(UpdateManagerRequestDto dto) {
         Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
         if (companyManagerId.isEmpty()){
@@ -69,19 +72,46 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         if (companyManagerId.isEmpty()){
             throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
         }
+
+        String url = toTurnStringAvatar(dto.getAvatar());
+         manager.get().setAvatar(url);
+        update(iManuelManagerMapper.toManager(manager.get(),dto));
+        return true;
+    }
+
+
+    public Boolean updateManagerNoPhoto(UpdateManagerNoPhotoRequestDto dto) {
+        Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
+        Optional<Manager> manager = managerRepository.findOptionalByAuthId(companyManagerId.get());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+        }
+
         update(iManuelManagerMapper.toManager(manager.get(),dto));
         return true;
     }
 
     public Boolean deleteManager(TokenDto dto) {
         Optional<Long> companyManagerId=jwtTokenManager.validToken(dto.getToken());
+        if (companyManagerId.isEmpty()){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
         deleteById(companyManagerId.get());
         return true;
     }
 
     public BaseManagerResponseDto findMe(TokenDto dto) {
         Long id = jwtTokenManager.validToken(dto.getToken()).get();
+        if (id==null){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
         Manager manager = managerRepository.findOptionalByAuthId(id).get();
+        if (manager==null){
+            throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+        }
         return iManuelManagerMapper.toBaseManagerResponseDto(manager);
     }
 
@@ -105,8 +135,14 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
 
     public List<EmployeeRequestAndResponseDto> findAllMyEmployee(TokenDto dto) {
         Optional<Long> authId= jwtTokenManager.validToken(dto.getToken());
+        if (authId.isEmpty()){
+            throw new ManagerException(EErrorType.INVALID_TOKEN);
+        }
         System.out.println("serviste 113");
         Optional<Manager> manager= managerRepository.findOptionalByAuthId(authId.get());
+        if (manager.isEmpty()){
+            throw new ManagerException(EErrorType.COMPANY_MANAGER_NOT_FOUND);
+        }
         directProducer.sendFindAllMyEmployee(iManuelManagerMapper.toModelBaseEmployee(manager.get()));
         try {
             Thread.sleep(1000);
@@ -120,4 +156,9 @@ public class ManagerService extends ServiceManagerImpl<Manager, Long>{
         }
         return dtos;
     }
+
+
+
+
+
 }

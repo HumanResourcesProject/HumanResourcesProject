@@ -1,4 +1,13 @@
 # yapilacaklar.
-* stream find all da stream filter sistemi equels olacak.
-* status ü frontend pending-approved-rejected
+* rabbit istekleri...
+* exception ...
+* employee lere puan sistemi gelecek.
+* şirketin employeeleri yıllık ve aylık gideri.
+* manager'in employeelerinin aylık ve yıllık giderleri
+
+
+
+# auth micro test'e bak
+
+
 

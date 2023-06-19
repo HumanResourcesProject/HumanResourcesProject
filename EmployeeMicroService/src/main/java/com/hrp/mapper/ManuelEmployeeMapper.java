@@ -30,6 +30,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
                 .address(model.getAddress())
                 .company(model.getCompany())
                 .managerId(model.getManagerId())
+                .leaveCount(15)
                 .build();
     }
 
@@ -52,6 +53,7 @@ public class ManuelEmployeeMapper implements IManuelEmployeeMapper {
         baseEmployeeResponseDto.setAvatar(employee.getAvatar());
         baseEmployeeResponseDto.setManagerId(employee.getManagerId());
         baseEmployeeResponseDto.setJobStart(employee.getJobStart());
+        baseEmployeeResponseDto.setLeaveCount(employee.getLeaveCount());
         return baseEmployeeResponseDto;
     }
 

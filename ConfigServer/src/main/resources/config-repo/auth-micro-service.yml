@@ -1,5 +1,5 @@
 server:
-  port: 7071
+  port: 7070
 
 spring:
   servlet:
@@ -15,13 +15,29 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: user
-    password: password
+    username: ${RBUSERNAME}
+    password: ${RBPASS}
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPAuthDB
-    username: postgres
-    password: asd123asd
+    username: ${PGUSERNAME}
+    password: ${PGPASS}
   jpa:
     hibernate:
       ddl-auto: update
+
+rabbitmq:
+  exchange:
+    direct: "exchange-direct"
+    fanout: "exchange-fanout"
+    topic : "exchange-topic"
+  key:
+    register:
+      admin: "binding-key-register-admin"
+      manager: "binding-key-register-manager"
+      employee: "binding-key-register-employee"
+  queue:
+    register:
+      admin: "queue-register-admin"
+      manager: "queue-register-manager"
+      employee: "queue-register-employee"

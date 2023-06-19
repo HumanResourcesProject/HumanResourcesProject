@@ -34,6 +34,7 @@ public class Employee extends BaseEntity{
     private String phone;
     private String address;
     private String company;
+    private int leaveCount;
     private LocalDateTime jobEnd;
     private String avatar;
     private Long salary;

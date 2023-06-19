@@ -1,5 +1,6 @@
 package com.hrp.controller.manager;
 
+import com.hrp.dto.request.BaseAnswerDto;
 import com.hrp.dto.request.BaseRequestDto;
 import com.hrp.dto.response.BaseLeaveResponseDto;
 import com.hrp.service.LeaveService;
@@ -32,4 +33,19 @@ public class LeaveManagerController {
         System.out.println("findall leave metodu"+dto.toString());
         return ResponseEntity.ok(leaveService.findAllMyLeavesPendingForManager(dto).stream().count());
     }
+    @PutMapping("/approveleave")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> approveleave(@RequestBody BaseAnswerDto dto) {
+        return ResponseEntity.ok(leaveService.approveleave(dto));
+    }
+
+    //rejeect
+    @PutMapping("/rejectleave")
+    @CrossOrigin("*")
+    public ResponseEntity<Boolean> rejectleave(@RequestBody BaseAnswerDto dto) {
+        return ResponseEntity.ok(leaveService.rejectleave(dto));
+    }
+
+
+
 }

@@ -10,14 +10,14 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: user
-    password: password
+    username: ${RBUSERNAME}
+    password: ${RBPASS}
 
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/HRPRequirementsDB
-    username: postgres
-    password: asd123asd # ortam degiskeni yapialacak
+    username: ${PGUSERNAME}
+    password: ${PGPASS}
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,3 +25,22 @@ spring:
     properties:
       hibernate:
         format_sql: true
+rabbitmq:
+  exchange:
+    direct: "exchange-direct"
+    fanout: "exchange-fanout"
+    topic : "exchange-topic"
+  key:
+    leave:
+      count: "binding-key-leave-count"
+    register:
+      admin: "binding-key-register-admin"
+      manager: "binding-key-register-manager"
+      employee: "binding-key-register-employee"
+  queue:
+    leave:
+      count: "queue-leave-count"
+    register:
+      admin: "queue-register-admin"
+      manager: "queue-register-manager"
+      employee: "queue-register-employee"

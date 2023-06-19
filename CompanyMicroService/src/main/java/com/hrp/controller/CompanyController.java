@@ -25,7 +25,6 @@ public class CompanyController {
     @PostMapping("/createcompany")
     @CrossOrigin("*")
     public ResponseEntity<Boolean> createCompany(CreateCompanyRequestDto dto){
-        System.out.println("create company metodu");
         return ResponseEntity.ok(companyService.createCompany(dto));
     }
 
@@ -33,11 +32,17 @@ public class CompanyController {
     @PostMapping("/findall")
     @CrossOrigin("*")
     public ResponseEntity<List<BaseCompanyResponseDto>> findAll(@RequestBody TokenDto dto){
-        System.out.println("find all company");
-        System.out.println(dto.toString());
         return ResponseEntity.ok(companyService.findAllDto(dto));
     }
 
 
+    @GetMapping("/apideneme")
+    public ResponseEntity<String> apideneme(){
+        return ResponseEntity.ok("api denemesi");
+    }
 
+    @GetMapping("/getallcompanycount")
+    public ResponseEntity<Long> getAllcompanyCount(){
+        return ResponseEntity.ok(companyService.findAll().stream().count());
+    }
 }

@@ -16,6 +16,7 @@ public class ModelRegisterEmployee implements Serializable {
     private String identityNumber;
     private Long managerId;
     private String name;
+    private String avatar;
     private String middleName;
     private String surname;
     private String birthDate;
@@ -27,5 +28,5 @@ public class ModelRegisterEmployee implements Serializable {
     private String phone;
     private String address;
     private String company;
-
+    private Long salary;
 }

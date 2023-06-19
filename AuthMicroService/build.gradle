@@ -3,9 +3,13 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$versions.springBoot")
     }
 }
+test {
+    useJUnitPlatform()
+}
 dependencies {
     implementation libs.springBootStarterDataJpa
     implementation libs.postgreSql
     implementation libs.springBootRabbitMQ
     implementation libs.springCloudConfigClient
+
 }

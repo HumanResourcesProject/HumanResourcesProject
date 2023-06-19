@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class BaseExpenseResponseDto {
+    private Long expenseId;
     private String employeeId;
     private Long managerId;
     private Long authId;

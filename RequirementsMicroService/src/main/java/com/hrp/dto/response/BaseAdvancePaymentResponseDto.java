@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class BaseAdvancePaymentResponseDto {
+    private Long advancePaymentId;
     private String employeeId;
     private Long authId;
     private Long managerId;
